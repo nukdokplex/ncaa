@@ -1,0 +1,3 @@
+# remove nix build result and test vm disk
+result
+*.qcow2
