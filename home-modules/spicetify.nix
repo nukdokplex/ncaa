@@ -2,10 +2,6 @@
   cfg = config.programs.spicetify;
 in {
   options.programs.spicetify.enableCustomConfiguration = lib.mkEnableOption "custom Spicetify configuration";
-  imports = [
-    inputs.spicetify.homeManagerModules.default
-  ];
-
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     programs.spicetify = let
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
