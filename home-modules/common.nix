@@ -6,13 +6,13 @@ in {
   config = lib.mkIf cfg.enable {
     programs.git.enable = true;
     programs.gpg.enable = true;
-    programs.gpg-agent = {
+    services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
     };
     programs.zsh = {
       enable = true;
-      shellAliasess = {
+      shellAliases = {
         nrs = "sudo nixos-rebuild switch --flake path:$HOME/ncaa#$(hostnamectl --json=short | '${lib.getExe pkgs.jq}' --raw-output .Hostname)";
         nrb = "sudo nixos-rebuild boot --flake path:$HOME/ncaa#$(hostnamectl --json=short | '${lib.getExe pkgs.jq}' --raw-output .Hostname)";
         nrt = "sudo nixos-rebuild test --flake path:$HOME/ncaa#$(hostnamectl --json=short | '${lib.getExe pkgs.jq}' --raw-output .Hostname)";

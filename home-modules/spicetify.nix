@@ -13,13 +13,13 @@ in {
       spotifyPackage = pkgs.spotify;
       theme = spicePkgs.themes.onepunch; # pretty cool gruvbox theme
 
-      enabledExtensions = with spicePkgs; [
+      enabledExtensions = with spicePkgs.extensions; [
         betterGenres
         showQueueDuration
         songStats
       ];
 
-      enabledCustomApps = with spicePkgs; [
+      enabledCustomApps = with spicePkgs.apps; [
         newReleases
         reddit
       ];

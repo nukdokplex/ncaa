@@ -9,7 +9,6 @@
       keepassxc
       qbittorrent
       vlc
-      libreoffic-fresh
       tor-browser
       chromium
       thunderbird
