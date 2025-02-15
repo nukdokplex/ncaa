@@ -24,6 +24,7 @@
   };
 
   programs.git = {
+    enable = true;
     userName = "nukdokplex";
     userEmail = "nukdokplex@nukdokplex.ru";
   };
