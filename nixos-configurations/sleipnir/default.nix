@@ -71,6 +71,8 @@
     model = "EPSON_L120.ppd";
   }];
 
+  programs.via.enable = true;
+
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
