@@ -72,6 +72,7 @@
       thunar-archive-plugin
       thunar-media-tags-plugin
     ];
+  };
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
