@@ -4,10 +4,17 @@
     ./stylix.nix
   ];
 
+  common = {
+    base.enable = true;
+    desktop.enable = true;
+  };
+
   nixpkgs.hostPlatform = "x86_64-linux";
   time.timeZone = "Asia/Yekaterinburg";
   i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
+  hardware.enableRedistributableFirmware = true;
+  hardware.enableAllFirmware = true;
 
   boot = {
     initrd = {
@@ -15,6 +22,7 @@
       includeDefaultModules = true;
       network.enable = true;
       kernelModules = [ "amdgpu" ]; # because i want make correct modeset early
+      systemd.enable = true;
     };
     kernelModules = [ "kvm-amd" "amdgpu" ];
     loader = {
@@ -25,7 +33,7 @@
       grub = {
         efiSupport = true;
         useOSProber = true;
-        device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNZFN703254E";
+        device = "nodev"; # this affects only BIOS system
       };
     };
   };
