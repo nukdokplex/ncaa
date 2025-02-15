@@ -14,7 +14,7 @@
       enable = true;
       includeDefaultModules = true;
       network.enable = true;
-      kernelModuels = [ "amdgpu" ]; # because i want make correct modeset early
+      kernelModules = [ "amdgpu" ]; # because i want make correct modeset early
     };
     kernelModules = [ "kvm-amd" "amdgpu" ];
     loader = {

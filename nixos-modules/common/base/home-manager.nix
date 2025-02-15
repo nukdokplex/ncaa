@@ -1,5 +1,5 @@
 {
   home-manager = {
-    useGlobalPackages = true;
+    useGlobalPkgs = true;
   };
 }

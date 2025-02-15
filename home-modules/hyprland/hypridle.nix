@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: let
   cfg = config.wayland.windowManager.hyprland;
 in {
-  options.wayland.windowManager.hyprland.hyprlock-timeouts = let
+  options.wayland.windowManager.hyprland.hypridle-timeouts = let
     mkTimeoutOption = name: lib.mkOption {
       default = -1;
       description = "Time in seconds to trigger ${name} timeout";
@@ -23,7 +23,7 @@ in {
           ignore_dbus_inhibit = false;
           lock_cmd = "'${lib.getExe config.programs.hyprlock.package}' --immediate --no-fade-in";
         };
-        listener = with cfg.hyprlock-timeouts;
+        listener = with cfg.hypridle-timeouts;
           [ ]
           ++ lib.optional (dim_backlight > -1) {
             timeout = dim_backlight;

@@ -5,6 +5,7 @@
     inputs.nur.modules.nixos.default
     inputs.agenix.nixosModules.age
     inputs.hyprland.nixosModules.default
+    inputs.disko.nixosModules.disko
   ];
 
   nixpkgs.config = import /${flakeRoot}/nixpkgs-config.nix;
