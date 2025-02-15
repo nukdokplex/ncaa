@@ -1,4 +1,7 @@
 { lib, pkgs, config, ... }: {
+  imports = [
+    ./nixvim
+  ];
   home = {
     username = "nukdokplex";
     stateVersion = "25.05";
