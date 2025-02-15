@@ -7,7 +7,6 @@ in {
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
       spotifyPackage = pkgs.spotify;
-      theme = spicePkgs.themes.onepunch; # pretty cool gruvbox theme
 
       enabledExtensions = with spicePkgs.extensions; [
         betterGenres

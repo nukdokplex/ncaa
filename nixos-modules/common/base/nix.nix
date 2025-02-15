@@ -1,6 +1,5 @@
 { lib, config, ... }: {
   config = lib.mkIf config.common.base.enable {
-    nixpkgs.config.allowUnfree = true;
     nix = {
       enable = true;
       settings = {

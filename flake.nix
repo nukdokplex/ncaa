@@ -1,4 +1,17 @@
 {
+  description = "Nix flake implementing NukDokPlex's NCaA";
+  nixConfig = {
+    extra-substituters = [
+      "https://nukdokplex.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nukdokplex.cachix.org-1:yLUFm5kbNrwexi9tBzqACj7fF0clQJ+lG7Qpb4BaEa0="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -64,6 +77,13 @@
         systems.follows = "systems";
       };
     };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs = {
+        hyprland.follows = "hyprland";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     spicetify = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -82,14 +102,9 @@
   outputs = inputs@{ flake-parts, systems, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        inputs.ez-configs.flakeModule
+        ./ez-configs.nix
       ];
 
       systems = import systems;
-
-      ezConfigs = {
-        root = ./.;
-        globalArgs = { inherit inputs; };
-      };
     };
 }

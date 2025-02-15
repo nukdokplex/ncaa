@@ -1,37 +1,4 @@
-{ pkgs, lib, ... }: {
-  common.base.enable = true;
-  common.desktop.enable = true;
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "25.05";
-  time.timeZone = "Etc/UTC";
-  i18n.defaultLocale = "ru_RU.UTF-8";
-
-  virtualisation.vmVariant = {
-    virtualisation = {
-      memorySize = 8192;
-      cores = 4;
-    };
-  };
-
-  users.users.nukdokplex = {
-    isNormalUser = true;
-    hashedPassword = "$y$j9T$8dRfprNnDsvSuKjFAwV8x.$yeNqUhW6gmYYuFSOEf4bKbmk6IUwYjN9kQPxRsp/fe4";
-    extraGroups = [ "wheel" "input" "networkmanager" ];
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    users.nukdokplex.wayland.windowManager.hyprland = {
-      enable = true;
-      enableCustomConfiguration = true;
-    };
-  };
-
-  programs.hyprland = {
-    enable = true;
-  };
-
+{ pkgs, ... }: {
   stylix = {
     enable = true;
     image = pkgs.fetchurl {
@@ -61,6 +28,36 @@
         base0E = "#96883E";
         base0F = "#3E965B";
       };
+    };
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+      monospace = {
+        package = pkgs.nerd-fonts.dejavu-sans-mono;
+        name = "DejaVuSansM Nerd Font Mono";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
+    cursor = let
+      themeVariant = "Dracula";
+      colorVariant = "Green";
+      package = pkgs.afterglow-cursors-recolored.override {
+        themeVariants = [ themeVariant ];
+        draculaColorVariants = [ colorVariant ];
+      };
+    in {
+      inherit package;
+      name = "Afterglow-Recolored-${themeVariant}-${colorVariant}";
+      size = 32;
     };
   };
 }
