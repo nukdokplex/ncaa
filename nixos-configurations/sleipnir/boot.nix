@@ -5,7 +5,6 @@
       includeDefaultModules = true;
       network.enable = true;
       kernelModules = [ "amdgpu" ]; # because i want make correct modeset early
-      systemd.enable = true;
       postResumeCommands = lib.mkAfter ''
         mkdir /btrfs_tmp
         mount /dev/mainpool/nixos /btrfs_tmp
