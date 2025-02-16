@@ -1,7 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./boot.nix
-    ./disko.nix
+    ./filesystems.nix
+    ./impermanence.nix
     ./stylix.nix
   ];
 

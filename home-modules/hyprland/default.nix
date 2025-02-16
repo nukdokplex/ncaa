@@ -126,7 +126,6 @@ in
           "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.wofi.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
           "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
           "$mainMod, O, Open file manager, exec, '${lib.getExe pkgs.xfce.thunar}'"
-          "$mainMod, Return, Open console, exec, '${lib.getExe config.programs.alacritty.package}'"
           "$mainMod Shift_L, Q, Close active window, killactive"
           "$mainMod, Z, Toggle split (top/side) of the current window, togglesplit"
           "$mainMod, F, Toggle window fullscreen, fullscreen"

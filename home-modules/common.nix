@@ -4,7 +4,10 @@ in {
   options.common.enable = lib.mkEnableOption "common modules";
 
   config = lib.mkIf cfg.enable {
-    programs.git.enable = true;
+    programs.git = {
+      enable  = true;
+      signing.format = "openpgp";
+    };
     programs.gpg.enable = true;
     services.gpg-agent = {
       enable = true;

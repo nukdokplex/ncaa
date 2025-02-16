@@ -5,4 +5,5 @@
     ./keymappings.nix
     ./autoCmd.nix
   ];
+  stylix.targets.nixvim.transparentBackground.main = true;
 }
