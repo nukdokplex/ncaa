@@ -3,6 +3,8 @@
     inputs.impermanence.nixosModules.impermanence
   ];
 
+  programs.fuse.userAllowOther = true;
+
   environment.persistence."/persistent" = {
     enable = true;
     hideMounts = true;
@@ -22,19 +24,12 @@
     imports = [
       inputs.impermanence.homeManagerModules.impermanence
     ];
-    home.persistence."/persistent/home/nukdokplex" = {
-      directories = [
-        ".gnupg"
-        ".ssh"
-        "desktop"
-        "documents"
-        "download"
-        "music"
-        "pictures"
-        "publicShare"
-        "templates"
-        "videos"
-      ];
+    home.persistence."/data/archive/nukdokplex" = {
+      directories = [ ".gnupg" ] ++ (
+        builtins.map
+          (directory: { inherit directory; method = "symlink"; })
+          [ ".ssh" "desktop" "documents" "download" "music" "pictures" "publicShare" "templates" "videos" ]
+      );
       allowOther = true;
     };
   };
