@@ -20,27 +20,34 @@
     ];
   };
 
-  home-manager.users.nukdokplex = { inputs, ... }: {
-    imports = [
-      inputs.impermanence.homeManagerModules.impermanence
+  environment.persistence."/persistent/home/nukdokplex".users.nukdokplex = {
+    directories = [
+      { directory = ".local/state/syncthing"; mode = "0700"; }
+      ".local/state/wireplumber"
+      { directory = ".local/share/TelegramDesktop"; mode = "0700"; }
+      { directory = ".mozilla"; mode = "0700"; }
+      { directory = ".thunderbird"; mode = "0700"; }
+      { directory = ".local/share/Steam"; }
     ];
-    home.persistence."/persistent/home/nukdokplex" = {
-      directories = [
-        {
-          directory = ".local/share/Steam";
-          method = "symlink";
-        }
-      ];
-      allowOther = true;
-    };
-    home.persistence."/data/archive/nukdokplex" = {
-      directories = [ ".gnupg" ] ++ (
-        builtins.map
-          (directory: { inherit directory; method = "symlink"; })
-          [ ".ssh" "desktop" "documents" "download" "music" "pictures" "publicShare" "templates" "videos" ]
-      );
-      allowOther = true;
-    };
+    files = [
+      ".config/mimeapps.list"
+    ];
+  };
+
+  environment.persistence."/data/archive/nukdokplex".users.nukdokplex = {
+    directories = [
+      { directory = ".gnupg"; mode = "0700"; }
+      { directory = ".ssh"; mode = "0700"; }
+      "ncaa"
+      "desktop"
+      "documents"
+      "download"
+      "music"
+      "pictures"
+      "publicShare"
+      "templates"
+      "videos"
+    ];
   };
 }
 
