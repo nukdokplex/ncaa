@@ -22,6 +22,7 @@ in
           modules-center = [ "clock" ];
           modules-right = [
             "idle_inhibitor"
+            "wireplumber"
             "tray"
           ] ++ (lib.optional cfg.usesBattery "battery") ++ [
             "hyprland/language"

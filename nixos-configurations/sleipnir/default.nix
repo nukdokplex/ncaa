@@ -18,7 +18,6 @@
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
 
-
   users.users.nukdokplex = {
     isNormalUser = true;
     hashedPassword = "$y$j9T$8dRfprNnDsvSuKjFAwV8x.$yeNqUhW6gmYYuFSOEf4bKbmk6IUwYjN9kQPxRsp/fe4";
@@ -54,6 +53,17 @@
       thunar-media-tags-plugin
     ];
   };
+
+  programs.steam = {
+    enable = true;
+    enableCustomConfiguration = true;
+  };
+
+  programs.lutris = {
+    enable = true;
+    enableCustomConfiguration = true;
+  };
+
   services.udisks2.enable = true;
   services.gvfs.enable = true;
 
@@ -71,6 +81,7 @@
   }];
 
   programs.via.enable = true;
+
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {

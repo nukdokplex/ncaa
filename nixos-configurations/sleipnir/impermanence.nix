@@ -25,6 +25,8 @@
         { directory = ".mozilla"; mode = "0700"; }
         { directory = ".thunderbird"; mode = "0700"; }
         { directory = ".local/share/Steam"; }
+        ".config/spotify"
+        ".config/vesktop"
       ];
       files = [
         ".config/mimeapps.list"
@@ -52,6 +54,7 @@
         "publicShare"
         "templates"
         "videos"
+        "keepass"
       ];
     };
   };
