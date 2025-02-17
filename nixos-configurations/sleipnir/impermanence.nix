@@ -5,7 +5,7 @@
 
   programs.fuse.userAllowOther = true;
 
-  environment.persistence."/persistent" = {
+  environment.persistence."/persistent/system" = {
     enable = true;
     hideMounts = true;
     directories = [
@@ -24,6 +24,15 @@
     imports = [
       inputs.impermanence.homeManagerModules.impermanence
     ];
+    home.persistence."/persistent/home/nukdokplex" = {
+      directories = [
+        {
+          directory = ".local/share/Steam";
+          method = "symlink";
+        }
+      ];
+      allowOther = true;
+    };
     home.persistence."/data/archive/nukdokplex" = {
       directories = [ ".gnupg" ] ++ (
         builtins.map

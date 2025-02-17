@@ -5,13 +5,13 @@
       includeDefaultModules = true;
       network.enable = true;
       kernelModules = [ "amdgpu" ]; # because i want make correct modeset early
-      postResumeCommands = lib.mkAfter ''
+      postDeviceCommands = lib.mkAfter ''
         mkdir /btrfs_tmp
         mount /dev/mainpool/nixos /btrfs_tmp
         if [[ -e /btrfs_tmp/rootfs ]]; then
           mkdir -p /btrfs_tmp/old_rootfs
           timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
-          mv /btrfs_tmp/rootfs "/btrfs_tmp/old_roots/$timestamp"
+          mv /btrfs_tmp/rootfs "/btrfs_tmp/old_rootfs/$timestamp"
         fi
 
         delete_subvolume_recursively() {
