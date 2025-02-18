@@ -31,8 +31,7 @@ in
           tooltip-format = ''
             Capacity: {capacity}%
             {timeTo}
-            Draw: {power} watts.
-          '';
+            Draw: {power} watts.'';
         };
         clock = {
           calendar = {
@@ -84,8 +83,7 @@ in
             Used swap: {swapUsed:.1f} GiB
       
             Free: {avail:.1f} GiB
-            Free swap: {swapAvail:.1f} GiB
-          '';
+            Free swap: {swapAvail:.1f} GiB'';
         };
         mpris = {
           dynamic-order = [ "artist" "title" "album" "position" "length" ];
