@@ -8,6 +8,7 @@ in {
     services = {
       cliphist.enable = true;
       swaync.enable = true;
+      playerctld.enable = true;
     };
   };
 }

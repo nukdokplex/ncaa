@@ -27,5 +27,11 @@ in {
         theme = "agnoster";
       };
     };
+    stylix.iconTheme = {
+      enable = true;
+      package = pkgs.papirus-icon-theme.override { color = "adwaita"; };
+      light = "Papirus";
+      dark = "Papirus-Dark";
+    };
   };
 }

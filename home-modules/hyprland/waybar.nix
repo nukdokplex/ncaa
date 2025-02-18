@@ -4,140 +4,105 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
+    stylix.targets.waybar.enable = false;
     programs.waybar = {
       enable = true;
       systemd.enable = true;
-      settings = {
-        mainBar = {
-          layer = "bottom";
-          postition = "top";
-          margin-top = 10;
-          margin-bottom = 0;
-          margin-left = 10;
-          margin-right = 10;
-          modules-left = [
-            "hyprland/workspaces"
-            "hyprland/window"
-          ];
-          modules-center = [ "clock" ];
-          modules-right = [
-            "idle_inhibitor"
-            "wireplumber"
-            "tray"
-          ] ++ (lib.optional cfg.usesBattery "battery") ++ [
-            "hyprland/language"
-          ];
-          idle_inhibitor = {
-            format = "{icon}";
-            format-icons = {
-              activated = "";
-              deactivated = "";
-            };
+      settings.mainBar = {
+        layer = "top";
+        position = "right";
+        margin = "10 10 10 0";
+        modules-left = [ 
+          "hyprland/workspaces"
+          "group/indicators"
+          "mpris"
+        ];
+        modules-right = [
+          "clock"
+          "idle_inhibitor"
+          "wireplumber"
+          "tray"
+          "hyprland/language"
+        ];
+        battery = {
+          format = "bat\n{capacity:03d}";
+          on-update = "'${pkgs.writeShellScript "check-battery" (builtins.readFile ./scripts/check-battery.sh)}'";
+          states = { critical = 20; };
+          tooltip-format = ''
+            Capacity: {capacity}%
+            {timeTo}
+            Draw: {power} watts.
+          '';
+        };
+        clock = {
+          calendar = {
+            format = { today = "<span color='red'><b><u>{}</u></b></span>"; };
+            mode = "month";
+            mode-mon-col = 3;
+            on-click-right = "mode";
+            on-scroll = 1;
+            weeks-pos = "right";
           };
-          "hyprland/workspaces" = {
-            all-outputs = false;
-            format = "{name}";
-            disable-scroll = false;
-            disable-click = false;
+          format = "{:%H\n%M\n%S}";
+          interval = 1;
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+        };
+        cpu = {
+          format = "cpu\n{usage:03d}";
+          interval = 3;
+        };
+        "group/indicators" = {
+          modules = [ "memory" "cpu" ] ++ lib.optional cfg.usesBattery [ "battery" ];
+          orientation = "inherit";
+        };
+        "hyprland/language" = {
+          format = "{}";
+          format-en = "EN";
+          format-ru = "RU";
+        };
+        "hyprland/workspaces" = {
+          all-outputs = false;
+          disable-click = false;
+          disable-scroll = false;
+          format = "{name}";
+        };
+        idle_inhibitor = {
+          format = "inh\n{icon}";
+          format-icons = {
+            activated = " on";
+            deactivated = "off";
           };
-          "hyprland/window" = {
-            format = "{title} ({class})";
-            all-outputs = true;
-          };
-          "hyprland/language" = {
-            format = "{}";
-          };
-          clock = {
-            format = "{:L%A, %d %B %Y - %H:%M:%S}";
-            interval = 1;
-            tooltip-format = "<tt><small>{calendar}</small></tt>";
-            locale = "ru_RU.UTF-8";
-            calendar = with config.lib.stylix.colors.withHashtag; {
-              mode = "year";
-              mode-mon-col = 3;
-              weeks-pos = "right";
-              on-scroll = 1;
-              format = {
-                days = "<span color='${base05}'><b>{}</b></span>";
-              };
-            };
-            actions = {
-              on-click-right = "mode";
-              on-click-forward = "tz_up";
-              on-click-backward = "tz_down";
-              on-scroll-up = "shift_up";
-              on-scroll-down = "shift_down";
-            };
-          };
-          wireplumber = {
-            format = "{volume}% {icon}";
-            format-icons = [ "" "" "" ];
-            tooltip = true;
-            tooltip-format = "{node_name}";
-            max-volume = 150.0;
-            on-click = lib.getExe pkgs.pavucontrol;
-          };
-          network = {
-            format-disabled = "󰀝";
-            format-disconnected = "󰀦";
-            format-ethernet = "󰈀";
-            format-icons = [ "󰤟" "󰤢" "󰤥" "󰤨" ];
-            format-wifi = "{icon}";
-            on-click = lib.getExe' pkgs.networkmanagerapplet "nm-connection-editor";
-            tooltip-format = "{ifname} via {gwaddr} 󰊗";
-            tooltip-format-disconnected = "Disconnected";
-            tooltip-format-ethernet = "{ifname} ";
-            tooltip-format-wifi = "{essid} ({signalStrength}%) {icon}";
-          };
-          bluetooth = {
-            format = "";
-            format-connected = " {num_connections}";
-            format-disabled = ""; # an empty format will hide the module
-            on-click = lib.getExe' pkgs.blueman "blueman-manager";
-            tooltip-format = "{controller_alias}	{controller_address}";
-
-            tooltip-format-connected = ''
-              {controller_alias}	{controller_address}
-
-              {device_enumerate}'';
-
-            tooltip-format-enumerate-connected = "{device_alias}	{device_address}";
-          };
-          tray = {
-            spacing = 15;
-          };
-          "custom/menu" = {
-            format = "󰀻";
-            on-click = "${lib.getExe pkgs.nwg-drawer}";
-            tooltip-format = "Touch-friendly application menu.";
-          };
-          power-profiles-daemon = {
-            format = "{icon}";
-
-            format-icons = {
-              balanced = "󰗑";
-              default = "󰗑";
-              performance = "󱐌";
-              power-saver = "󰌪";
-            };
-
-            tooltip-format = ''
-              Profile: {profile}
-              Driver: {driver}'';
-
-            tooltip = true;
-          };
-          battery = {
-            format = "{icon}";
-            format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-
-            on-update = "${pkgs.writeShellScript "check-battery" (builtins.readFile ./scripts/check-battery.sh)}";
-            tooltip-format = ''
-              {capacity}%: {timeTo}.
-              Draw: {power} watts.'';
-
-            states = { critical = 20; };
-          };
+        };
+        memory = {
+          format = "mem\n{percentage:03d}";
+          interval = 3;
+          tooltip-format = ''
+            Total: {total:.1f} GiB
+            Total swap: {swapTotal:.1f} GiB
+      
+            Used: {used:.1f} GiB
+            Used swap: {swapUsed:.1f} GiB
+      
+            Free: {avail:.1f} GiB
+            Free swap: {swapAvail:.1f} GiB
+          '';
+        };
+        mpris = {
+          dynamic-order = [ "artist" "title" "album" "position" "length" ];
+          format-paused = " 󰐊 ";
+          format-playing = " 󰏤 ";
+          format-stopped = " 󰓛 ";
+        };
+        tray = {
+          icon-size = 24;
+          spacing = 6;
+        };
+        wireplumber = {
+          format = "vol\n{volume:03d}";
+          max-volume = 150;
+          on-click = "'${lib.getExe pkgs.pavucontrol}'";
+          tooltip = true;
+          tooltip-format = "{volume}% {node_name}";
         };
       };
 
@@ -159,67 +124,45 @@ in
         @define-color base0D ${base0D}; /* #88b0da Functions, Methods, Attribute IDs, Headings */
         @define-color base0E ${base0E}; /* #b39be0 Keywords, Storage, Selector, Markup Italic, Diff Changed */
         @define-color base0F ${base0F}; /* #d89aba Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?> */
-
+        
         * {
-          /* that's kinda tricky solution for clipping icons */
-          font-family: ${config.stylix.fonts.sansSerif.name}, Symbols Nerd Font;
-          font-size: 10pt;
+          font-family: ${config.stylix.fonts.monospace.name};
+          font-size: 18px;
         }
-
+        
         #waybar {
           background-color: @base00;
           color: @base05;
           border-radius: 0px;
-          border: 2px solid @base0D;
-          padding: 10px 10px;
+          border: 3px solid @base0D;
         }
-
+        
         #waybar.hidden {
           opacity: 0.1;
         }
-
+        
         #waybar > box > * > widget > * {
-          padding: 0px 6px;
-          margin: 12px 6px;
+          padding: 2.5px;
+        }
+        
+        #waybar > box > * > widget > * {
+          margin: 5px;
           background-color: @base01;
           border-radius: 0px;
           border: 0.5px solid @base02;
         }
-
-        .modules-left {
-          margin-left: 6px;
+        
+        #waybar > box > * {
+          margin: 5px;
         }
-
-        .modules-right {
-          margin-right: 6px;
-        }
-
-        #waybar > box > * > widget > box > widget > * {
-          padding: 0px 3px;
-          background-color: @base00;
-          border-radius: 0px; 
-          margin: 3px;
-          border: 0.5px solid @base02;
-        }
-
-        #waybar > box > * > widget > box > :first-child > * {
-          margin-left: 0px;
-        }
-
-        #waybar > box > * > widget > box > :last-child > * {
-          margin-right: 0px;
-        }
-
+        
         #workspaces {
-          padding: 0px 0px;
         }
-
-        #workspaces> * {
-          padding: 0px 3px;
-          margin: 0px 0px;
-          border-radius: 0.5px; 
+        
+        #workspaces > button {
+          padding: 0px;
         }
-
+        
         #workspaces .active {
           background-color: @base02;
         }
