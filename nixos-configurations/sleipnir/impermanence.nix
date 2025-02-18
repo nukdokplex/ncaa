@@ -30,6 +30,7 @@
       ];
       files = [
         ".config/mimeapps.list"
+        ".config/syncthingtray.ini"
       ];
     };
   };
