@@ -18,6 +18,13 @@
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
 
+  networking.firewall.interfaces.enp42s0 = {
+    allowedUDPPorts = [ 22000 ];
+    allowedTCPPorts = [ 22000 ];
+  };
+
+  networking.interfaces.enp42s0.wakeOnLan.enable = true;
+
   users.users.nukdokplex = {
     isNormalUser = true;
     hashedPassword = "$y$j9T$8dRfprNnDsvSuKjFAwV8x.$yeNqUhW6gmYYuFSOEf4bKbmk6IUwYjN9kQPxRsp/fe4";
