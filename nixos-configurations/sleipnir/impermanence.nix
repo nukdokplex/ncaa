@@ -21,7 +21,7 @@
       directories = [
         { directory = ".local/state/syncthing"; mode = "0700"; }
         ".local/state/wireplumber"
-        { directory = ".local/share/TelegramDesktop"; mode = "0700"; }
+        { directory = ".local/share/AyuGramDesktop"; mode = "0700"; }
         { directory = ".mozilla"; mode = "0700"; }
         { directory = ".thunderbird"; mode = "0700"; }
         { directory = ".local/share/Steam"; }

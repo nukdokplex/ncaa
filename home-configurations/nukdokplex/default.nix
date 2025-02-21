@@ -11,15 +11,17 @@
     homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${config.home.username}" else "/home/${config.home.username}";
     packages = with pkgs; [
       vesktop
-      telegram-desktop
       keepassxc
+      ayugram-desktop
       qbittorrent
       vlc
       tor-browser
       chromium
       thunderbird
+      font-manager
     ];
   };
+
 
   programs.spicetify = {
     enable = true;
@@ -35,6 +37,7 @@
       }
     '';
   };
+  programs.fuzzel.settings.main.terminal = "'${lib.getExe config.programs.wezterm.package}'";
 
   programs.git = {
     userName = "nukdokplex";

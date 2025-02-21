@@ -7,6 +7,8 @@ in {
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
       spotifyPackage = pkgs.spotify;
+      windowManagerPatch = true;
+      spotifyLaunchFlags = "--ozone-platform=x11"; # wm patch works only when spotify runs in x11 mode
 
       enabledExtensions = with spicePkgs.extensions; [
         betterGenres

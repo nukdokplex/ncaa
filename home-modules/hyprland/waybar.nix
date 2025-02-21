@@ -3,7 +3,7 @@ let
   cfg = config.wayland.windowManager.hyprland;
 in
 {
-  config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
+  config = with config.lib.stylix.colors.withHashtag; lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     stylix.targets.waybar.enable = false;
     programs.waybar = {
       enable = true;
@@ -21,6 +21,7 @@ in
           "clock"
           "idle_inhibitor"
           "wireplumber"
+          "custom/notifications"
           "tray"
           "hyprland/language"
         ];
@@ -35,7 +36,7 @@ in
         };
         clock = {
           calendar = {
-            format = { today = "<span color='red'><b><u>{}</u></b></span>"; };
+            format = { today = "<span color='${base08}'><b><u>{}</u></b></span>"; };
             mode = "month";
             mode-mon-col = 3;
             on-click-right = "mode";
@@ -49,6 +50,26 @@ in
         cpu = {
           format = "cpu\n{usage:03d}";
           interval = 3;
+        };
+        "custom/notifications" = {
+          tooltip = false;
+          format = "{icon}";
+          format-icons = {
+            notification = "<span foreground='${base08}'><sup></sup></span>";
+            none = "";
+            dnd-notification = "<span foreground='${base08}'><sup></sup></span>";
+            dnd-none = "";
+            inhibited-notification = "<span foreground='${base08}'><sup></sup></span>";
+            inhibited-none = "";
+            dnd-inhibited-notification = "<span foreground='${base08}'><sup></sup></span>";
+            dnd-inhibited-none = "";
+          };
+          return-type = "json";
+          exec-if = "which swaync-client";
+          exec = "swaync-client -swb";
+          on-click = "swaync-client -t -sw";
+          on-click-right = "swaync-client -d -sw";
+          escape = true;
         };
         "group/indicators" = {
           modules = [ "memory" "cpu" ] ++ lib.optional cfg.usesBattery [ "battery" ];
@@ -104,7 +125,7 @@ in
         };
       };
 
-      style = with config.lib.stylix.colors.withHashtag; ''
+      style = ''
         /* colors in comments are examples, not actual color scheme */
         @define-color base00 ${base00}; /* #00211f Default Background */
         @define-color base01 ${base01}; /* #003a38 Lighter Background (Used for status bars, line number and folding marks) */

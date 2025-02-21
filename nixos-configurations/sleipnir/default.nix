@@ -12,6 +12,7 @@
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.config.rocmSupport = true; # AMDGPU support for packages
   time.timeZone = "Asia/Yekaterinburg";
   i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
@@ -38,6 +39,10 @@
       ];
     }];
     users.nukdokplex = {
+      services.ollama = {
+        enable = true;
+        acceleration = "rocm";
+      };
       wayland.windowManager.hyprland = {
         enable = true;
         enableCustomConfiguration = true;
