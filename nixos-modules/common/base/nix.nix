@@ -1,7 +1,17 @@
-{ lib, config, ... }: {
+{ lib, config, inputs, ... }: let
+  base = "/etc/nixpkgs/channels";
+  nixpkgsPath = "${base}/nixpkgs";
+in {
   config = lib.mkIf config.common.base.enable {
+    systemd.tmpfiles.rules = [
+      "L+ ${nixpkgsPath} - - - - ${inputs.nixpkgs}"
+    ];
     nix = {
       enable = true;
+      nixPath = [
+        "nixpkgs=${nixpkgsPath}"
+      ];
+      registry.nixpkgs.flake = inputs.nixpkgs;
       settings = {
         show-trace = true;
         sandbox = true;
