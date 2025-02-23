@@ -7,7 +7,7 @@
         type = "gpt";
         partitions = {
           ESP = {
-            end = "1G";
+            size = "1G";
             type = "EF00";
             content = {
               type = "filesystem";
@@ -17,8 +17,7 @@
             };
           };
           root = {
-            name = "root";
-            end = "-36G";
+            size = "100%";
             content = {
               type = "filesystem";
               format = "f2fs";
@@ -33,7 +32,7 @@
             };
           };
           swap = {
-            end = "-0";
+            size = "36G";
             content = {
               type = "swap";
               resumeDevice = true;
