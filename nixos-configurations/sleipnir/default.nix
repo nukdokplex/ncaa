@@ -2,7 +2,6 @@
   imports = [
     ./boot.nix
     ./filesystems.nix
-    ./impermanence.nix
     ./stylix.nix
   ];
 

@@ -1,4 +1,47 @@
 {
+  disko.devices = {
+    disk.main = {
+      type = "disk";
+      device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNZFN703254E";
+      content = {
+        type = "gpt";
+        partitions = {
+          ESP = {
+            size = "1G";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
+            };
+          };
+          root = {
+            size = "100%";
+            content = {
+              type = "filesystem";
+              format = "f2fs";
+              mountpoint = "/";
+              extraArgs = [
+                "-O"
+                "extra_attr,inode_checksum,sb_checksum,compression"
+              ];
+              mountOptions = [
+                "compress_algorithm=zstd:6,compress_chksum,atgc,gc_merge,lazytime,nodiscard"
+              ];
+            };
+          };
+          swap = {
+            size = "36G";
+            content = {
+              type = "swap";
+              resumeDevice = true;
+            };
+          };
+        };
+      };
+    };
+  };
   systemd.mounts = [
     {
       name = "data-archive.mount";
@@ -28,69 +71,13 @@
       options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
     }
   ];
-  disko.devices = {
-    disk.main = {
-      type = "disk";
-      device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNZFN703254E";
-      content = {
-        type = "gpt";
-        partitions = {
-          esp = {
-            size = "1G";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-            };
-          };
-          root = {
-            size = "100%";
-            content = {
-              type = "lvm_pv";
-              vg = "mainpool";
-            };
-          };
-          swap = {
-            size = "36G";
-            content = {
-              type = "swap";
-              resumeDevice = true;
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      mainpool = {
-        type = "lvm_vg";
-        lvs = {
-          nixos = {
-            size = "100%FREE";
-            content = {
-              type = "btrfs";
-              extraArgs = ["-f"];
-
-              subvolumes = {
-                "/rootfs" = {
-                  mountpoint = "/";
-                };
-
-                "/persistent" = {
-                  mountOptions = [ "noatime" ];
-                  mountpoint = "/persistent";
-                };
-
-                "/nix" = {
-                  mountOptions = [ "noatime" ];
-                  mountpoint = "/nix";
-                };
-              };
-            };
-          };
-        };
-      };
-    };
-  };
-  fileSystems."/persistent".neededForBoot = true;
+  home-manager.users.nukdokplex.imports = [
+    ({ config, lib, ... }: {
+      home.file = builtins.listToAttrs (
+        builtins.map
+          (name: lib.nameValuePair name { target = name; source = config.lib.file.mkOutOfStoreSymlink "/data/archive/nukdokplex/${name}"; })
+          [ "desktop" "documents" "download" "music" "pictures" "publicShare" "templates" "videos" ]
+      );
+    })
+  ];
 }
