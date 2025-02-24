@@ -78,7 +78,7 @@
       home.file = builtins.listToAttrs (
         builtins.map
           (name: lib.nameValuePair name { target = name; source = config.lib.file.mkOutOfStoreSymlink "/data/archive/nukdokplex/${name}"; })
-          [ "desktop" "documents" "download" "music" "pictures" "publicShare" "templates" "videos" ]
+          [ "documents" "music" "pictures" "ncaa" "nix-packages" "publicShare" "templates" "videos" "keepass" ]
       );
     })
   ];
