@@ -847,7 +847,8 @@
         "nur": "nur",
         "spicetify": "spicetify",
         "stylix": "stylix",
-        "systems": "systems_5"
+        "systems": "systems_5",
+        "tssp": "tssp"
       }
     },
     "rust-overlay": {
@@ -1149,6 +1150,26 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "tssp": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1740435142,
+        "narHash": "sha256-ku4zm0m1WjStbpRFdLEZvRUkaruIsosuWwGRFO502+E=",
+        "owner": "nukdokplex",
+        "repo": "tssp-nix",
+        "rev": "51acc8b3b7f4126e6fee6bab31d0358fd5e369d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nukdokplex",
+        "repo": "tssp-nix",
         "type": "github"
       }
     },

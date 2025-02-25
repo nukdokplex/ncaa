@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./boot.nix
     ./filesystems.nix
@@ -92,6 +92,37 @@
   }];
 
   programs.via.enable = true;
+
+  services.turing-smart-screen-python = {
+    enable = true; 
+    systemd.enable = true;
+    fonts = with inputs.tssp.packages.${pkgs.system}.resources.fonts; [
+      geforce
+      generale-mono
+      jetbrains-mono
+      racespace
+      roboto
+      roboto-mono
+    ];
+    themes = with inputs.tssp.packages.${pkgs.system}.resources.themes; [
+      LandscapeEarth
+    ];
+    settings = {
+      config = {
+        COM_PORT = "AUTO";
+        THEME = "LandscapeEarth";
+        HW_SENSORS = "PYTHON";
+        ETH = "enp42s0";
+        WLO = "enp5s0";
+        CPU_FAN = "AUTO";
+      };
+      display = {
+        REVISION = "A";
+        BRIGHTNESS = 20;
+        DISPLAY_REVERSE = false;
+      };
+    };
+  };
 
 
   programs.virt-manager.enable = true;
