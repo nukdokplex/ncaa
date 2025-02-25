@@ -19,6 +19,7 @@
       chromium
       thunderbird
       font-manager
+      gimp
     ];
   };
 
