@@ -22,6 +22,7 @@
             priority = 1;
             end = "-0";
             content = {
+              name = "system";
               type = "luks";
               extraOpenArgs = [];
               settings = {
@@ -39,8 +40,7 @@
     lvm_vg.systempool = {
       type = "lvm_vg";
       lvs.root = {
-        size = "100%";
-        priority = 0;
+        size = "100%FREE";
         content = {
           type = "filesystem";
           format = "ext4";
@@ -52,10 +52,9 @@
       };
       lvs.swap = {
         size = "12G";
-        priority = 1;
         content = {
           type = "swap";
-          resumeDevice = "true";
+          resumeDevice = true;
         };
       };
     };
