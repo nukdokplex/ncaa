@@ -64,6 +64,7 @@
       thunar-media-tags-plugin
     ];
   };
+  services.tumbler.enable = true;
 
   programs.steam = {
     enable = true;
@@ -106,11 +107,12 @@
     ];
     themes = with inputs.tssp.packages.${pkgs.system}.resources.themes; [
       LandscapeEarth
+      Landscape6Grid
     ];
     settings = {
       config = {
         COM_PORT = "AUTO";
-        THEME = "LandscapeEarth";
+        THEME = "Landscape6Grid";
         HW_SENSORS = "PYTHON";
         ETH = "enp42s0";
         WLO = "enp5s0";
