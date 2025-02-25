@@ -14,6 +14,7 @@
         efiSysMountPoint = "/boot";
       };
       grub = {
+        enable = true;
         efiSupport = true;
         useOSProber = true;
         device = "nodev"; # this affects only BIOS system

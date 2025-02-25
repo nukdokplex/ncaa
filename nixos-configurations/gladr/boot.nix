@@ -15,8 +15,9 @@
       };
       grub = {
         enable = true;
+        efiSupport = true;
         useOSProber = true;
-        device = "nodev"; # this affects only legacy boot
+        device = "nodev"; # with affects only legacy bios boot
       };
     };
   };
