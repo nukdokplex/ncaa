@@ -1,13 +1,4 @@
-{ inputs, pkgs, lib, ... }: {
-  imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
-  ];
-
-  environment.systemPackages = [
-    # for debugging and troubleshooting secure boot
-    pkgs.sbctl
-  ];
-
+{
   boot = {
     initrd = {
       enable = true;
@@ -22,11 +13,11 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      systemd-boot.enable = lib.mkForce false;
-    };
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
+      grub = {
+        enable = true;
+        useOSProber = true;
+        device = "nodev"; # this affects only legacy boot
+      };
     };
   };
 }
