@@ -37,6 +37,17 @@ in
     enableCustomConfiguration = lib.mkEnableOption "custom Hyprland configuration";
     usesBattery = lib.mkEnableOption "Hyprland configuration to enable battery management";
     beEnergyEfficient = lib.mkEnableOption "make Hyprland be energy efficient";
+    programs = let 
+      mkExeOption = name: default: lib.mkOption {
+        inherit default;
+        description = "Default ${name} program to use";
+        type = lib.types.string;
+      };
+    in {
+      fileManager = mkExeOption "file manager" "thunar";
+      terminal = mkExeOption "terminal" "kitty";
+      webBrowser = mkExeOption "web browser" "firefox";
+    };
   };
 
 
@@ -124,9 +135,9 @@ in
           "Control_L Alt_L, Delete, Open power menu, exec, '${fuzzelPowerMenu}'"
           "$mainMod, P, Screenshot screen region, exec, '${lib.getExe pkgs.grim}' -g \"$('${lib.getExe pkgs.slurp}')\" -l 6 -t png - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
           "$mainMod Shift_L, P, Screenshot active output, exec, '${lib.getExe pkgs.grim}' -c -l 6 -t png -o \"$('${lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl"}' activeworkspace -j | '${lib.getExe pkgs.jq}' -r .monitor))\" - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
-          "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.wofi.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
+          "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
           "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
-          "$mainMod, O, Open file manager, exec, '${lib.getExe pkgs.xfce.thunar}'"
+          "$mainMod, O, Open file manager, exec, '${cfg.programs.fileManager}'"
           "$mainMod Shift_L, Q, Close active window, killactive"
           "$mainMod, Z, Toggle split (top/side) of the current window, togglesplit"
           "$mainMod, F, Toggle window fullscreen, fullscreen"
@@ -254,6 +265,15 @@ in
           "NIXOS_OZONE_WL,1"
         ];
       };
+
+      extraConfig = ''
+        bindd = $mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough  
+
+        submap = passthrough
+        bindd = $mainMod, Insert, Exit passthrough mode, submap, reset
+
+        submap = reset
+      '';
 
       systemd = {
         enable = true;

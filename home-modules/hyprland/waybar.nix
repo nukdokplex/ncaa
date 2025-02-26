@@ -15,6 +15,7 @@ in
         modules-left = [ 
           "hyprland/workspaces"
           "group/indicators"
+        ] ++ (lib.optional cfg.usesBattery "battery") ++ [
           "mpris"
         ];
         modules-right = [

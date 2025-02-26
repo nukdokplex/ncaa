@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -d /sys/class/power_supply/BAT0 ]; then
     BAT=/sys/class/power_supply/BAT0
