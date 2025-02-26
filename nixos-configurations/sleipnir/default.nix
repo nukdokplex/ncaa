@@ -3,6 +3,7 @@
     ./boot.nix
     ./filesystems.nix
     ./stylix.nix
+    ./secrets
   ];
 
   common = {
@@ -21,6 +22,19 @@
   networking.firewall.interfaces.enp42s0 = {
     allowedUDPPorts = [ 22000 ];
     allowedTCPPorts = [ 22000 ];
+  };
+
+  services.yggdrasil = {
+    enable = true;
+    settings = {
+      MulticastInterfaces = [
+        {
+          Regex = "enp42s0";
+          Beacon = true;
+          Listen = true;
+        }
+      ];
+    };
   };
 
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
