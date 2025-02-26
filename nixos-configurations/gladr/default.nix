@@ -4,6 +4,7 @@
     ./filesystems.nix
     ./stylix.nix
     ./secrets
+    ./power.nix
   ];
 
   common = {
