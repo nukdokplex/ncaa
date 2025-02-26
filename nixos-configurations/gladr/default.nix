@@ -3,6 +3,7 @@
     ./boot.nix
     ./filesystems.nix
     ./stylix.nix
+    ./secrets
   ];
 
   common = {

@@ -1,4 +1,12 @@
-{
+{ inputs, pkgs, lib, ... }: {
+  imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
+
+  environment.systemPackages = with pkgs; [
+    sbctl
+  ];
+
   boot = {
     initrd = {
       enable = true;
@@ -13,12 +21,11 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      grub = {
-        enable = true;
-        efiSupport = true;
-        useOSProber = true;
-        device = "nodev"; # with affects only legacy bios boot
-      };
+      systemd-boot.enable = lib.mkForce false;
+    };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
     };
   };
 }
