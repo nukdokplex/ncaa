@@ -25,7 +25,7 @@ in {
       ];
 
       windowrulev2 = lib.mkAfter [
-        "worspace 2 silent, class:vesktop"
+        "workspace 2 silent, class:vesktop"
       ];
     };
   };
