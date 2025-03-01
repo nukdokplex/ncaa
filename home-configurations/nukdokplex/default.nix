@@ -2,7 +2,7 @@
   imports = [
     ./nixvim
     ./hyprland.nix
-    ./xdg-dirs.nix
+./xdg-dirs.nix
   ];
   common.enable = true;
   home = {
@@ -49,4 +49,6 @@
     enable = true;
     tray.enable = true;
   };
+
+  services.arrpc.enable = true;
 }
