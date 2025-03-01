@@ -250,8 +250,8 @@ in
         xwayland.force_zero_scaling = true;
 
         env = [
-          # GTK
           "GDK_BACKEND,wayland,x11"
+          "GTK_USE_PORTAL=1" # set gtk applications to use desktop portal file picker and other staff
           "QT_QPA_PLATFORM,wayland;xcb"
 
           "XDG_CURRENT_DESKTOP,Hyprland"
