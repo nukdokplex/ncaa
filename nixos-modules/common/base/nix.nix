@@ -1,4 +1,4 @@
-{ lib, config, inputs, ... }: let
+{ lib, config, inputs, flakeRoot, ... }: let
   base = "/etc/nixpkgs/channels";
   nixpkgsPath = "${base}/nixpkgs";
 in {
@@ -19,7 +19,7 @@ in {
         experimental-features = [ "nix-command" "flakes" ];
         min-free = "1G";
         max-free = "5G";
-      };
+      } // (import (flakeRoot + /flake.nix)).nixConfig;
       optimise = {
         automatic = true;
         dates = [
