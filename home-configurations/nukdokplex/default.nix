@@ -2,7 +2,7 @@
   imports = [
     ./nixvim
     ./hyprland.nix
-./xdg-dirs.nix
+    ./xdg-dirs.nix
   ];
   common.enable = true;
   home = {
@@ -20,7 +20,18 @@
       thunderbird
       font-manager
       gimp
-    ];
+    ] ++ lib.optional (!stdenv.isDarwin) (imv.override {
+      # because imv has darwin in it's badPlatforms
+      withBackends = [
+        "libtiff"
+        "libpng"
+        "librsvg"
+        "libheif"
+        "libjxl"
+        "libjpeg"
+        # "libnsgif"
+      ];
+    });
   };
 
 

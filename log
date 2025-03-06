@@ -1,0 +1,53 @@
+Running phase: unpackPhase
+@nix { "action": "setPhase", "phase": "unpackPhase" }
+unpacking source archive /nix/store/c2bjxirw4ccg22pa241fgyg7s692c7fi-source
+source root is source
+Running phase: patchPhase
+@nix { "action": "setPhase", "phase": "patchPhase" }
+Running phase: updateAutotoolsGnuConfigScriptsPhase
+@nix { "action": "setPhase", "phase": "updateAutotoolsGnuConfigScriptsPhase" }
+Running phase: configurePhase
+@nix { "action": "setPhase", "phase": "configurePhase" }
+mesonConfigurePhase flags: --prefix=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0 --libdir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/lib --libexecdir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/libexec --bindir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/bin --sbindir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/sbin --includedir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/include --mandir=/nix/store/l7x2d46cni9vv1bd2n873sg30il11nmp-imv-4.5.0-man/share/man --infodir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/share/info --localedir=/nix/store/wwa0z8w154vfz5h5r8sgy933rzzbpd34-imv-4.5.0/share/locale -Dauto_features=enabled -Dwrap_mode=nodownload --buildtype=plain -Dwindows=all -Dtest=enabled -Dman=enabled -Dfreeimage=disabled -Dlibheif=enabled -Dlibjpeg=enabled -Dlibjxl=enabled -Dlibnsgif=enabled -Dlibpng=enabled -Dlibrsvg=enabled -Dlibtiff=enabled
+[1mThe Meson build system[0m
+Version: 1.7.0
+Source dir: [1m/build/source[0m
+Build dir: [1m/build/source/build[0m
+Build type: [1mnative build[0m
+Project name: [1mimv[0m
+Project version: [1m4.5.0[0m
+C compiler for the host machine: [1mgcc[0m (gcc 14.2.1 "gcc (GCC) 14.2.1 20241116")
+C linker for the host machine: [1mgcc[0m ld.bfd 2.43.1
+Host machine cpu family: [1mx86_64[0m
+Host machine cpu: [1mx86_64[0m
+Program [1mgit[0m found: [1;31mNO[0m
+Library [1mm[0m found: [1;32mYES[0m
+Found pkg-config: [1;32mYES[0m [1m(/nix/store/601zbsyxn1zqx22yrif9yxa1x450qfc8-pkg-config-wrapper-0.29.2/bin/pkg-config)[0m [1;34m0.29.2[0m
+Run-time dependency [1micu-io[0m found: [1;32mYES[0m [36m75.1[0m
+Run-time dependency [1mgl[0m found: [1;32mYES[0m [36m1.2[0m
+Run-time dependency [1mpangocairo[0m found: [1;32mYES[0m [36m1.56.1[0m
+Run-time dependency [1mthreads[0m found: [1;32mYES[0m
+Run-time dependency [1mxkbcommon[0m found: [1;32mYES[0m [36m1.7.0[0m
+Run-time dependency [1minih[0m found: [1;32mYES[0m [36m58[0m
+Run-time dependency [1mwayland-client[0m found: [1;32mYES[0m [36m1.23.1[0m
+Run-time dependency [1mwayland-egl[0m found: [1;32mYES[0m [36m18.1.0[0m
+Run-time dependency [1megl[0m found: [1;32mYES[0m [36m1.5[0m
+Library [1mrt[0m found: [1;32mYES[0m
+Run-time dependency [1mx11[0m found: [1;32mYES[0m [36m1.8.11[0m
+Dependency [1mgl[0m found: [1;32mYES[0m [36m1.2[0m [1;34m(cached)[0m
+Run-time dependency [1mglu[0m found: [1;32mYES[0m [36m9.0.3[0m
+Run-time dependency [1mxcb[0m found: [1;32mYES[0m [36m1.17.0[0m
+Run-time dependency [1mxkbcommon-x11[0m found: [1;32mYES[0m [36m1.7.0[0m
+Library [1mfreeimage[0m skipped: feature [1mfreeimage[0m disabled
+Run-time dependency [1mlibtiff-4[0m found: [1;32mYES[0m [36m4.7.0[0m
+Run-time dependency [1mlibpng[0m found: [1;32mYES[0m [36m1.6.46[0m
+Run-time dependency [1mlibturbojpeg[0m found: [1;32mYES[0m [36m3.0.4[0m
+Run-time dependency [1mlibrsvg-2.0[0m found: [1;32mYES[0m [36m2.59.2[0m
+Dependency [1mlibnsgif[0m found: [1;31mNO[0m. Found [36m1.0.0[0m but need: [1m'< 1.0.0'[0m
+Did not find CMake 'cmake'
+Found CMake: [1;31mNO[0m
+Run-time dependency [1mlibnsgif[0m found: [1;31mNO[0m 
+
+meson.build:137:11: [1;31mERROR:[0m Dependency lookup for libnsgif with method 'pkgconfig' failed: Invalid version, need 'libnsgif' ['< 1.0.0'] found '1.0.0'.
+
+A full log can be found at [1m/build/source/build/meson-logs/meson-log.txt[0m
