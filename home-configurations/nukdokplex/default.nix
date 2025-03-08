@@ -1,8 +1,10 @@
 { lib, pkgs, config, ... }: {
   imports = [
+    ./secrets
     ./nixvim
     ./hyprland.nix
     ./xdg-dirs.nix
+    ./ranger.nix
   ];
   common.enable = true;
   home = {

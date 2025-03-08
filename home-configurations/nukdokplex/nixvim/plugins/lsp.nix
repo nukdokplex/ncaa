@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   programs.nixvim.plugins = {
     lsp-format = {
       enable = true;
@@ -29,6 +29,10 @@
       servers = {
         nixd = {
           enable = true;
+        };
+        pylsp = {
+          enable = true;
+          pythonPackage = pkgs.python312;
         };
       };
     };
