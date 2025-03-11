@@ -24,6 +24,9 @@
       gimp
       shotwell
     ];
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
 
 
@@ -41,7 +44,6 @@
       }
     '';
   };
-  programs.fuzzel.settings.main.terminal = "'${lib.getExe config.programs.wezterm.package}'";
 
   programs.git = {
     userName = "nukdokplex";

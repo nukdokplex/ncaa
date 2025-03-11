@@ -248,22 +248,6 @@ in
         misc.vfr = cfg.beEnergyEfficient;
 
         xwayland.force_zero_scaling = true;
-
-        env = [
-          "GDK_BACKEND,wayland,x11"
-          "GTK_USE_PORTAL=1" # set gtk applications to use desktop portal file picker and other staff
-          "QT_QPA_PLATFORM,wayland;xcb"
-
-          "XDG_CURRENT_DESKTOP,Hyprland"
-          "XDG_SESSION_TYPE,wayland"
-          "XDG_SESSION_DESKTOP,Hyprland"
-
-          "DESKTOP_SESSION,hyprland"
-
-          "WLR_DRM_NO_ATOMIC,1"
-
-          "NIXOS_OZONE_WL,1"
-        ];
       };
 
       extraConfig = ''
@@ -278,16 +262,6 @@ in
       systemd = {
         enable = true;
         enableXdgAutostart = true;
-        variables = [
-          "GDK_BACKEND"
-          "QT_QPA_PLATFORM"
-          "QT_QPA_PLATFORMTHEME"
-          # "SDL_VIDEODRIVER"
-          # "CLUTTER_BACKEND"
-          "DESKTOP_SESSION"
-          "WLR_DRM_NO_ATOMIC"
-          "NIXOS_OZONE_WL"
-        ];
       };
     };
   };
