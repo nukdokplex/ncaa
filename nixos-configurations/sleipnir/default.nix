@@ -16,7 +16,6 @@
   time.timeZone = "Asia/Yekaterinburg";
   i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
-  hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
 
   networking.firewall.interfaces.enp42s0 = {

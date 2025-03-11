@@ -17,7 +17,6 @@
   time.timeZone = "Asia/Yekaterinburg";
   i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
-  hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
 
   users.users.nukdokplex = {
