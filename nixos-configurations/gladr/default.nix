@@ -5,6 +5,7 @@
     ./stylix.nix
     ./secrets
     ./power.nix
+    ./printing.nix
   ];
 
   common = {
