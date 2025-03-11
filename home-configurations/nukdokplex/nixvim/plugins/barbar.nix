@@ -4,7 +4,9 @@
     keymaps = {
       next.key = "<TAB>";
       previous.key = "<S-TAB>";
-      close.key = "<C-w>";
+      close.key = "<leader>x";
+      closeAllButCurrentOrPinned.key = "<leader>X";
+      pin.key = "<leader>V";
     };
 
   };
