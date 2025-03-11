@@ -33,5 +33,8 @@ in {
       light = "Papirus";
       dark = "Papirus-Dark";
     };
+
+    # this config causes adding unwanted nixpkgs overlay
+    stylix.targets.gnome-text-editor.enable = false;
   };
 }
