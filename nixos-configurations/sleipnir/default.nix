@@ -73,19 +73,18 @@
         enableCustomConfiguration = true;
         hypridle-timeouts = timeouts;
       };
+      services.blueman-applet.enable = true;
     };
   };
 
   # programs.hyprland.enable = true;
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
   programs.nm-applet.enable = true;
-  service.blueman = {
-    enable = true;
-    enableAppletService = true;
-  };
+  services.blueman.enable = true;
   security.pam.services.swaylock = {};
   security.pam.services.hyprlock = {};
   

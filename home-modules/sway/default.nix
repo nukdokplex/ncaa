@@ -6,6 +6,21 @@ in {
     enableCustomConfiguration = lib.mkEnableOption "sway custom configuration";
     usesBattery = lib.mkEnableOption "Hyprland configuration to enable battery management";
     beEnergyEfficient = lib.mkEnableOption "make Hyprland be energy efficient";
+    workspaceBoundStartup = lib.mkOption {
+      description = "Workspace-bound startups";
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          workspaceNumber = lib.mkOption {
+            type = lib.types.ints.unsigned;
+            description = "workspace number in which window should be spawned";
+          };
+          command = lib.mkOption {
+            type = lib.types.string;
+            description = "command to execute";
+          };
+        };
+      });
+    };
     programs = let 
       mkExeOption = name: default: lib.mkOption {
         inherit default;
@@ -20,6 +35,7 @@ in {
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     wayland.windowManager.sway = {
+      checkConfig = false;
       package = if (builtins.hasAttr "osConfig" args)
         then args.osConfig.programs.sway.package
         else pkgs.sway;
@@ -38,6 +54,7 @@ in {
         defaultWorkspace = "workspace number 1";
 
         modifier = "Mod4";
+        focus.mouseWarping = "container";
         menu = lib.mkDefault "'${lib.getExe config.programs.fuzzel.package}' --show-actions";
         bindkeysToCode = true; # workaround for multilayout setups
         keybindings = {
@@ -144,6 +161,23 @@ in {
           "${modifier}+r" = "mode resize";
         };
       };
+      extraConfig = lib.concatStringsSep "\n" (
+        builtins.map
+        (elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}") 
+        (lib.reverseList (
+          lib.sortOn (x: x.workspaceNumber) cfg.workspaceBoundStartup
+        ))
+      ) + "\n" + lib.optionalString (cfg.package.pname == "swayfx") ''
+        blur ${if cfg.beEnergyEfficient then "disable" else "enable"}
+        blur_xray disable
+        blur_passes 3
+        blur_radius 1
+        blur_noise 0
+        blur_brightness 1
+        blur_contrast 1
+        blur_saturation 1
+
+        shadows disable'';
     };
   };
 

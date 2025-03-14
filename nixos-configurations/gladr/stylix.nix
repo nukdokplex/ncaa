@@ -5,6 +5,7 @@
       url = "https://w.wallhaven.cc/full/5d/wallhaven-5dl1g7.jpg";
       hash = "sha256-w9x5FzjFGZy75fYwuKHM0pi+Sda2bP4KY8fWpP/nVFY=";
     };
+    polarity = "dark";
     base16Scheme = {
       system = "base16";
       name = "Apathy modified";
