@@ -15,7 +15,7 @@ in {
       ];
 
       exec-once = lib.mkAfter [
-        "[workspace 1 silent] firefox"
+        "[workspace 1 silent] '${cfg.programs.webBrowser}'"
         "[workspace 2 silent] ayugram-desktop"
         "[workspace 2 silent] vesktop"
         "[workspace 4 silent] '${cfg.programs.fileManager}'" 

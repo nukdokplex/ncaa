@@ -62,7 +62,6 @@ in
         # autostarts
         exec-once = [
           "'${lib.getExe pkgs.soteria}'"
-          "'${lib.getExe' pkgs.networkmanagerapplet "nm-applet"}'"
         ];
 
         # inputs

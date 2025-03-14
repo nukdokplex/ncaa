@@ -51,26 +51,44 @@
         "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
       ];
     }];
-    users.nukdokplex = {
+    users.nukdokplex = let
+      timeouts = {
+        off_backlight = 300;
+        lock = 360;
+        suspend = 3600;
+      };
+    in {
       programs.gaming-essentials.enable = true;
       services.ollama = {
         enable = true;
         acceleration = "rocm";
       };
-      wayland.windowManager.hyprland = {
+      wayland.windowManager.sway = {
         enable = true;
         enableCustomConfiguration = true;
-        hypridle-timeouts = {
-          off_backlight = 300;
-          lock = 360;
-          suspend = 3600;
-        };
+        swayidle-timeouts = timeouts;
+      };
+      wayland.windowManager.hyprland = {
+        enable = false;
+        enableCustomConfiguration = true;
+        hypridle-timeouts = timeouts;
       };
     };
   };
 
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+  programs.nm-applet.enable = true;
+  service.blueman = {
+    enable = true;
+    enableAppletService = true;
+  };
+  security.pam.services.swaylock = {};
   security.pam.services.hyprlock = {};
+  
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [
@@ -95,7 +113,6 @@
   services.gvfs.enable = true;
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   programs.via.enable = true;
 

@@ -1,16 +1,13 @@
-{ config, lib, ... }: let
+{ lib, config, ... }: let
   cfg = config.wayland.windowManager.sway;
 in {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
-    programs.fuzzel = {
+    programs.swaylock = {
       enable = true;
       settings = {
-        border = {
-          width = 3;
-          radius = 0;
-        };
+        show-keyboard-layout = true;
+        show-failed-attempts = true;
       };
     };
   };
 }
-
