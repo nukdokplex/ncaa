@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: let
-  cfg = config.wayland.windowManager.hyprland;
+  cfg = config.wayland.windowManager.sway;
 in {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     home.packages = with pkgs; [
