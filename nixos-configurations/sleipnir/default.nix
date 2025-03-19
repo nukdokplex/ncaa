@@ -42,7 +42,7 @@
   users.users.nukdokplex = {
     isNormalUser = true;
     hashedPassword = "$y$j9T$8dRfprNnDsvSuKjFAwV8x.$yeNqUhW6gmYYuFSOEf4bKbmk6IUwYjN9kQPxRsp/fe4";
-    extraGroups = [ "wheel" "input" "networkmanager" ];
+    extraGroups = [ "wheel" "input" "networkmanager" "cdrom" ];
   };
 
   home-manager = {
@@ -97,6 +97,8 @@
     ];
   };
   services.tumbler.enable = true;
+  programs.optical-disk-essentials.enable = true; 
+  programs.k3b-custom.enable = true;
 
   programs.steam = {
     enable = true;
