@@ -20,6 +20,15 @@
         enable = true;
         enableCustomConfiguration = true;
       };
+      wezterm = {
+        enable = true;
+        enableZshIntegration = true;
+        extraConfig = ''
+          return {
+            window_background_opacity = 0.75
+          }
+        '';
+      };
     };
     services = {
       syncthing.enable = true;

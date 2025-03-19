@@ -18,16 +18,6 @@
     };
   };
 
-  programs.wezterm = {
-    enable = true;
-    enableZshIntegration = true;
-    extraConfig = ''
-      return {
-        window_background_opacity = 0.75
-      }
-    '';
-  };
-
   programs.git = {
     userName = "nukdokplex";
     userEmail = "nukdokplex@nukdokplex.ru";
