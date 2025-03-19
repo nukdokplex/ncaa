@@ -10,6 +10,7 @@
       sleipnir.userHomeModules = [ "nukdokplex" ];
       gladr.userHomeModules = [ "nukdokplex" ];
       test-vm.userHomeModules = [ "nukdokplex" ];
+      ams-out.userHomeModules = [ "nukdokplex" ];
     };
   };
 }
