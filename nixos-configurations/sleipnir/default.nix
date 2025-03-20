@@ -151,6 +151,9 @@
 
 
   programs.virt-manager.enable = true;
+  virtualisation.podman = {
+    enable = true;
+  };
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
