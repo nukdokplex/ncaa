@@ -1,4 +1,4 @@
-{ pkgs, lib, config, osConfig, ... }: let
+{ pkgs, lib, config, ... }@args: let
   cfg = config.wayland.windowManager.sway;
 in {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
@@ -8,13 +8,14 @@ in {
       slurp
       wayvnc
       soteria
+      brightnessctl
     ];
 
     services = {
       cliphist.enable = true;
       swaync.enable = true;
       playerctld.enable = true;
-      blueman-applet.enable =  osConfig.services.blueman.enable;
+      blueman-applet.enable = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).services.blueman.enable else false; 
     };
   };
 }

@@ -32,7 +32,7 @@ in {
         lib.optional (off_backlight > -1) { 
           timeout = off_backlight; 
           command = "'${lib.getExe' cfg.package "swaymsg"}' 'output * dpms off'"; 
-          resumeCommand = "'${lib.getExe' cfg.package "swaymsg"}' 'output * dmps on'"; 
+          resumeCommand = "'${lib.getExe' cfg.package "swaymsg"}' 'output * dpms on'"; 
         } ++
         lib.optional (lock > -1) { 
           timeout = lock; 
@@ -40,7 +40,7 @@ in {
         } ++
         lib.optional (suspend > -1) { 
           timeout = suspend; 
-          command = "'${lib.getExe systemd "systemctl"}' suspend"; 
+          command = "'${lib.getExe' systemd "systemctl"}' suspend"; 
         };
     };
   };
