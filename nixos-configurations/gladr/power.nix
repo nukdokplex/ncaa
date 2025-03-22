@@ -18,6 +18,12 @@
 
       RADEON_DPM_STATE_ON_AC="performance";
       RADEON_DPM_STATE_ON_BAT="battery";
+      USB_AUTOSUSPEND = 0;
+      USB_EXCLUDE_AUDIO = 1;
+      USB_EXCLUDE_BTUSB = 1;
+      USB_EXCLUDE_PHONE = 1;
+      USB_EXCLUDE_PRINTER = 0;
+      USB_EXCLUDE_WWAN = 1;
     };
   };
   services.upower.enable = true;
