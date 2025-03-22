@@ -1,5 +1,6 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }@args: let
   cfg = config.wayland.windowManager.hyprland;
+  systemd = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).systemd.package else pkgs.systemd;
 in {
   options.wayland.windowManager.hyprland.hypridle-timeouts = let
     mkTimeoutOption = name: lib.mkOption {
@@ -19,7 +20,7 @@ in {
       settings = {
         general = {
           after_sleep_cmd = "'${lib.getExe' cfg.package "hyprctl"}' dispatch dpms on";
-          before_sleep_cmd = "loginctl lock-session";
+          before_sleep_cmd = "'${lib.getExe' systemd "loginctl"}' lock-session";
           ignore_dbus_inhibit = false;
           lock_cmd = "'${lib.getExe config.programs.hyprlock.package}' --immediate --no-fade-in";
         };
@@ -37,11 +38,11 @@ in {
           }
           ++ lib.optional (lock > -1) {
             timeout = lock;
-            on-timeout = "loginctl lock-session";
+            on-timeout = "'${lib.getExe' systemd "loginctl"}' lock-session";
           }
           ++ lib.optional (suspend > -1) {
             timeout = suspend;
-            on-timeout = "systemctl suspend";
+            on-timeout = "'${lib.getExe' systemd "systemctl"}' suspend";
           };
       };
     };
