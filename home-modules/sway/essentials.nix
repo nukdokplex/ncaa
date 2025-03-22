@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, osConfig, ... }: let
   cfg = config.wayland.windowManager.sway;
 in {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
@@ -14,6 +14,7 @@ in {
       cliphist.enable = true;
       swaync.enable = true;
       playerctld.enable = true;
+      blueman-applet.enable =  osConfig.services.blueman.enable;
     };
   };
 }

@@ -27,29 +27,62 @@
   };
 
   home-manager = {
-    sharedModules = [{
-      wayland.windowManager.hyprland.settings.monitor = [
-        "desc:LG Display 0x05F6, 1920x1080, 0x0, 1.25"
-      ];
-    }];
-    users.nukdokplex = {
-      wayland.windowManager.hyprland = {
-        enable = true;
+    sharedModules = let
+      timeouts = {
+        dim_backlight = 45;
+        off_backlight = 90;
+        lock = 180;
+        suspend = 600;
+      };
+    in [{
+      wayland.windowManager.sway =  {
+        config = {
+          output."LG Display 0x05F6 Unknown" = {
+            mode = "1920x1080@60Hz";
+            scale = "1.25";
+          };
+          input."1739:52545:SYN1B7F:00_06CB:CD41_Touchpad" = {
+            natural_scroll = "enabled";
+            dwt = "enabled";
+            tap = "enabled";
+            drag_lock = "enabled";
+            click_method = "button_areas";
+          };
+        };
         usesBattery = true;
         beEnergyEfficient = true;
+        swayidle-timeouts = timeouts;
+      };
+      wayland.windowManager.hyprland = {
+        settings.monitor = [
+          "desc:LG Display 0x05F6, 1920x1080, 0x0, 1.25"
+        ];
+        usesBattery = true;
+        beEnergyEfficient = true;
+        hypridle-timeouts = timeouts;
+      };
+    }];
+    users.nukdokplex = {
+      programs.gaming-essentials.enable = true;
+      wayland.windowManager.sway = {
+        enable = true;
         enableCustomConfiguration = true;
-        hypridle-timeouts = {
-          dim_backlight = 45;
-          off_backlight = 90;
-          lock = 180;
-          suspend = 600;
-        };
       };
     };
   };
 
-  programs.hyprland.enable = true;
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+
+  security.pam.services.swaylock = {};
   security.pam.services.hyprlock = {};
+
+  programs.nm-applet.enable = true;
+  services.blueman.enable = true;
+
+  services.tumbler.enable = true;
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [
@@ -58,7 +91,6 @@
       thunar-media-tags-plugin
     ];
   };
-  services.tumbler.enable = true;
 
   programs.steam = {
     enable = true;
@@ -74,7 +106,8 @@
   services.gvfs.enable = true;
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   programs.via.enable = true;
+
+  virtualisation.podman.enable = true;
 }

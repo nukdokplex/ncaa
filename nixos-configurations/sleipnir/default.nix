@@ -46,34 +46,37 @@
   };
 
   home-manager = {
-    sharedModules = [{
-      wayland.windowManager.hyprland.settings.monitor = [
-        "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
-      ];
-    }];
-    users.nukdokplex = let
+    sharedModules = let
       timeouts = {
         off_backlight = 300;
         lock = 360;
         suspend = 3600;
       };
-    in {
-      programs.gaming-essentials.enable = true;
-      services.ollama = {
-        enable = true;
-        acceleration = "rocm";
+    in [{
+      wayland.windowManager.hyprland = {
+        settings = {
+          monitor = [
+            "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
+          ];
+        };
+        hypridle-timeouts = timeouts;
       };
+      wayland.windowManager.sway = {
+        config = {
+          output."LG Electronics LG ULTRAWIDE 0x00000459" = {
+            mode = "2560x1080@60Hz";
+            scale = "1.0";
+          };
+        };
+        swayidle-timeouts = timeouts;
+      };
+    }];
+    users.nukdokplex = {
+      programs.gaming-essentials.enable = true;
       wayland.windowManager.sway = {
         enable = true;
         enableCustomConfiguration = true;
-        swayidle-timeouts = timeouts;
       };
-      wayland.windowManager.hyprland = {
-        enable = false;
-        enableCustomConfiguration = true;
-        hypridle-timeouts = timeouts;
-      };
-      services.blueman-applet.enable = true;
     };
   };
 
