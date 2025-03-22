@@ -15,7 +15,7 @@ in {
       settings = {
         show-trace = true;
         sandbox = true;
-        allowed-users = [ "@wheel" ];
+        trusted-users = [ "@wheel" ];
         experimental-features = [ "nix-command" "flakes" ];
         min-free = "1G";
         max-free = "5G";
