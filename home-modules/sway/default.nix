@@ -58,34 +58,34 @@ in {
         menu = lib.mkDefault "'${lib.getExe config.programs.fuzzel.package}' --show-actions";
         bindkeysToCode = true; # workaround for multilayout setups
         keybindings = {
-          "Ctrl+Alt+Delete" = "exec '${fuzzelPowerMenu}'";
-          "${modifier}+p" = "exec '${lib.getExe pkgs.grim}' -g \"$('${lib.getExe pkgs.slurp}')\" -l 6 -t png - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
-          "${modifier}+Shift+p" = "exec '${lib.getExe pkgs.grim}' -c -l 6 -t png -o \"$('${lib.getExe' pkgs.sway "swaymsg"}' -t get_workspaces | '${lib.getExe pkgs.jq}' -r '.[] | select(.focused==true).output')\" - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
-          "${modifier}+t" = "exec '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
-          "${modifier}+Insert" = "mode passthrough; floating_modifer none";
-          "${modifier}+Shift+q" = "kill";
-          "${modifier}+Return" = "exec ${cfg.config.terminal}";
-          "${modifier}+d" = "exec ${cfg.config.menu}";
+          "--no-repeat Ctrl+Alt+Delete" = "exec '${fuzzelPowerMenu}'";
+          "--no-repeat ${modifier}+p" = "exec '${lib.getExe pkgs.grim}' -g \"$('${lib.getExe pkgs.slurp}')\" -l 6 -t png - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
+          "--no-repeat ${modifier}+Shift+p" = "exec '${lib.getExe pkgs.grim}' -c -l 6 -t png -o \"$('${lib.getExe' pkgs.sway "swaymsg"}' -t get_workspaces | '${lib.getExe pkgs.jq}' -r '.[] | select(.focused==true).output')\" - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
+          "--no-repeat ${modifier}+t" = "exec '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
+          "--no-repeat ${modifier}+Insert" = "mode passthrough; floating_modifer none";
+          "--no-repeat ${modifier}+Shift+q" = "kill";
+          "--no-repeat ${modifier}+Return" = "exec ${cfg.config.terminal}";
+          "--no-repeat ${modifier}+d" = "exec ${cfg.config.menu}";
 
-          "${modifier}+${cfg.config.left}" = "focus left";
-          "${modifier}+${cfg.config.down}" = "focus down";
-          "${modifier}+${cfg.config.up}" = "focus up";
-          "${modifier}+${cfg.config.right}" = "focus right";
+          "--no-repeat ${modifier}+${cfg.config.left}" = "focus left";
+          "--no-repeat ${modifier}+${cfg.config.down}" = "focus down";
+          "--no-repeat ${modifier}+${cfg.config.up}" = "focus up";
+          "--no-repeat ${modifier}+${cfg.config.right}" = "focus right";
 
-          "${modifier}+Left" = "focus left";
-          "${modifier}+Down" = "focus down";
-          "${modifier}+Up" = "focus up";
-          "${modifier}+Right" = "focus right";
+          "--no-repeat ${modifier}+Left" = "focus left";
+          "--no-repeat ${modifier}+Down" = "focus down";
+          "--no-repeat ${modifier}+Up" = "focus up";
+          "--no-repeat ${modifier}+Right" = "focus right";
 
-          "${modifier}+Shift+${cfg.config.left}" = "move left";
-          "${modifier}+Shift+${cfg.config.down}" = "move down";
-          "${modifier}+Shift+${cfg.config.up}" = "move up";
-          "${modifier}+Shift+${cfg.config.right}" = "move right";
+          "--no-repeat ${modifier}+Shift+${cfg.config.left}" = "move left";
+          "--no-repeat ${modifier}+Shift+${cfg.config.down}" = "move down";
+          "--no-repeat ${modifier}+Shift+${cfg.config.up}" = "move up";
+          "--no-repeat ${modifier}+Shift+${cfg.config.right}" = "move right";
 
-          "${modifier}+Shift+Left" = "move left";
-          "${modifier}+Shift+Down" = "move down";
-          "${modifier}+Shift+Up" = "move up";
-          "${modifier}+Shift+Right" = "move right";
+          "--no-repeat ${modifier}+Shift+Left" = "move left";
+          "--no-repeat ${modifier}+Shift+Down" = "move down";
+          "--no-repeat ${modifier}+Shift+Up" = "move up";
+          "--no-repeat ${modifier}+Shift+Right" = "move right";
 
           "${modifier}+Ctrl+${cfg.config.left}" = "resize shrink width 10 px";
           "${modifier}+Ctrl+${cfg.config.down}" = "resize grow height 10 px";
@@ -97,68 +97,74 @@ in {
           "${modifier}+Ctrl+Up" = "resize shrink heigt 10 px";
           "${modifier}+Ctrl+Right" = "resize grow width 10 px";
 
-          "${modifier}+b" = "splith";
-          "${modifier}+v" = "splitv";
-          "${modifier}+f" = "fullscreen toggle";
-          "${modifier}+a" = "focus parent";
+          "--no-repeat ${modifier}+b" = "splith";
+          "--no-repeat ${modifier}+v" = "splitv";
+          "--no-repeat ${modifier}+f" = "fullscreen toggle";
+          "--no-repeat ${modifier}+a" = "focus parent";
 
-          "${modifier}+s" = "layout stacking";
-          "${modifier}+w" = "layout tabbed";
-          "${modifier}+e" = "layout toggle split";
+          "--no-repeat ${modifier}+s" = "layout stacking";
+          "--no-repeat ${modifier}+w" = "layout tabbed";
+          "--no-repeat ${modifier}+e" = "layout toggle split";
 
-          "${modifier}+Shift+space" = "floating toggle";
-          "${modifier}+space" = "focus mode_toggle";
+          "--no-repeat ${modifier}+Shift+space" = "floating toggle";
+          "--no-repeat ${modifier}+space" = "focus mode_toggle";
 
-          "${modifier}+1" = "workspace number 1";
-          "${modifier}+2" = "workspace number 2";
-          "${modifier}+3" = "workspace number 3";
-          "${modifier}+4" = "workspace number 4";
-          "${modifier}+5" = "workspace number 5";
-          "${modifier}+6" = "workspace number 6";
-          "${modifier}+7" = "workspace number 7";
-          "${modifier}+8" = "workspace number 8";
-          "${modifier}+9" = "workspace number 9";
-          "${modifier}+0" = "workspace number 10";
+          "--no-repeat ${modifier}+1" = "workspace number 1";
+          "--no-repeat ${modifier}+2" = "workspace number 2";
+          "--no-repeat ${modifier}+3" = "workspace number 3";
+          "--no-repeat ${modifier}+4" = "workspace number 4";
+          "--no-repeat ${modifier}+5" = "workspace number 5";
+          "--no-repeat ${modifier}+6" = "workspace number 6";
+          "--no-repeat ${modifier}+7" = "workspace number 7";
+          "--no-repeat ${modifier}+8" = "workspace number 8";
+          "--no-repeat ${modifier}+9" = "workspace number 9";
+          "--no-repeat ${modifier}+0" = "workspace number 10";
 
-          "${modifier}+Alt+1" = "workspace number 11";
-          "${modifier}+Alt+2" = "workspace number 12";
-          "${modifier}+Alt+3" = "workspace number 13";
-          "${modifier}+Alt+4" = "workspace number 14";
-          "${modifier}+Alt+5" = "workspace number 15";
-          "${modifier}+Alt+6" = "workspace number 16";
-          "${modifier}+Alt+7" = "workspace number 17";
-          "${modifier}+Alt+8" = "workspace number 18";
-          "${modifier}+Alt+9" = "workspace number 19";
-          "${modifier}+Alt+0" = "workspace number 20";
+          "--no-repeat ${modifier}+Alt+1" = "workspace number 11";
+          "--no-repeat ${modifier}+Alt+2" = "workspace number 12";
+          "--no-repeat ${modifier}+Alt+3" = "workspace number 13";
+          "--no-repeat ${modifier}+Alt+4" = "workspace number 14";
+          "--no-repeat ${modifier}+Alt+5" = "workspace number 15";
+          "--no-repeat ${modifier}+Alt+6" = "workspace number 16";
+          "--no-repeat ${modifier}+Alt+7" = "workspace number 17";
+          "--no-repeat ${modifier}+Alt+8" = "workspace number 18";
+          "--no-repeat ${modifier}+Alt+9" = "workspace number 19";
+          "--no-repeat ${modifier}+Alt+0" = "workspace number 20";
 
-          "${modifier}+Shift+1" = "move container to workspace number 1; workspace number 1";
-          "${modifier}+Shift+2" = "move container to workspace number 2; workspace number 2";
-          "${modifier}+Shift+3" = "move container to workspace number 3; workspace number 3";
-          "${modifier}+Shift+4" = "move container to workspace number 4; workspace number 4";
-          "${modifier}+Shift+5" = "move container to workspace number 5; workspace number 5";
-          "${modifier}+Shift+6" = "move container to workspace number 6; workspace number 6";
-          "${modifier}+Shift+7" = "move container to workspace number 7; workspace number 7";
-          "${modifier}+Shift+8" = "move container to workspace number 8; workspace number 8";
-          "${modifier}+Shift+9" = "move container to workspace number 9; workspace number 9";
-          "${modifier}+Shift+0" = "move container to workspace number 10; workspace number 10";
+          "--no-repeat ${modifier}+Shift+1" = "move container to workspace number 1; workspace number 1";
+          "--no-repeat ${modifier}+Shift+2" = "move container to workspace number 2; workspace number 2";
+          "--no-repeat ${modifier}+Shift+3" = "move container to workspace number 3; workspace number 3";
+          "--no-repeat ${modifier}+Shift+4" = "move container to workspace number 4; workspace number 4";
+          "--no-repeat ${modifier}+Shift+5" = "move container to workspace number 5; workspace number 5";
+          "--no-repeat ${modifier}+Shift+6" = "move container to workspace number 6; workspace number 6";
+          "--no-repeat ${modifier}+Shift+7" = "move container to workspace number 7; workspace number 7";
+          "--no-repeat ${modifier}+Shift+8" = "move container to workspace number 8; workspace number 8";
+          "--no-repeat ${modifier}+Shift+9" = "move container to workspace number 9; workspace number 9";
+          "--no-repeat ${modifier}+Shift+0" = "move container to workspace number 10; workspace number 10";
 
-          "${modifier}+Shift+Alt+1" = "move container to workspace number 11; workspace number 11";
-          "${modifier}+Shift+Alt+2" = "move container to workspace number 12; workspace number 12";
-          "${modifier}+Shift+Alt+3" = "move container to workspace number 13; workspace number 13";
-          "${modifier}+Shift+Alt+4" = "move container to workspace number 14; workspace number 14";
-          "${modifier}+Shift+Alt+5" = "move container to workspace number 15; workspace number 15";
-          "${modifier}+Shift+Alt+6" = "move container to workspace number 16; workspace number 16";
-          "${modifier}+Shift+Alt+7" = "move container to workspace number 17; workspace number 17";
-          "${modifier}+Shift+Alt+8" = "move container to workspace number 18; workspace number 18";
-          "${modifier}+Shift+Alt+9" = "move container to workspace number 19; workspace number 19";
-          "${modifier}+Shift+Alt+0" = "move container to workspace number 20; workspace number 20";
+          "--no-repeat ${modifier}+Shift+Alt+1" = "move container to workspace number 11; workspace number 11";
+          "--no-repeat ${modifier}+Shift+Alt+2" = "move container to workspace number 12; workspace number 12";
+          "--no-repeat ${modifier}+Shift+Alt+3" = "move container to workspace number 13; workspace number 13";
+          "--no-repeat ${modifier}+Shift+Alt+4" = "move container to workspace number 14; workspace number 14";
+          "--no-repeat ${modifier}+Shift+Alt+5" = "move container to workspace number 15; workspace number 15";
+          "--no-repeat ${modifier}+Shift+Alt+6" = "move container to workspace number 16; workspace number 16";
+          "--no-repeat ${modifier}+Shift+Alt+7" = "move container to workspace number 17; workspace number 17";
+          "--no-repeat ${modifier}+Shift+Alt+8" = "move container to workspace number 18; workspace number 18";
+          "--no-repeat ${modifier}+Shift+Alt+9" = "move container to workspace number 19; workspace number 19";
+          "--no-repeat ${modifier}+Shift+Alt+0" = "move container to workspace number 20; workspace number 20";
 
-          "${modifier}+Shift+minus" = "move scratchpad";
-          "${modifier}+minus" = "scratchpad show";
+          "--no-repeat ${modifier}+Shift+minus" = "move scratchpad";
+          "--no-repeat ${modifier}+minus" = "scratchpad show";
 
-          "${modifier}+Shift+c" = "reload";
+          "--no-repeat ${modifier}+Shift+c" = "reload";
 
-          "${modifier}+r" = "mode resize";
+          "--no-repeat ${modifier}+r" = "mode resize";
+
+          "--locked XF86MonBrightnessUp" = "'${lib.getExe pkgs.brightnessctl}' set 5%+"; 
+          "--locked XF86MonBrightnessDown" = "'${lib.getExe pkgs.brightnessctl}' set 5%-";  
+          "--locked XF86AudioRaiseVolume" = "wpctl set-volume @DEFAULT_SINK@ 5%+ -l 1.5";
+          "--locked XF86AudioLowerVolume" = "wpctl set-volume @DEFAULT_SINK@ 5%- -l 1.5";
+          "--no-repeat --locked XF86AudioMute" = "wpctl set-mute @DEFAULT_SINK@ toggle";
         };
       };
       extraConfig = lib.concatStringsSep "\n" (
