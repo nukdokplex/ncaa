@@ -8,6 +8,7 @@
   ];
 
   boot = {
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     initrd = {
       enable = true;
       includeDefaultModules = true;
