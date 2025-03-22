@@ -1,6 +1,24 @@
 { pkgs, lib, config, ... }@args: let
   cfg = config.wayland.windowManager.sway;
   fuzzelPowerMenu = pkgs.writeShellScript "fuzzel-power-menu" (builtins.readFile ./scripts/fuzzel-power-menu.sh);
+  wpctlVolumeCommand = isIncrease: wireplumberPkg: "'${lib.getExe' wireplumberPkg "wpctl"}' set-volume @DEFAULT_SINK@ 5%${if isIncrease then "+" else "-"} -l 1.5";  
+  pactlVolumeCommand = isIncrease: pulseaudioPkg: "'${lib.getExe' pulseaudioPkg "pacmd"}' set-sink-volume @DEFAULT_SINK@ ${if isIncrease then "+" else "-"}5%";
+  wpctlMuteCommand = wireplumberPkg: "'${lib.getExe' wireplumberPkg "wpctl"}' set-mute @DEFAULT_SINK@ toggle";  
+  pactlMuteCommand = pulseaudioPkg: "'${lib.getExe' pulseaudioPkg "pactl"}' set-sink-mute @DEFAULT_SIN@ toggle";
+  volumeCommand = isIncrease: if (builtins.hasAttr "osConfig" args)
+    then (
+      if (builtins.getAttr "osConfig" args).services.pulseaudio.enable
+      then (pactlVolumeCommand isIncrease (builtins.getAttr "osConfig" args).services.pulseaudio.package)
+      else (wpctlVolumeCommand isIncrease (builtins.getAttr "osConfig" args).services.pipewire.wireplumber.package)
+    )
+    else (wpctlVolumeCommand isIncrease pkgs.wireplumber);
+  muteCommand = if (builtins.hasAttr "osConfig" args)
+    then (
+      if (builtins.getAttr "osConfig" args).services.pulseaudio.enable
+      then (pactlMuteCommand (builtins.getAttr "osConfig" args).services.pulseaudio.package)
+      else (wpctlMuteCommand (builtins.getAttr "osConfig" args).services.pipewire.wireplumber.package)
+    )
+    else (wpctlMuteCommand pkgs.wireplumber);
 in {
   options.wayland.windowManager.sway = {
     enableCustomConfiguration = lib.mkEnableOption "sway custom configuration";
@@ -160,11 +178,11 @@ in {
 
           "--no-repeat ${modifier}+r" = "mode resize";
 
-          "--locked XF86MonBrightnessUp" = "'${lib.getExe pkgs.brightnessctl}' set 5%+"; 
-          "--locked XF86MonBrightnessDown" = "'${lib.getExe pkgs.brightnessctl}' set 5%-";  
-          "--locked XF86AudioRaiseVolume" = "wpctl set-volume @DEFAULT_SINK@ 5%+ -l 1.5";
-          "--locked XF86AudioLowerVolume" = "wpctl set-volume @DEFAULT_SINK@ 5%- -l 1.5";
-          "--no-repeat --locked XF86AudioMute" = "wpctl set-mute @DEFAULT_SINK@ toggle";
+          "--locked XF86MonBrightnessUp" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%+"; 
+          "--locked XF86MonBrightnessDown" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%-";  
+          "--locked XF86AudioRaiseVolume" = "exec ${volumeCommand true}";
+          "--locked XF86AudioLowerVolume" = "exec ${volumeCommand false}";
+          "--no-repeat --locked XF86AudioMute" = "exec ${muteCommand}";
         };
       };
       extraConfig = lib.concatStringsSep "\n" (
