@@ -23,6 +23,7 @@
       vim
       w3m 
       wget
+      fzf
       inputs.home-manager.packages.${pkgs.system}.home-manager
       inputs.agenix.packages.${pkgs.system}.agenix
     ];
