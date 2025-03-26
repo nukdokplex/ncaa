@@ -2,15 +2,14 @@
   # you can get all plugin hashes this way:
   # nix env shell nixpkgs#nix-prefetch
   # for i in $(seq 0 6); do nix-prefetch "{ pkgs }: (builtins.elemAt (import ./ranger.nix { inherit pkgs; }).programs.ranger.plugins $i).src"; done
-
-  home.packages = with pkgs; [
-    zoxide # required by ranger-zoxide plugin
-    ueberzug
-    dragon-drop
-  ];
   programs.ranger = {
     enable = true;
     package = pkgs.ranger;
+    extraPackages = with pkgs; [
+      dragon-drop
+      mmtui
+    ];
+
     plugins = [
       {
         name = "devicons2";
@@ -28,15 +27,6 @@
           repo = "ranger-archives";
           rev = "b4e136b24fdca7670e0c6105fb496e5df356ef25";
           hash = "sha256-QJu5G2AYtwcaE355yhiG4wxGFMQvmBWvaPQGLsi5x9Q=";
-        };
-      }
-      {
-        name = "udisk_menu";
-        src = pkgs.fetchFromGitHub {
-          owner = "SL-RU";
-          repo = "ranger_udisk_menu";
-          rev = "d676b7d5406d804ea4ceb894768674a740d95ebb";
-          hash = "sha256-AzuWe6KXXusUfn8UABRq93/tvtiUB1OIlxGiljNuc2g=";
         };
       }
       {
@@ -66,19 +56,10 @@
           hash = "sha256-UeFJ+zrpu7zhJ3omKAWIKjbpiQ58S4VmAKJVsYy9VKU=";
         };
       }
-      {
-        name = "zoxide";
-        src = pkgs.fetchFromGitHub {
-          owner = "jchook";
-          repo = "ranger-zoxide";
-          rev = "281828de060299f73fe0b02fcabf4f2f2bd78ab3";
-          hash = "sha256-JEuyYSVa1NS3aftezEJx/k19lwwzf7XhqBCL0jH6VT4=";
-        };
-      }
     ];
     settings = {
-      default_linemode = "devicons2";
-      preview_images_method = "ueberzug";
+      preview_images = true;
+      preview_images_method = "iterm2";
     };
     mappings = {
       Q = "quitall";
@@ -87,6 +68,35 @@
       ec = "compress";
       "<C-d>" = "shell '${lib.getExe pkgs.dragon-drop}' -a -x %p";
     };
+    extraConfig = ''
+      default_linemode devicons2
+    '';
   };
+  xdg.configFile."ranger/commands.py".text = ''
+    from ranger.api.commands import Command
+
+    class mount(Command):
+      """:mount.
+
+      Show menu to mount and unmount.
+      """
+
+      MMTUI_PATH = "'${lib.getExe pkgs.mmtui}'"
+
+      def execute(self):
+        """Show menu to mount and unmount."""
+        import os
+        import tempfile
+        (f, p) = tempfile.mkstemp()
+        os.close(f)
+        self.fm.execute_console(
+          f'shell bash -c "{self.MMTUI_PATH} 1> {p}"'
+        )
+        with open(p, 'r') as f:
+          d = f.readline().strip()
+          if os.path.exists(d):
+            self.fm.cd(d)
+        os.remove(p)
+  '';
 }
 
