@@ -6,6 +6,7 @@
     ./secrets
     ./power.nix
     ./printing.nix
+    ./network.nix
   ];
 
   common = {

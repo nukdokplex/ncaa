@@ -12,6 +12,7 @@ let
     "secureboot/keys/PK/PK.pem"
     "secureboot/keys/db/db.key"
     "secureboot/keys/db/db.pem"
+    "nm_secrets"
   ];
 in builtins.listToAttrs (
   builtins.map

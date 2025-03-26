@@ -14,7 +14,12 @@
   );
 in {
   age.secrets = {
-
+    nm_secrets = {
+      file = ./nm_secrets;
+      owner = "root";
+      group = "root";
+      mode = "400";
+    };
   } // generateSecretsDir {
     secretsDir = ./secureboot;
     dirPrefix = "secureboot";
