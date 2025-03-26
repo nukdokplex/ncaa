@@ -185,7 +185,9 @@ in {
           "--no-repeat --locked XF86AudioMute" = "exec ${muteCommand}";
         };
       };
-      extraConfig = lib.concatStringsSep "\n" (
+      extraConfig = ''
+        for_window [app_id="dragon-drop"] floating enable, sticky enable
+      '' + "\n" + lib.concatStringsSep "\n" (
         builtins.map
         (elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}") 
         (lib.reverseList (
