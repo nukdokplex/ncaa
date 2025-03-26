@@ -83,16 +83,6 @@
   programs.nm-applet.enable = true;
   services.blueman.enable = true;
 
-  services.tumbler.enable = true;
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-volman
-      thunar-archive-plugin
-      thunar-media-tags-plugin
-    ];
-  };
-
   programs.steam = {
     enable = true;
     enableCustomConfiguration = true;

@@ -1,27 +1,16 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   # you can get all plugin hashes this way:
   # nix env shell nixpkgs#nix-prefetch
   # for i in $(seq 0 6); do nix-prefetch "{ pkgs }: (builtins.elemAt (import ./ranger.nix { inherit pkgs; }).programs.ranger.plugins $i).src"; done
 
   home.packages = with pkgs; [
     zoxide # required by ranger-zoxide plugin
+    ueberzug
+    dragon-drop
   ];
   programs.ranger = {
     enable = true;
-    # that fixes not working images preview
-    package = pkgs.ranger.overrideAttrs (r: {
-      preConfigure = r.preConfigure + ''
-        # Specify path to Überzug
-        substituteInPlace ranger/ext/img_display.py \
-          --replace "Popen(['ueberzug'" \
-                    "Popen(['${pkgs.ueberzug}/bin/ueberzug'"
-    
-        # Use Überzug as the default method
-        substituteInPlace ranger/config/rc.conf \
-          --replace 'set preview_images_method w3m' \
-                    'set preview_images_method ueberzug'
-      '';
-    });
+    package = pkgs.ranger;
     plugins = [
       {
         name = "devicons2";
@@ -89,12 +78,14 @@
     ];
     settings = {
       default_linemode = "devicons2";
+      preview_images_method = "ueberzug";
     };
     mappings = {
       Q = "quitall";
       q = "quit";
-      ex = "extract";
+      ex = "extract_to_dirs";
       ec = "compress";
+      "<C-d>" = "shell '${lib.getExe pkgs.dragon-drop}' -a -x %p";
     };
   };
 }

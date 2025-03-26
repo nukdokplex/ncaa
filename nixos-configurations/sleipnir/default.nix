@@ -91,15 +91,6 @@
   security.pam.services.swaylock = {};
   security.pam.services.hyprlock = {};
   
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-volman
-      thunar-archive-plugin
-      thunar-media-tags-plugin
-    ];
-  };
-  services.tumbler.enable = true;
   programs.optical-disk-essentials.enable = true; 
   programs.k3b-custom.enable = true;
 
@@ -112,9 +103,6 @@
     enable = true;
     enableCustomConfiguration = true;
   };
-
-  services.udisks2.enable = true;
-  services.gvfs.enable = true;
 
   hardware.bluetooth.enable = true;
 
