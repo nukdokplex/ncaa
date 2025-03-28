@@ -56,6 +56,23 @@
           hash = "sha256-UeFJ+zrpu7zhJ3omKAWIKjbpiQ58S4VmAKJVsYy9VKU=";
         };
       }
+      {
+        name = "mtpy";
+        src = pkgs.stdenvNoCC.mkDerivation {
+          pname = "ranger_mtpy";
+          version = "0-unstable-2024-01-20";
+          installPhase = ''
+            mkdir -p $out
+            cp mtpy.py "$out/__init__.py"
+          '';
+          src = pkgs.fetchFromGitHub {
+            owner = "KKV9";
+            repo = "ranger_mtpy";
+            rev = "9e4ab537b4457161acf497d36f408fa119cb953e";
+            hash = "sha256-nmnebPpsO1Lfc1k9jsaB4UG0fTvFJd8xTIfPzCXEo/Y=";
+          };
+        };
+      }
     ];
     settings = {
       preview_images = true;

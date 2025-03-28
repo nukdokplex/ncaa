@@ -24,6 +24,7 @@
       w3m 
       wget
       fzf
+      usbutils
       inputs.home-manager.packages.${pkgs.system}.home-manager
       inputs.agenix.packages.${pkgs.system}.agenix
     ];

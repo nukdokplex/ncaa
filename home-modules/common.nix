@@ -21,7 +21,9 @@ in {
         nrt = "sudo nixos-rebuild test --flake path:$HOME/ncaa#$(hostnamectl --json=short | '${lib.getExe pkgs.jq}' --raw-output .Hostname) --accept-flake-config";
         nrbuild = "sudo nixos-rebuild build --flake path:$HOME/ncaa#$(hostnamectl --json=short | '${lib.getExe pkgs.jq}' --raw-output .Hostname) --accept-flake-config";
       };
-
+      initExtra = lib.mkAfter ''
+        source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+      '';
       oh-my-zsh = {
         enable = true;
         theme = "agnoster";
