@@ -9,6 +9,7 @@ in {
       cliphist.enable = true;
       swaync.enable = true;
       playerctld.enable = true;
+      gpg-agent.pinentryPackage = pkgs.wayprompt;
     };
   };
 }

@@ -16,6 +16,7 @@ in {
       swaync.enable = true;
       playerctld.enable = true;
       blueman-applet.enable = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).services.blueman.enable else false; 
+      gpg-agent.pinentryPackage = pkgs.wayprompt;
     };
   };
 }
