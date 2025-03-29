@@ -14,7 +14,6 @@ in {
       enableSshSupport = true;
       enableZshIntegration = true;
     };
-    services.ssh-agent.enable = true;
     programs.zsh = {
       enable = true;
       shellAliases = {

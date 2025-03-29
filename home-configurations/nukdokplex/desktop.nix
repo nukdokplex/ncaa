@@ -25,7 +25,8 @@
         enableZshIntegration = true;
         extraConfig = ''
           return {
-            window_background_opacity = 0.75
+            window_background_opacity = 0.75,
+            mux_enable_ssh_agent = false
           }
         '';
       };
