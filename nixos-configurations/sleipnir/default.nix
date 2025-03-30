@@ -14,6 +14,7 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.rocmSupport = true; # AMDGPU support for packages
+  hardware.opengl.extraPackages = with pkgs; [ rocmPackages.clr ];
   time.timeZone = "Asia/Yekaterinburg";
   i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
