@@ -9,8 +9,8 @@ in
       package = pkgs.firefox;
       policies = {
         Cookies = {
-          Behavior = "reject-foreign";
-          BehaviorPrivateBrowsing = "reject-foreign";
+          Behavior = "reject-tracker";
+          BehaviorPrivateBrowsing = "reject-tracker";
         };
 
         DisableAppUpdate = true;
@@ -51,6 +51,11 @@ in
             "twitchinventoryclaimer@schulzjona" # Twitch Inventory Claimer
             "uBlock0@raymondhill.net" # uBlock Origin
             "{d7742d87-e61d-4b78-b8a1-b469842139fa}" # Vimium
+            "jid1-KKzOGWgsW3Ao4Q@jetpack" # I don't care about cookies
+            "jid1-MnnxcxisBPnSXQ@jetpack" # Privacy badger
+            "simple-translate@sienori" # Simple Traslate
+            "sponsorBlocker@ajay.app" # SponsorBlock for YouTube
+            "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
           ];
           makeExtensionParams = id: {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
@@ -90,7 +95,6 @@ in
           StartPage = "previous-session";
         };
 
-        NewTabPage = false;
         NoDefaultBookmarks = true;
         OfferToSaveLogins = false;
         OverrideFirstRunPage = "";
@@ -115,16 +119,12 @@ in
           "media.rdd-ffmpeg.enabled" = true;
         };
 
-        SearchEngines.Default = "DuckDuckGo";
-
         UserMessaging = {
           ExtensionRecommendations = false;
           FeatureRecommendations = false;
           MoreFromMozilla = false;
           SkipOnboarding = true;
         };
-
-        UseSystemPrintDialog = true;
       };
     };
   };
