@@ -1,6 +1,7 @@
 { lib, pkgs, config, osConfig, ... }: {
   imports = [
     ./desktop.nix
+    ./firefox.nix
     ./hyprland.nix
     ./nixvim
     ./ranger.nix

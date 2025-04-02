@@ -16,6 +16,7 @@
       shotwell
     ]; 
     programs = {
+      firefox.enable = true; # configuration located in ./firefox.nix
       spicetify = {
         enable = true;
         enableCustomConfiguration = true;
