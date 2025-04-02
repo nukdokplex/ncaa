@@ -93,6 +93,7 @@
   security.pam.services.hyprlock = {};
   
   programs.optical-disk-essentials.enable = true; 
+  programs.usb-essentials.enable = true;
   programs.k3b-custom.enable = true;
 
   programs.steam = {

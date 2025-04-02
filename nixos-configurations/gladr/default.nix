@@ -80,6 +80,7 @@
   security.pam.services.swaylock = {};
   security.pam.services.hyprlock = {};
 
+  programs.usb-essentials.enable = true;
   programs.nm-applet.enable = true;
   services.blueman.enable = true;
 
