@@ -1,5 +1,5 @@
 {
-  description = "Nix flake implementing NukDokPlex's NCaA";
+  description = "A collection of crap, hacks, and copy-paste to make my hosts boot";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
