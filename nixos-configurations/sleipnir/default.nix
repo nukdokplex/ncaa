@@ -1,10 +1,12 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ezModules, ... }: {
   imports = [
     ./boot.nix
     ./filesystems.nix
     ./stylix.nix
     ./secrets
     ./printing.nix
+    ./tssp.nix
+    ezModules.my-common-desktop
   ];
 
   common = {
@@ -14,9 +16,7 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.rocmSupport = true; # AMDGPU support for packages
-  hardware.opengl.extraPackages = with pkgs; [ rocmPackages.clr ];
   time.timeZone = "Asia/Yekaterinburg";
-  i18n.defaultLocale = "ru_RU.UTF-8";
   system.stateVersion = "25.05";
   hardware.enableAllFirmware = true;
 
@@ -24,27 +24,7 @@
     allowedUDPPorts = [ 22000 ];
     allowedTCPPorts = [ 22000 ];
   };
-
-  services.yggdrasil = {
-    enable = true;
-    settings = {
-      MulticastInterfaces = [
-        {
-          Regex = "enp42s0";
-          Beacon = true;
-          Listen = true;
-        }
-      ];
-    };
-  };
-
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
-
-  users.users.nukdokplex = {
-    isNormalUser = true;
-    hashedPassword = "$y$j9T$8dRfprNnDsvSuKjFAwV8x.$yeNqUhW6gmYYuFSOEf4bKbmk6IUwYjN9kQPxRsp/fe4";
-    extraGroups = [ "wheel" "input" "networkmanager" "cdrom" ];
-  };
 
   home-manager = {
     sharedModules = let
@@ -72,81 +52,15 @@
         swayidle-timeouts = timeouts;
       };
     }];
-    users.nukdokplex = {
-      programs.gaming-essentials.enable = true;
-      wayland.windowManager.sway = {
-        enable = true;
-        enableCustomConfiguration = true;
-      };
-    };
   };
 
-  # programs.hyprland.enable = true;
-  programs.sway = {
-    enable = true;
-    package = pkgs.swayfx;
-    wrapperFeatures.gtk = true;
-  };
-  programs.nm-applet.enable = true;
-  services.blueman.enable = true;
-  security.pam.services.swaylock = {};
-  security.pam.services.hyprlock = {};
-  
   programs.optical-disk-essentials.enable = true; 
-  programs.usb-essentials.enable = true;
   programs.k3b-custom.enable = true;
 
-  programs.steam = {
-    enable = true;
-    enableCustomConfiguration = true;
-  };
-
-  programs.lutris = {
-    enable = true;
-    enableCustomConfiguration = true;
-  };
-
+  programs.sway.package = pkgs.swayfx;
   hardware.bluetooth.enable = true;
 
-  programs.via.enable = true;
-
-  services.turing-smart-screen-python = {
-    enable = true; 
-    systemd.enable = true;
-    fonts = with inputs.tssp.packages.${pkgs.system}.resources.fonts; [
-      geforce
-      generale-mono
-      jetbrains-mono
-      racespace
-      roboto
-      roboto-mono
-    ];
-    themes = with inputs.tssp.packages.${pkgs.system}.resources.themes; [
-      LandscapeEarth
-      Landscape6Grid
-    ];
-    settings = {
-      config = {
-        COM_PORT = "AUTO";
-        THEME = "Landscape6Grid";
-        HW_SENSORS = "PYTHON";
-        ETH = "enp42s0";
-        WLO = "enp5s0";
-        CPU_FAN = "AUTO";
-      };
-      display = {
-        REVISION = "A";
-        BRIGHTNESS = 20;
-        DISPLAY_REVERSE = false;
-      };
-    };
-  };
-
-
   programs.virt-manager.enable = true;
-  virtualisation.podman = {
-    enable = true;
-  };
   virtualisation.libvirtd = {
     enable = true;
     qemu = {

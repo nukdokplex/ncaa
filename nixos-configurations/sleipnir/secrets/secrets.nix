@@ -1,8 +1,6 @@
 let
   userKeys = import ../../../home-configurations/nukdokplex/ssh-keys.nix;
-  hostKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImflw7aBhpCAkjmlblGq4kCzKMHdq9GPJDPUj3bW7Au root@sleipnir"
-  ];
+  hostKeys = import ../ssh-keys.nix;
   files = [
     "yggdrasil"
   ];
