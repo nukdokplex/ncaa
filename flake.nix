@@ -28,6 +28,14 @@
         home-manager.follows = "home-manager";
       };
     };
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs = {
+        # TODO: check inputs
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -103,11 +111,23 @@
   };
 
   outputs = inputs@{ flake-parts, systems, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  flake-parts.lib.mkFlake 
+    { inherit inputs; } 
+    ({ lib, ... }: {
       imports = [
+        inputs.ez-configs.flakeModule
+        inputs.agenix-rekey.flakeModule
         ./ez-configs.nix
       ];
 
+      flake.lib = import ./lib { inherit lib; };
+
       systems = import systems;
-    };
+
+      perSystem = { config, pkgs, ... }: {
+        devShells.agenix-rekey = pkgs.mkShell {
+          nativeBuildInputs = [ config.agenix-rekey.package ];
+        };
+      };
+    });
 }

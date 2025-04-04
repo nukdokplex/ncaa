@@ -1,5 +1,4 @@
-{ inputs, ... }: {
-  imports = [ inputs.ez-configs.flakeModule ];
+{ inputs, config, ... }: {
   ezConfigs = {
     globalArgs = { 
       inherit inputs;

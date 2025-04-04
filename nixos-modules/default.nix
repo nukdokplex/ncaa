@@ -2,8 +2,8 @@
   # here declared module names which should not be imported
   # notice that "default" module is excluded already
   excludedModules = [ 
-    "my-common-base"
-    "my-common-desktop"
+    "common-base"
+    "common-desktop"
     "secrets"
   ];
 in {
@@ -11,7 +11,8 @@ in {
   imports = lib.attrValues (lib.filterAttrs (module: _: module != "default") ezModules) ++ [
     inputs.stylix.nixosModules.stylix
     inputs.nur.modules.nixos.default
-    inputs.agenix.nixosModules.age
+    inputs.agenix.nixosModules.default
+    inputs.agenix-rekey.nixosModules.default
     inputs.hyprland.nixosModules.default
     inputs.disko.nixosModules.disko
     inputs.tssp.nixosModules.default

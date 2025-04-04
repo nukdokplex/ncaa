@@ -1,4 +1,4 @@
-{ lib, pkgs, config, osConfig, ... }: {
+{ lib, pkgs, config, ezModules, ... }: {
   imports = [
     ./desktop.nix
     ./firefox.nix
@@ -8,8 +8,8 @@
     ./secrets
     ./sway.nix
     ./xdg-dirs.nix
+    ezModules.common
   ];
-  common.enable = true;
   home = {
     username = "nukdokplex";
     stateVersion = "25.05";

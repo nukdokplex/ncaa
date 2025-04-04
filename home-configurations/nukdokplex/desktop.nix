@@ -1,5 +1,5 @@
-{ pkgs, lib, osConfig, ... }: {
-  config = lib.mkIf osConfig.common.desktop.enable {
+{ pkgs, lib, config, ... }: {
+  config = lib.mkIf config.home.isDesktop {
     # there we add only desktop stuff
     home.packages = with pkgs; [ 
       onlyoffice-desktopeditors
