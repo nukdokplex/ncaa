@@ -18,8 +18,7 @@ in {
     services.swayidle = {
       enable = true;
       events = [
-        { event = "before-sleep"; command = "'${lib.getExe config.programs.swaylock.package}' -f"; }
-        { event = "before-sleep"; command = "'${lib.getExe pkgs.playerctl}' pause"; }
+        { event = "before-sleep"; command = "'${lib.getExe' systemd "loginctl"}' lock-session; '${lib.getExe pkgs.playerctl}' pause"; }
         { event = "lock"; command = "'${lib.getExe config.programs.swaylock.package}' -f"; }
         { event = "unlock"; command = "'${lib.getExe' pkgs.coreutils "kill"}' -USR1 $('${lib.getExe' pkgs.procps "pgrep"}' -f swaylock)"; }
       ];
