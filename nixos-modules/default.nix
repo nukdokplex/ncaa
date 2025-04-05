@@ -4,7 +4,6 @@
   excludedModules = [ 
     "common-base"
     "common-desktop"
-    "secrets"
   ];
 in {
   # import all modules in this module so this ("default") module become super-module that inherits all nixos modules in this flake

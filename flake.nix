@@ -126,7 +126,7 @@
 
       perSystem = { config, pkgs, ... }: {
         devShells.agenix-rekey = pkgs.mkShell {
-          nativeBuildInputs = [ config.agenix-rekey.package ];
+          nativeBuildInputs = [ config.agenix-rekey.package pkgs.rage ];
         };
       };
     });

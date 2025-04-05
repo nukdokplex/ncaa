@@ -1,5 +1,8 @@
-{ lib, config, ... }: {
-  services.yggdrasil = lib.mkIf (lib.hasAttr "yggdrasil" config.age.secrets) (lib.mkDefault {
-    enable = true;
-  });
+{ lib, config, flakeRoot, ... }: {
+  services.yggdrasil = {
+    enable = lib.mkDefault true;
+    configFile = config.age.secrets.yggdrasil.path;
+  };
+
+  age.secrets.yggdrasil.rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/yggdrasil.age;
 }
