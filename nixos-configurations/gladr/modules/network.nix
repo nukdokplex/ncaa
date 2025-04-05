@@ -1,7 +1,7 @@
-{ config, ... }: {
+{ config, flakeRoot, ... }: {
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [
-      config.age.secrets.nm_secrets.path
+      config.age.secrets.networkmanager_env.path
     ];
     profiles = {
       yggdrasils_4 = {
@@ -58,4 +58,6 @@
       };
     };
   };
+
+  age.secrets.networkmanager_env.rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/networkmanager_env.age;
 }
