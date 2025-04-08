@@ -8,7 +8,7 @@
     nixos.hosts = {
       sleipnir.userHomeModules = [ "nukdokplex" ];
       gladr.userHomeModules = [ "nukdokplex" ];
-      test-vm.userHomeModules = [ "nukdokplex" ];
+      gler.userHomeModules = [ "nukdokplex" ];
     };
   };
 }
