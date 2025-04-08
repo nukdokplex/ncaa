@@ -3,6 +3,7 @@
     path = ./modules;
   } ++ [
     ezModules.common-base
+    inputs.simple-nixos-mailserver.nixosModule
     (modulesPath + "/profiles/qemu-guest.nix") # adds virtio and 9p kernel modules
   ];
 
