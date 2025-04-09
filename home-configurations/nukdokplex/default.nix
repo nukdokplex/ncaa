@@ -1,10 +1,9 @@
 { lib, pkgs, config, ezModules, inputs, ... }: {
   imports = [
     ezModules.common
-  ] ++ inputs.self.lib.umport {
-    path = ./modules
-    recursive = false;
-  };
+  ] ++ (inputs.self.lib.umport {
+    path = ./modules;
+  });
   home = {
     username = "nukdokplex";
     stateVersion = "25.05";
