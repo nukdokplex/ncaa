@@ -15,7 +15,7 @@ in {
     programs.webBrowser = lib.getExe config.programs.firefox.package; 
 
     config = {
-      terminal = "wezterm";
+      terminal = lib.getExe config.programs.foot.package;
       input = {
         "type:keyboard" = {
           xkb_layout = "us,ru";
@@ -24,7 +24,6 @@ in {
       };
       keybindings = with cfg.config; with cfg.programs; {
         "${modifier}+u" = "exec '${webBrowser}'";
-        "${modifier}+o" = "exec '${fileManager}'";
       };
       assigns = {
         "2" = [{ class = "vesktop"; }];

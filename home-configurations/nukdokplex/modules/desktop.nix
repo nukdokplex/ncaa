@@ -21,15 +21,14 @@
         enable = true;
         enableCustomConfiguration = true;
       };
-      wezterm = {
+      foot = {
         enable = true;
-        enableZshIntegration = true;
-        extraConfig = ''
-          return {
-            window_background_opacity = 0.75,
-            mux_enable_ssh_agent = false
-          }
-        '';
+        settings = {
+          mouse = {
+            hide-when-typing = "yes";
+          };
+          colors.alpha = "0.6";
+        };
       };
     };
     services = {

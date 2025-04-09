@@ -1,15 +1,10 @@
-{ lib, pkgs, config, ezModules, ... }: {
+{ lib, pkgs, config, ezModules, inputs, ... }: {
   imports = [
-    ./desktop.nix
-    ./firefox.nix
-    ./hyprland.nix
-    ./nixvim
-    ./ranger.nix
-    ./secrets
-    ./sway.nix
-    ./xdg-dirs.nix
     ezModules.common
-  ];
+  ] ++ inputs.self.lib.umport {
+    path = ./modules
+    recursive = false;
+  };
   home = {
     username = "nukdokplex";
     stateVersion = "25.05";
