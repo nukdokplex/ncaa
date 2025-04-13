@@ -1,5 +1,5 @@
 { config, lib, ... }: let
-  cfg = config.wayland.windowManager.sway;
+  cfg = config.wayland.windowManager.hyprland;
 in {
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     programs.fuzzel = {

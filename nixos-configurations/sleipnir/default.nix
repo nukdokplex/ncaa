@@ -1,6 +1,7 @@
 { pkgs, ezModules, inputs, ... }: {
   imports = inputs.self.lib.umport {
     path = ./modules;
+    exclude = [ ./modules/sway.nix ];
   } ++ [
     ezModules.common-desktop
   ];
@@ -19,40 +20,14 @@
   };
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
-
-  home-manager = {
-    sharedModules = let
-      timeouts = {
-        off_backlight = 300;
-        lock = 360;
-        suspend = 3600;
-      };
-    in [{
-      wayland.windowManager.hyprland = {
-        settings = {
-          monitor = [
-            "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
-          ];
-        };
-        hypridle-timeouts = timeouts;
-      };
-      wayland.windowManager.sway = {
-        config = {
-          output."LG Electronics LG ULTRAWIDE 0x00000459" = {
-            mode = "2560x1080@60Hz";
-            scale = "1.0";
-          };
-        };
-        swayidle-timeouts = timeouts;
-      };
-    }];
-  };
-
   programs.optical-disk-essentials.enable = true; 
   programs.k3b-custom.enable = true;
 
-  programs.sway.package = pkgs.swayfx;
   hardware.bluetooth.enable = true;
+
+  home-manager.sharedModules = [{
+    programs.gaming-essentials.enable = true;
+  }];
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {

@@ -16,23 +16,15 @@
       shotwell
     ]; 
     programs = {
-      firefox.enable = true; # configuration located in ./firefox.nix
+      firefox.enable = true;
       spicetify = {
         enable = true;
         enableCustomConfiguration = true;
       };
-      foot = {
-        enable = true;
-        settings = {
-          mouse = {
-            hide-when-typing = "yes";
-          };
-        };
-      };
+      foot.enable = true;
     };
     services = {
       syncthing.enable = true;
-      arrpc.enable = true;
     };
   };
 }

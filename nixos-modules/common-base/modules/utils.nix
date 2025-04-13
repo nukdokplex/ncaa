@@ -24,5 +24,7 @@
     fzf
     usbutils
     rage
+    nushell
+    bash
   ];
 }

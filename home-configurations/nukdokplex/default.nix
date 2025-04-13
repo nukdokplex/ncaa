@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ezModules, inputs, ... }: {
+{  pkgs, config, ezModules, inputs, ... }: {
   imports = [
     ezModules.common
   ] ++ (inputs.self.lib.umport {
@@ -14,7 +14,17 @@
   };
 
   programs.git = {
+    enable = true;
+    signing.format = "openpgp";
     userName = "nukdokplex";
     userEmail = "nukdokplex@nukdokplex.ru";
+  };
+
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    enableZshIntegration = true;
   };
 }

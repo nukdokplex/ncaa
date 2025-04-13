@@ -2,7 +2,7 @@
   cfg = config.wayland.windowManager.hyprland;
 in {
   wayland.windowManager.hyprland = {
-    programs.terminal = lib.getExe config.programs.wezterm.package;
+    programs.terminal = lib.getExe config.programs.foot.package;
     settings = {
       input = {
         kb_layout = "us,ru";
