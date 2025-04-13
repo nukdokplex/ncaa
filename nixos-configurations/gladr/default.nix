@@ -1,7 +1,7 @@
 { pkgs, ezModules, inputs, ... }: {
   imports = inputs.self.lib.umport {
     path = ./modules;
-    exclude = ./modules/sway.nix;
+    exclude = [ ./modules/sway.nix ];
   } ++ [
     ezModules.common-desktop
   ];
