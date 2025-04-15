@@ -10,7 +10,7 @@
       vlc
       tor-browser
       chromium
-      thunderbird
+      claws-mail
       font-manager
       gimp
       shotwell
