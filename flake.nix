@@ -100,6 +100,16 @@
       url = "github:nukdokplex/tssp-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # yazi plugins
+    bunny-yazi = {
+      url = "github:stelcodes/bunny.yazi";
+      flake = false;
+    };
+    custom-shell-yazi = {
+      url = "github:AnirudhG07/custom-shell.yazi";
+      flake = false;
+    };
   };
 
   # notice that this nixConfig is being imported by nixosModules.common.base

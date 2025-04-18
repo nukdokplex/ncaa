@@ -167,6 +167,22 @@
         "type": "gitlab"
       }
     },
+    "bunny-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742530608,
+        "narHash": "sha256-d1FiwYPKdvN7amOWO5PJLxA3dDkPvaUNpNjwF32Ukns=",
+        "owner": "stelcodes",
+        "repo": "bunny.yazi",
+        "rev": "a64f32a30101c1a7fe27507e7880653779f54d0a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "stelcodes",
+        "repo": "bunny.yazi",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1741148495,
@@ -179,6 +195,22 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
+        "type": "github"
+      }
+    },
+    "custom-shell-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739185747,
+        "narHash": "sha256-deLbUM4J/pDrLdKeEp62GJ+CFdwsSwOUiX85KuCRStc=",
+        "owner": "AnirudhG07",
+        "repo": "custom-shell.yazi",
+        "rev": "6b4550a1b18afbb7ef328ebf54d81de24101288e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AnirudhG07",
+        "repo": "custom-shell.yazi",
         "type": "github"
       }
     },
@@ -914,6 +946,8 @@
       "inputs": {
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
+        "bunny-yazi": "bunny-yazi",
+        "custom-shell-yazi": "custom-shell-yazi",
         "disko": "disko",
         "ez-configs": "ez-configs",
         "flake-parts": "flake-parts",
