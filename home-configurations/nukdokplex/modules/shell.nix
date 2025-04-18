@@ -1,4 +1,10 @@
 {
+  programs.oh-my-posh = {
+    enable = true;
+    enableNushellIntegration = true;
+    useTheme = "kushal";
+  };
+  
   programs.carapace = {
     enable = true;
     enableNushellIntegration = true;
@@ -6,7 +12,7 @@
 
   programs.nushell = {
     enable = true;
-    shellAliases = {
+shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake path:/home/nukdokplex/ncaa#(hostname) --accept-flake-config";
       nrb = "sudo nixos-rebuild boot --flake path:/home/nukdokplex/ncaa#(hostname) --accept-flake-config";
       nrt = "sudo nixos-rebuild test --flake path:/home/nukdokplex/ncaa#(hostname) --accept-flake-config";
