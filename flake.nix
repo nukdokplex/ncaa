@@ -130,10 +130,12 @@
   flake-parts.lib.mkFlake 
     { inherit inputs; } 
     ({ lib, ... }: {
+      _module.args.flakeRoot = ./.;
       imports = [
         inputs.ez-configs.flakeModule
         inputs.agenix-rekey.flakeModule
         ./ez-configs.nix
+        ./packages
       ];
 
       flake.lib = import ./lib { inherit lib; };
