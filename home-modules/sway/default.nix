@@ -1,24 +1,6 @@
-{ pkgs, lib, config, ... }@args: let
+{ pkgs, lib, config, inputs, ... }@args: let
   cfg = config.wayland.windowManager.sway;
-  fuzzelPowerMenu = pkgs.writeShellScript "fuzzel-power-menu" (builtins.readFile ./scripts/fuzzel-power-menu.sh);
-  wpctlVolumeCommand = isIncrease: wireplumberPkg: "'${lib.getExe' wireplumberPkg "wpctl"}' set-volume @DEFAULT_SINK@ 5%${if isIncrease then "+" else "-"} -l 1.5";  
-  pactlVolumeCommand = isIncrease: pulseaudioPkg: "'${lib.getExe' pulseaudioPkg "pacmd"}' set-sink-volume @DEFAULT_SINK@ ${if isIncrease then "+" else "-"}5%";
-  wpctlMuteCommand = wireplumberPkg: "'${lib.getExe' wireplumberPkg "wpctl"}' set-mute @DEFAULT_SINK@ toggle";  
-  pactlMuteCommand = pulseaudioPkg: "'${lib.getExe' pulseaudioPkg "pactl"}' set-sink-mute @DEFAULT_SIN@ toggle";
-  volumeCommand = isIncrease: if (builtins.hasAttr "osConfig" args)
-    then (
-      if (builtins.getAttr "osConfig" args).services.pulseaudio.enable
-      then (pactlVolumeCommand isIncrease (builtins.getAttr "osConfig" args).services.pulseaudio.package)
-      else (wpctlVolumeCommand isIncrease (builtins.getAttr "osConfig" args).services.pipewire.wireplumber.package)
-    )
-    else (wpctlVolumeCommand isIncrease pkgs.wireplumber);
-  muteCommand = if (builtins.hasAttr "osConfig" args)
-    then (
-      if (builtins.getAttr "osConfig" args).services.pulseaudio.enable
-      then (pactlMuteCommand (builtins.getAttr "osConfig" args).services.pulseaudio.package)
-      else (wpctlMuteCommand (builtins.getAttr "osConfig" args).services.pipewire.wireplumber.package)
-    )
-    else (wpctlMuteCommand pkgs.wireplumber);
+  wm-utils = "'${lib.getExe inputs.self.packages.${pkgs.system}.wm-utils}'";
 in {
   options.wayland.windowManager.sway = {
     enableCustomConfiguration = lib.mkEnableOption "sway custom configuration";
@@ -76,9 +58,9 @@ in {
         menu = lib.mkDefault "'${lib.getExe config.programs.fuzzel.package}' --show-actions";
         bindkeysToCode = true; # workaround for multilayout setups
         keybindings = {
-          "--no-repeat Ctrl+Alt+Delete" = "exec '${fuzzelPowerMenu}'";
-          "--no-repeat ${modifier}+p" = "exec '${lib.getExe pkgs.grim}' -g \"$('${lib.getExe pkgs.slurp}')\" -l 6 -t png - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
-          "--no-repeat ${modifier}+Shift+p" = "exec '${lib.getExe pkgs.grim}' -c -l 6 -t png -o \"$('${lib.getExe' pkgs.sway "swaymsg"}' -t get_workspaces | '${lib.getExe pkgs.jq}' -r '.[] | select(.focused==true).output')\" - | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
+          "--no-repeat Ctrl+Alt+Delete" = "exec ${wm-utils} fuzzel_power_menu";
+          "--no-repeat ${modifier}+p" = "exec ${wm-utils} screenshot_region";
+          "--no-repeat ${modifier}+Shift+p" = "exec ${wm-utils} screenshot_output";
           "--no-repeat ${modifier}+t" = "exec '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
           "--no-repeat ${modifier}+Insert" = "mode passthrough; floating_modifer none";
           "--no-repeat ${modifier}+Shift+q" = "kill";
@@ -180,9 +162,9 @@ in {
 
           "--locked XF86MonBrightnessUp" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%+"; 
           "--locked XF86MonBrightnessDown" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%-";  
-          "--locked XF86AudioRaiseVolume" = "exec ${volumeCommand true}";
-          "--locked XF86AudioLowerVolume" = "exec ${volumeCommand false}";
-          "--no-repeat --locked XF86AudioMute" = "exec ${muteCommand}";
+          "--locked XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+";
+          "--locked XF86AudioLowerVolume" = "exec wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%-";
+          "--no-repeat --locked XF86AudioMute" = "exec ${wm-utils} toggle_sound_mute @DEFAULT_SINK@";
         };
       };
       extraConfig = ''

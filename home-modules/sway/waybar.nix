@@ -28,7 +28,6 @@ in
         ];
         battery = {
           format = "bat\n{capacity:03d}";
-          on-update = "'${pkgs.writeShellScript "check-battery" (builtins.readFile ./scripts/check-battery.sh)}'";
           states = { critical = 20; };
           tooltip-format = ''
             Capacity: {capacity}%
@@ -119,7 +118,7 @@ in
         wireplumber = {
           format = "vol\n{volume:03d}";
           max-volume = 150;
-          on-click = "'${lib.getExe pkgs.pavucontrol}'";
+          on-click = "'${lib.getExe pkgs.pwvucontrol}'";
           tooltip = true;
           tooltip-format = "{volume}% {node_name}";
         };
