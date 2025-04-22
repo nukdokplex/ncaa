@@ -12,5 +12,5 @@
       sounds = "${flakeRoot}/static/sounds";
   }).overrideAttrs ( old: { doCheck = false; });
 in {
-  wm-utils = pkgs.writeShellScriptBin "wm-utils" (builtins.readFile script);
+  wm-utils = pkgs.writeShellScriptBin "wm-utils" (builtins.readFile script + "\n\${@}") ;
 }

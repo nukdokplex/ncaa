@@ -1,4 +1,6 @@
+# thx to voronind for this functions
 function sound_output_cycle() {
+  # TODO: REWRITE, it doesn't work
   local IFS=$'\n'
   local current=$(pactl get-default-sink)
   local all=($(pactl list short sinks | cut -f2))
@@ -14,6 +16,7 @@ function sound_output_cycle() {
 }
 
 function sound_input_cycle() {
+  # TODO: REWRITE, it doesn't work
   notify_sound single-click
   local IFS=$'\n'
   local current=$(pactl get-default-source)
@@ -28,25 +31,38 @@ function sound_input_cycle() {
   pactl set-default-source ${all[${i_target}]}
 }
 
-function sound_output_toggle() {
-  local state=$(pactl get-sink-mute @DEFAULT_SINK@ | cut -d\  -f2)
-  if [ "${state}" = "yes" ]; then
-    pactl set-sink-mute @DEFAULT_SINK@ 0
-	 notify_sound single-click
-  else
-    notify_sound double-click
-    pactl set-sink-mute @DEFAULT_SINK@ 1
-  fi
+function wp_get_id() {
+  wpctl inspect $1 | head --lines 1 | awk -F ', ' '{print $1}' | awk '{print $2}'
 }
 
-function sound_input_toggle() {
-  local state=$(pactl get-source-mute @DEFAULT_SOURCE@ | cut -d\  -f2)
-  if [ "${state}" = "yes" ]; then
+function pw_get_mute_state() {
+  result=$(pw-dump | '@jq@/bin/jq' -r ".[] | select(.id==$1) | .info.params.Props | map(select(has(\"mute\")))[0] | .mute")
+  if [ "$result" = "true" ]; then
+    exit 0
+  elif [ "$result" = "false" ]; then
+    exit 1
+  fi
+  exit 2
+}
+
+function toggle_sound_mute() {
+  # supposed to use @DEFAULT_SINK@ or @DEFAULT_INPUT@ in $1
+  id=$(wp_get_id $1)
+  pw_get_mute_state $id
+
+  if [ $? -eq 0 ]; then
+    # it's muted now
+    wpctl set-mute $id 0
     notify_sound single-click
-    pactl set-source-mute @DEFAULT_SOURCE@ 0
-  else
+    exit 0
+  elif [ $? -eq 1 ]; then
+    # it's not muted now
     notify_sound double-click
-    pactl set-source-mute @DEFAULT_SOURCE@ 1
+    wpctl set-mute $id 1
+    exit 0
   fi
-}
 
+  # main algo didn't worked, fallback to simple toggle
+  wpctl set-mute $1 toggle
+  exit 1
+}
