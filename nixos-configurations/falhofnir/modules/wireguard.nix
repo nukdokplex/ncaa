@@ -17,14 +17,14 @@ in {
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
       postSetup = ''
-        '${lib.getExe' pkgs.iptables "iptables"}' -t nat -A POSTROUTING -i ${awg0InterfaceName} -o ${uplink} -j MASQUERADE
-        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -A POSTROUTING -i ${awg0InterfaceName} -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "iptables"}'  -t nat -A POSTROUTING -s 10.100.1.0/24 -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -A POSTROUTING -s fe80:10:100:1::/64 -o ${uplink} -j MASQUERADE
       '';
 
       # This undoes the above command
       postShutdown = ''
-        '${lib.getExe' pkgs.iptables "iptables"}' -t nat -D POSTROUTING -i ${awg0InterfaceName} -o ${uplink} -j MASQUERADE
-        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -D POSTROUTING -i ${awg0InterfaceName} -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "iptables"}'  -t nat -D POSTROUTING -s 10.100.1.0/24 -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -D POSTROUTING -s fe80:10:100:1::/64 -o ${uplink} -j MASQUERADE
       '';
 
       privateKeyFile = config.age.secrets.awg0-private.path;
