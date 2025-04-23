@@ -1,6 +1,7 @@
 { config, flakeRoot, pkgs, lib, ... }: let
   awg0Port = 18181;
   awg0InterfaceName = "awg0";
+  uplink = "enx" + (lib.toLower (builtins.replaceStrings [ ":" ] [ "" ] config.systemd.network.networks.uplink.matchConfig.MACAddress));
 in {
   # ASC parameters support for kernel-driven wireguard interfaces
   boot.kernelModules = [ "amneziawg" ];
@@ -18,12 +19,12 @@ in {
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${uplink} -j MASQUERADE
       '';
 
       # This undoes the above command
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${uplink} -j MASQUERADE
       '';
 
       privateKeyFile = config.age.secrets.awg0-private.path;

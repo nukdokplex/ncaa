@@ -1,20 +1,17 @@
-{ config, flakeRoot, lib, ... }: {
+{ config, flakeRoot, lib, ... }: let
+  uplink = "enx" + (lib.toLower (builtins.replaceStrings [ ":" ] [ "" ] config.systemd.network.networks.uplink.matchConfig.MACAddress));
+in {
   networking.useDHCP = false;
   systemd.network = lib.fix (self: {
     enable = true;
-    links.uplink = {
-      matchConfig.MACAddress = "00:16:3c:63:bd:c6";
-      linkConfig.Alias = "uplink";
-      linkConfig.AlternativeName = "uplink";
-    };
     networks.uplink = {
-      matchConfig = self.links.uplink.matchConfig;
+      matchConfig.MACAddress = "00:16:3c:63:bd:c6";
     };
   });
 
   networking.nat = {
     enable = true;
-    externalInterface = config.systemd.network.links.uplink.linkConfig.AlternativeName;
+    externalInterface = uplink;
   };
 
   # systemd drop-in to keep address secret
