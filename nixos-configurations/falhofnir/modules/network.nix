@@ -1,6 +1,4 @@
-{ config, flakeRoot, lib, ... }: let
-  uplink = "enx" + (lib.toLower (builtins.replaceStrings [ ":" ] [ "" ] config.systemd.network.networks.uplink.matchConfig.MACAddress));
-in {
+{ config, flakeRoot, lib, ... }: {
   networking.useDHCP = false;
   systemd.network = lib.fix (self: {
     enable = true;
@@ -11,7 +9,8 @@ in {
 
   networking.nat = {
     enable = true;
-    externalInterface = uplink;
+    enableIPv6 = true; # Viatcheslav negoduet 
+    externalInterface = "ens3";
   };
 
   # systemd drop-in to keep address secret
