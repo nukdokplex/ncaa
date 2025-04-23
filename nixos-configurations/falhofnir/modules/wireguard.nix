@@ -3,7 +3,7 @@
   awg0InterfaceName = "awg0";
 in {
   # ASC parameters support for kernel-driven wireguard interfaces
-  boot.kernelModules = with config.boot.kernelPackages; [ amneziawg ];
+  boot.kernelModules = [ "amneziawg" ];
 
   networking.firewall.allowedUDPPorts = [ awg0Port ];
   networking.nat.internalInterfaces = [ awg0InterfaceName ];
