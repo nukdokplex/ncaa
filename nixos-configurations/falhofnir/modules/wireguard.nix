@@ -3,9 +3,6 @@
   awg0InterfaceName = "awg0";
   uplink = "enx" + (lib.toLower (builtins.replaceStrings [ ":" ] [ "" ] config.systemd.network.networks.uplink.matchConfig.MACAddress));
 in {
-  # ASC parameters support for kernel-driven wireguard interfaces
-  boot.kernelModules = [ "amneziawg" ];
-
   networking.firewall.allowedUDPPorts = [ awg0Port ];
   networking.nat.internalInterfaces = [ awg0InterfaceName ];
 
@@ -13,18 +10,21 @@ in {
     enable = true;
 
     interfaces.${awg0InterfaceName} = {
-      ips = [ "10.100.1.1/24" ];
+      type = "amneziawg";
+      ips = [ "10.100.1.1/24" "fe80:10:100:1::1/64" ];
       listenPort = awg0Port;
       
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "iptables"}' -t nat -A POSTROUTING -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -A POSTROUTING -o ${uplink} -j MASQUERADE
       '';
 
       # This undoes the above command
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "iptables"}' -t nat -D POSTROUTING -o ${uplink} -j MASQUERADE
+        '${lib.getExe' pkgs.iptables "ip6tables"}' -t nat -D POSTROUTING -o ${uplink} -j MASQUERADE
       '';
 
       privateKeyFile = config.age.secrets.awg0-private.path;
@@ -33,7 +33,7 @@ in {
         {
           # yggdrasils
           publicKey = "we1V/v3wsZzZknibdQVPyxgMoCgVPvt/5bD2UEoHgVc=";
-          allowedIPs = [ "10.100.1.2/32" ];
+          allowedIPs = [ "10.100.1.2/32" "fe80:10:100:1::2/128" ];
         }
       ];
       
