@@ -1,18 +1,17 @@
 { config, flakeRoot, pkgs, lib, ... }: let
   awg0Port = 18181;
+  awg0InterfaceName = "awg0";
 in {
   # ASC parameters support for kernel-driven wireguard interfaces
   boot.kernelModules = with config.boot.kernelPackages; [ amneziawg ];
 
-  networking.nat.enable = true;
-  networking.nat.externalInterface = "uplink";
-  networking.nat.internalInterfaces = [ "awg0" ];
   networking.firewall.allowedUDPPorts = [ awg0Port ];
+  networking.nat.internalInterfaces = [ awg0InterfaceName ];
 
   networking.wireguard = {
     enable = true;
 
-    interfaces.awg0 = {
+    interfaces.${awg0InterfaceName} = {
       ips = [ "10.100.1.1/24" ];
       listenPort = awg0Port;
       
@@ -40,6 +39,7 @@ in {
       # we do not believe in lies
       extraOptions = {
         # https://github.com/amnezia-vpn/amneziawg-linux-kernel-module/tree/master?tab=readme-ov-file#configuration
+        # this options doesn't work without amneziawg kernel module
         Jc = 4;
         Jmin = 50;
         Jmax = 1000;

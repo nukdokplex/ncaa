@@ -4,6 +4,11 @@
   systemd.network.networks."10-uplink" = {
     linkConfig.AlternativeName = "uplink";
   };
+  networking.nat = {
+    enable = true;
+    externalInterface = config.systemd.network.networks."10-uplink".linkConfig.AlternativeName;
+  };
+
 
   # systemd drop-in to keep address secret
   age.secrets.uplink-address = {
