@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelParams = [ "preempt=full" ];
     initrd = {
       enable = true;
       includeDefaultModules = true;
