@@ -15,7 +15,7 @@ in {
             description = "workspace number in which window should be spawned";
           };
           command = lib.mkOption {
-            type = lib.types.string;
+            type = lib.types.str;
             description = "command to execute";
           };
         };

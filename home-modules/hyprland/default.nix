@@ -11,7 +11,7 @@ in
       mkExeOption = name: default: lib.mkOption {
         inherit default;
         description = "Default ${name} program to use";
-        type = lib.types.string;
+        type = lib.types.str;
       };
     in {
       fileManager = mkExeOption "file manager" "thunar";
