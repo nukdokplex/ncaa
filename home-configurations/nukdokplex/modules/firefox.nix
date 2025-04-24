@@ -126,4 +126,5 @@
       };
     };
   };
+  stylix.target.firefox.profileNames = [ "default" ];
 }
