@@ -4,6 +4,7 @@
   excludedModules = [ 
     "common-base"
     "common-desktop"
+    "email-passwords"
     "default"
   ];
 in {

@@ -4,6 +4,7 @@
     exclude = [ ./modules/sway.nix ];
   } ++ [
     ezModules.common-desktop
+    ezModules.email-passwords
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
