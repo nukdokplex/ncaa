@@ -1,5 +1,6 @@
-{ lib, ... }: {
+{ lib, config, ... }: {
   programs.foot.settings = {
+    enable = lib.mkDefault config.home.isDesktop;
     colors.alpha = lib.mkForce "0.7";
     mouse = {
       hide-when-typing = "yes";

@@ -10,18 +10,15 @@
       vlc
       tor-browser
       chromium
-      claws-mail
       font-manager
       gimp
       shotwell
     ]; 
     programs = {
-      firefox.enable = true;
       spicetify = {
         enable = true;
         enableCustomConfiguration = true;
       };
-      foot.enable = true;
     };
     services = {
       syncthing.enable = true;

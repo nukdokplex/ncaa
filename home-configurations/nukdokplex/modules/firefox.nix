@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
   programs.firefox = {
+    # uncomment line below to enable
+    # enable = lib.mkDefault config.home.isDesktop;
     package = pkgs.firefox;
     languagePacks = [
       "ru"
