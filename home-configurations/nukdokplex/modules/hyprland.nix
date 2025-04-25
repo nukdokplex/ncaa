@@ -2,6 +2,7 @@
   cfg = config.wayland.windowManager.hyprland;
 in {
   wayland.windowManager.hyprland = {
+    programs.webBrowser = "librewolf";
     programs.terminal = lib.getExe config.programs.foot.package;
     settings = {
       input = {
