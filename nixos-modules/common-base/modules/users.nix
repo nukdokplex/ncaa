@@ -1,5 +1,5 @@
 { flakeRoot, config, pkgs, ... }: {
-  users.defaultUserShell = pkgs.nushell;
+  users.defaultUserShell = pkgs.zsh;
   users.mutableUsers = true;
   users.users.nukdokplex = {
     name = "nukdokplex";
