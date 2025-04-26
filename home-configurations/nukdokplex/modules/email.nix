@@ -1,7 +1,7 @@
 args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
   generatePasswordCommand = name:
     if ((builtins.hasAttr "osConfig" args) && (builtins.hasAttr "${name}-password" args.osConfig.age.secrets))
-    then "'${lib.getExe pkgs.coreutils "cat"}' ${lib.escapeShellArg args.osConfig.age.secrets."${name}-password".path}"
+    then "'${lib.getExe' pkgs.coreutils "cat"}' ${lib.escapeShellArg args.osConfig.age.secrets."${name}-password".path}"
     else null;
   gpg = {
     signByDefault = true;
@@ -29,6 +29,9 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
         tls.enable = true;
       };
   
+      himalaya = {
+        enable = true;
+      };
       thunderbird = {
         enable = true;
         settings = id: {
@@ -46,6 +49,9 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       inherit gpg realName;
       flavor = "gmail.com";
   
+      himalaya = {
+        enable = true;
+      };
       thunderbird = {
         enable = true;
         settings = id: {
@@ -63,6 +69,9 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       inherit gpg realName;
       flavor = "gmail.com";
   
+      himalaya = {
+        enable = true;
+      };
       thunderbird = {
         enable = true;
         settings = id: {
@@ -74,18 +83,21 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
     }))
   
     (lib.fix (self: {
-      address = with lib; concatStringsSep "@" (reverseList [ "outlook.com" "nukdokplex" ]);
+      address = with lib; concatStringsSep "@" (reverseList [ "outlook.com" "NukDokPlex" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "outlook-com-has-nukdokplex";
   
       inherit gpg realName;
       flavor = "outlook.office365.com";
   
+      himalaya = {
+        enable = true;
+      };
       thunderbird = {
         enable = true;
         settings = id: {
-          "mail.server.server_${id}.authMethod" = 3;
-          "mail.smtpserver.smtp_${id}.authMethod" = 3;
+          "mail.server.server_${id}.authMethod" = 4;
+          "mail.smtpserver.smtp_${id}.authMethod" = 4;
         };
       };
     }))
@@ -97,7 +109,11 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
   
       inherit gpg realName;
       flavor = "yandex.com";
-  
+
+
+      himalaya = {
+        enable = true;
+      };
       thunderbird = {
         enable = true;
         settings = id: {
@@ -117,6 +133,10 @@ in {
         (a: a.address)
         accounts;
     };
+  };
+
+  programs.himalaya = {
+    enable = true;
   };
 
   accounts.email.accounts = lib.listToAttrs (
