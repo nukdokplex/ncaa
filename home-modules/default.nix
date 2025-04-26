@@ -8,6 +8,6 @@ in {
     inputs.agenix.homeManagerModules.age
     inputs.nixvim.homeManagerModules.nixvim
     inputs.hyprland.homeManagerModules.default
-    inputs.nix-index-database.hmModules.nix-index;
+    inputs.nix-index-database.hmModules.nix-index
   ];
 }
