@@ -1,4 +1,5 @@
 { flakeRoot, config, pkgs, ... }: {
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   users.mutableUsers = true;
   users.users.nukdokplex = {
