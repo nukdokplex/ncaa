@@ -17,7 +17,7 @@ in {
   networking.nat = {
     enable = true;
     enableIPv6 = true; # Viatcheslav negoduet 
-    externalInterface = "ens3";
+    externalInterface = "uplink";
   };
 
   # systemd drop-in to keep address secret

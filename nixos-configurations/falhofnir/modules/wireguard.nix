@@ -1,7 +1,6 @@
 { config, flakeRoot, pkgs, lib, ... }: let
   awg0Port = 18181;
   awg0InterfaceName = "awg0";
-  # uplink = "enx" + (lib.toLower (builtins.replaceStrings [ ":" ] [ "" ] config.systemd.network.networks.uplink.matchConfig.MACAddress));
 in {
   networking.firewall.allowedUDPPorts = [ awg0Port ];
   networking.nat.internalInterfaces = [ awg0InterfaceName ];
