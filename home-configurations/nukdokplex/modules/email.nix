@@ -30,7 +30,7 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       };
   
       himalaya = {
-        enable = true;
+        enable = !builtins.isNull self.passwordCommand;
       };
       thunderbird = {
         enable = true;
@@ -50,7 +50,7 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       flavor = "gmail.com";
   
       himalaya = {
-        enable = true;
+        enable = !builtins.isNull self.passwordCommand;
       };
       thunderbird = {
         enable = true;
@@ -70,7 +70,7 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       flavor = "gmail.com";
   
       himalaya = {
-        enable = true;
+        enable = !builtins.isNull self.passwordCommand;
       };
       thunderbird = {
         enable = true;
@@ -91,7 +91,7 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       flavor = "outlook.office365.com";
   
       himalaya = {
-        enable = true;
+        enable = !builtins.isNull self.passwordCommand;
       };
       thunderbird = {
         enable = true;
@@ -112,7 +112,7 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
 
 
       himalaya = {
-        enable = true;
+        enable = !builtins.isNull self.passwordCommand;
       };
       thunderbird = {
         enable = true;

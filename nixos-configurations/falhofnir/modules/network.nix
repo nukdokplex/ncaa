@@ -1,9 +1,16 @@
-{ config, flakeRoot, lib, ... }: {
+{ config, flakeRoot, lib, ... }: let
+  uplinkMACAddress = "00:16:3c:63:bd:c6";
+in {
   networking.useDHCP = false;
+
+  boot.initrd.services.udev.rules = ''
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
+  '';
+
   systemd.network = lib.fix (self: {
     enable = true;
     networks.uplink = {
-      matchConfig.MACAddress = "00:16:3c:63:bd:c6";
+      matchConfig.MACAddress = uplinkMACAddress;
     };
   });
 
