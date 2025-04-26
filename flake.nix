@@ -47,6 +47,10 @@
         pre-commit-hooks-nix.follows = "";
       };
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs = {
