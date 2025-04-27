@@ -45,25 +45,33 @@ in {
               server = tls.server_name;
               server_port = 443;
             };
-            private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key; };
+            private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path; };
+            short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id; } ];
           };
         });
       }];
     };
   };
 
-  age.secrets.sing-box-hrafn-uuid = {
-    rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-hrafn-uuid.age;
-    generator.script = "uuid";
-  };
+  age.secrets = {
+    sing-box-vless-in-hrafn-uuid = {
+      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-hrafn-uuid.age;
+      generator.script = "uuid";
+    };
 
-  age.secrets.sing-box-babushbant-uuid = {
-    rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-babushbant-uuid.age;
-    generator.script = "uuid";
-  };
+    sing-box-vless-in-babushbant-uuid = {
+      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-babushbant-uuid.age;
+      generator.script = "uuid";
+    };
 
-  age.secrets.sing-box-vless-in-reality-private-key = {
-    rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-private-key.age;
-    generator.script = "reality-keypair";
+    sing-box-vless-in-reality-private-key = {
+      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-private-key.age;
+      generator.script = "reality-keypair";
+    };
+
+    sing-box-vless-in-reality-short-id = {
+      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-short-id.age;
+      generator.script = "reality-short-id";
+    };
   };
 }
