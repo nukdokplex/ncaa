@@ -31,7 +31,7 @@ in {
           }
           {
             name = "babushbant";
-            uuid = { _secret = config.age.secrets.sing-box-babushbant.path; };
+            uuid = { _secret = config.age.secrets.sing-box-babushbant-uuid.path; };
             flow = "xtls-rprx-vision";
           }
         ];
