@@ -131,26 +131,26 @@
   };
 
   outputs = inputs@{ flake-parts, systems, ... }:
-  flake-parts.lib.mkFlake 
-    { inherit inputs; } 
-    ({ lib, ... }: {
-      _module.args.flakeRoot = ./.;
-      imports = [
-        inputs.ez-configs.flakeModule
-        inputs.agenix-rekey.flakeModule
-        ./ez-configs.nix
-        ./packages
-      ];
+    flake-parts.lib.mkFlake
+      { inherit inputs; }
+      ({ lib, ... }: {
+        _module.args.flakeRoot = ./.;
+        imports = [
+          inputs.ez-configs.flakeModule
+          inputs.agenix-rekey.flakeModule
+          ./ez-configs.nix
+          ./packages
+        ];
 
-      flake.lib = import ./lib { inherit lib; };
+        flake.lib = import ./lib { inherit lib; };
 
-      systems = import systems;
+        systems = import systems;
 
-      perSystem = { config, pkgs, ... }: {
-        formatter = pkgs.nixpkgs-fmt;
-        devShells.agenix-rekey = pkgs.mkShell {
-          nativeBuildInputs = [ config.agenix-rekey.package pkgs.rage ];
+        perSystem = { config, pkgs, ... }: {
+          formatter = pkgs.nixpkgs-fmt;
+          devShells.agenix-rekey = pkgs.mkShell {
+            nativeBuildInputs = [ config.agenix-rekey.package pkgs.rage ];
+          };
         };
-      };
-    });
+      });
 }

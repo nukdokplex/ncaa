@@ -6,7 +6,7 @@
       usb-modeswitch
       usb-modeswitch-data
     ];
-    
+
     hardware.usb-modeswitch.enable = lib.mkDefault true;
   };
 }

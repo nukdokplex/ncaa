@@ -1,7 +1,8 @@
-{ pkgs, lib, config, ... }: 
+{ pkgs, lib, config, ... }:
 let
   cfg = config.programs.steam;
-in {
+in
+{
   options.programs.steam.enableCustomConfiguration = lib.mkEnableOption "custom Steam configuration";
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {

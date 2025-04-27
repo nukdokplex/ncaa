@@ -1,15 +1,17 @@
-{ flakeRoot, ... }: let
+{ flakeRoot, ... }:
+let
   nukdokplex-perms = {
     mode = "400";
     owner = "nukdokplex";
     group = "users";
   };
-  generateEmailPasswordSecret = name: attrs: { 
+  generateEmailPasswordSecret = name: attrs: {
     ${name} = {
       rekeyFile = flakeRoot + /secrets/generated/common/${name}.age;
     } // attrs;
   };
-in {
+in
+{
   age.secrets = { }
     // (generateEmailPasswordSecret "nukdokplex-ru-has-nukdokplex-password" nukdokplex-perms)
     // (generateEmailPasswordSecret "gmail-com-has-nukdokplex-password" nukdokplex-perms)

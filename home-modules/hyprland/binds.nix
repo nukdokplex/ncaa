@@ -1,7 +1,9 @@
-{ pkgs, lib, config, inputs, ... }@args: let
+{ pkgs, lib, config, inputs, ... }@args:
+let
   cfg = config.wayland.windowManager.hyprland;
   wm-utils = "'${lib.getExe inputs.self.packages.${pkgs.system}.wm-utils}'";
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     wayland.windowManager.hyprland.settings = with inputs.self.lib.hyprland-utils; {
       # bind flags:

@@ -20,5 +20,5 @@
     hashedPasswordFile = config.age.secrets.nukdokplex-password.path;
   };
 
-  age.secrets.nukdokplex-password.rekeyFile = flakeRoot + /secrets/generated/common/nukdokplex-password.age; 
+  age.secrets.nukdokplex-password.rekeyFile = flakeRoot + /secrets/generated/common/nukdokplex-password.age;
 }

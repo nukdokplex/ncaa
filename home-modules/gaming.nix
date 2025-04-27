@@ -1,6 +1,8 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }:
+let
   cfg = config.programs.gaming-essentials;
-in {
+in
+{
   options.programs.gaming-essentials.enable = lib.mkEnableOption "set of essential gaming programs";
 
   config = lib.mkIf cfg.enable {

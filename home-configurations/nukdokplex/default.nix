@@ -1,4 +1,4 @@
-{  pkgs, config, ezModules, inputs, ... }: {
+{ pkgs, config, ezModules, inputs, ... }: {
   imports = [
     ezModules.common
   ] ++ (inputs.self.lib.umport {

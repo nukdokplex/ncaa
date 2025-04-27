@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.programs.k3b-custom;
-in {
+in
+{
   options.programs.k3b-custom = {
     enable = lib.mkOption {
       type = lib.types.bool;

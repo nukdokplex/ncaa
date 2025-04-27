@@ -1,6 +1,8 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   cfg = config.wayland.windowManager.sway;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     programs.swaylock = {
       enable = true;

@@ -1,18 +1,22 @@
-{ pkgs, lib, config, ... }@args: let
+{ pkgs, lib, config, ... }@args:
+let
   cfg = config.wayland.windowManager.hyprland;
   systemd = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).systemd.package else pkgs.systemd;
-in {
-  options.wayland.windowManager.hyprland.hypridle-timeouts = let
-    mkTimeoutOption = name: lib.mkOption {
-      default = -1;
-      description = "Time in seconds to trigger ${name} timeout";
+in
+{
+  options.wayland.windowManager.hyprland.hypridle-timeouts =
+    let
+      mkTimeoutOption = name: lib.mkOption {
+        default = -1;
+        description = "Time in seconds to trigger ${name} timeout";
+      };
+    in
+    {
+      dim_backlight = mkTimeoutOption "dim backlight";
+      off_backlight = mkTimeoutOption "off backlight";
+      lock = mkTimeoutOption "session lock";
+      suspend = mkTimeoutOption "suspend";
     };
-  in {
-    dim_backlight = mkTimeoutOption "dim backlight";
-    off_backlight = mkTimeoutOption "off backlight";
-    lock = mkTimeoutOption "session lock";
-    suspend = mkTimeoutOption "suspend";
-  };
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     services.hypridle = {

@@ -24,8 +24,8 @@
     enable = true;
   };
 
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
   programs.nm-applet.enable = true;
   services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
-  
+
 }

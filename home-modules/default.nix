@@ -1,8 +1,10 @@
-{ lib, ezModules, inputs, ... }: let
+{ lib, ezModules, inputs, ... }:
+let
   excludedModules = [
     "common"
   ];
-in {
+in
+{
   imports = lib.attrValues (lib.filterAttrs (name: _: !(builtins.elem name (excludedModules ++ [ "default" ]))) ezModules) ++ [
     inputs.spicetify.homeManagerModules.spicetify
     inputs.agenix.homeManagerModules.age

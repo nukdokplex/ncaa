@@ -1,6 +1,6 @@
 { inputs, flakeRoot, config, ... }: {
   ezConfigs = {
-    globalArgs = { 
+    globalArgs = {
       inherit inputs flakeRoot;
     };
     root = ./.;

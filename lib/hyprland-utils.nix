@@ -1,4 +1,5 @@
-{ lib, ... }: let
+{ lib, ... }:
+let
   keySynonims = {
     directions = rec {
       Left = {
@@ -25,7 +26,8 @@
     numbersNormal = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
     numbersNumpad = [ "KP_End" "KP_Down" "KP_Next" "KP_Left" "KP_Begin" "KP_Right" "KP_Home" "KP_Up" "KP_Prior" "KP_Insert" ];
   };
-in {
+in
+{
   generateDirectionBinds = resizeModifier: fn: (lib.attrsets.mapAttrsToList (key: props: (fn { inherit key; inherit (props) direction; resizeX = builtins.toString (props.resizeVector.x * resizeModifier); resizeY = builtins.toString (props.resizeVector.y * resizeModifier); })) keySynonims.directions);
   generateWorkspaceBinds = fn: ((lib.lists.imap1 (i: key: (fn i key)) keySynonims.numbersNormal) ++ (lib.lists.imap1 (i: key: (fn i key)) keySynonims.numbersNumpad));
 }

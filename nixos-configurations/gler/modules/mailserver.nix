@@ -1,4 +1,5 @@
-{ config, lib, flakeRoot, ... }: let
+{ config, lib, flakeRoot, ... }:
+let
   nukdokplexUsernames = [
     "nukdokplex"
     "temporal"
@@ -12,19 +13,20 @@
     "hostmaster"
     "grandmaster"
   ];
-  nukdokplexAliases = builtins.filter 
+  nukdokplexAliases = builtins.filter
     (alias: !((alias.username == "nukdokplex") && (alias.domain == "nukdokplex.ru")))
     (
       lib.flatten (
         builtins.map
-          (domain: builtins.map 
+          (domain: builtins.map
             (username: { inherit domain username; })
             nukdokplexUsernames
           )
           config.mailserver.domains
       )
     );
-in {
+in
+{
   mailserver = {
     enable = true;
     fqdn = "${config.networking.hostName}.nukdokplex.ru";
@@ -36,7 +38,7 @@ in {
     # email crawler resistance, maybe
     loginAccounts.${builtins.concatStringsSep "@" [ "nukdokplex" "nukdokplex.ru" ]} = {
       hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
-      aliases = builtins.map 
+      aliases = builtins.map
         (alias: builtins.concatStringsSep "@" [ alias.username alias.domain ])
         nukdokplexAliases;
     };
@@ -50,6 +52,6 @@ in {
     generator.script = "mail-hashed-password";
   };
 
-  age.generators.mail-hashed-password = { pkgs, lib, file, ... }: 
-    "'${lib.getExe pkgs.pwgen}' -s 32 1 | '${lib.getExe' pkgs.coreutils "tee"}' ${lib.escapeShellArg (lib.removeSuffix ".age" file)} | '${lib.getExe pkgs.mkpasswd}' -sm bcrypt"; 
+  age.generators.mail-hashed-password = { pkgs, lib, file, ... }:
+    "'${lib.getExe pkgs.pwgen}' -s 32 1 | '${lib.getExe' pkgs.coreutils "tee"}' ${lib.escapeShellArg (lib.removeSuffix ".age" file)} | '${lib.getExe pkgs.mkpasswd}' -sm bcrypt";
 }

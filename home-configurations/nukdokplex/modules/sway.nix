@@ -1,6 +1,8 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   cfg = config.wayland.windowManager.sway;
-in {
+in
+{
   wayland.windowManager.sway = {
     workspaceBoundStartup = with cfg.programs; [
       { workspaceNumber = 1; command = "'${webBrowser}'"; }
@@ -12,7 +14,7 @@ in {
       { workspaceNumber = 10; command = "spotify"; }
     ];
 
-    programs.webBrowser = lib.getExe config.programs.firefox.package; 
+    programs.webBrowser = lib.getExe config.programs.firefox.package;
 
     config = {
       terminal = lib.getExe config.programs.foot.package;

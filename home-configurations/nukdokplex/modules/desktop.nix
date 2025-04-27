@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: {
   config = lib.mkIf config.home.isDesktop {
     # there we add only desktop stuff
-    home.packages = with pkgs; [ 
+    home.packages = with pkgs; [
       onlyoffice-desktopeditors
       vesktop
       keepassxc
@@ -13,7 +13,7 @@
       font-manager
       gimp
       shotwell
-    ]; 
+    ];
     services = {
       syncthing.enable = true;
     };

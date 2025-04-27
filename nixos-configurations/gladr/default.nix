@@ -1,8 +1,9 @@
 { pkgs, ezModules, inputs, ... }: {
-  imports = inputs.self.lib.umport {
-    path = ./modules;
-    exclude = [ ./modules/sway.nix ];
-  } ++ [
+  imports = inputs.self.lib.umport
+    {
+      path = ./modules;
+      exclude = [ ./modules/sway.nix ];
+    } ++ [
     ezModules.common-desktop
     ezModules.email-passwords
   ];

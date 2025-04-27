@@ -1,11 +1,13 @@
-{ lib, config, ... }: let 
+{ lib, config, ... }:
+let
   userDirs = [ "desktop" "documents" "download" "music" "pictures" "publicShare" "templates" "videos" ];
-in {
+in
+{
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
   } // builtins.listToAttrs (
-    builtins.map 
+    builtins.map
       (name: lib.nameValuePair name "${config.home.homeDirectory}/${name}")
       userDirs
   );

@@ -1,6 +1,8 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }:
+let
   cfg = config.programs.lutris;
-in {
+in
+{
   options.programs.lutris = {
     enable = lib.mkEnableOption "Lutris, an open-source gaming platform";
     enableCustomConfiguration = lib.mkEnableOption "custom Lutris configuration";
@@ -10,7 +12,7 @@ in {
     environment.systemPackages = [
       (pkgs.lutris.override {
         steamSupport = false;
-        extraLibraries = pkgs: with pkgs; [];
+        extraLibraries = pkgs: with pkgs; [ ];
         extraPkgs = pkgs: with pkgs; [
           wineWowPackages.stableFull
           libgudev

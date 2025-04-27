@@ -36,7 +36,7 @@
     wrapperFeatures.gtk = true;
   };
 
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
   programs.nm-applet.enable = true;
   services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
 }

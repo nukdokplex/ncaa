@@ -1,6 +1,8 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   cfg = config.wayland.windowManager.hyprland;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     programs.hyprlock = {
       enable = true;

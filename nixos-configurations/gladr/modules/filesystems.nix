@@ -24,7 +24,7 @@
             content = {
               name = "system";
               type = "luks";
-              extraOpenArgs = [];
+              extraOpenArgs = [ ];
               settings = {
                 allowDiscards = true;
               };

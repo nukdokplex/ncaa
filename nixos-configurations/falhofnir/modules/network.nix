@@ -1,6 +1,8 @@
-{ config, flakeRoot, lib, ... }: let
+{ config, flakeRoot, lib, ... }:
+let
   uplinkMACAddress = "00:16:3c:63:bd:c6";
-in {
+in
+{
   networking.useDHCP = false;
 
   boot.initrd.services.udev.rules = ''

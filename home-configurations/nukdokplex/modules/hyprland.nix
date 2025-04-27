@@ -1,6 +1,8 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   cfg = config.wayland.windowManager.hyprland;
-in {
+in
+{
   wayland.windowManager.hyprland = {
     programs.webBrowser = "firefox";
     programs.terminal = lib.getExe config.programs.foot.package;
@@ -19,7 +21,7 @@ in {
         "[workspace 1 silent] '${cfg.programs.webBrowser}'"
         "[workspace 2 silent] ayugram-desktop"
         "[workspace 2 silent] vesktop"
-        "[workspace 4 silent] '${cfg.programs.fileManager}'" 
+        "[workspace 4 silent] '${cfg.programs.fileManager}'"
         "[workspace 5 silent] thunderbird"
         "[workspace 7 silent] keepassxc"
         "[workspace 10 silent] spotify"

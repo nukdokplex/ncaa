@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   flakePath = "path:${lib.escapeShellArg "${config.home.homeDirectory}/ncaa"}";
   hostName = "$('${lib.getExe' pkgs.nettools "hostname"}')";
-in {
+in
+{
   programs.oh-my-posh = {
     enable = true;
     enableZshIntegration = true;
@@ -11,7 +13,7 @@ in {
   programs.nix-index = {
     enable = true;
   };
-  
+
   programs.zsh = {
     enable = true;
 

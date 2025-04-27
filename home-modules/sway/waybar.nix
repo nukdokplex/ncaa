@@ -12,7 +12,7 @@ in
         layer = "top";
         position = "right";
         margin = "10 10 10 0";
-        modules-left = [ 
+        modules-left = [
           "sway/workspaces"
           "group/indicators"
         ] ++ (lib.optional cfg.usesBattery "battery") ++ [

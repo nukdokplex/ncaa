@@ -1,10 +1,12 @@
-{ inputs, flakeRoot, lib, ... }: let
+{ inputs, flakeRoot, lib, ... }:
+let
   packages = inputs.self.lib.umport {
     path = ./.;
     exclude = [ ./default.nix ];
     recursive = false;
   };
-in {
+in
+{
   perSystem = { pkgs, ... }: {
     packages = lib.mergeAttrsList (
       builtins.map

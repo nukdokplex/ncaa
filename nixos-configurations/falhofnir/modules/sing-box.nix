@@ -1,12 +1,14 @@
-{ lib, flakeRoot, pkgs, config, ... }: let
+{ lib, flakeRoot, pkgs, config, ... }:
+let
   vlessPort = 3000;
-in {
+in
+{
   networking.firewall.interfaces.uplink.allowedTCPPorts = [ vlessPort ];
 
   services.sing-box = {
     enable = true;
     settings = {
-      log = { 
+      log = {
         level = "debug";
       };
       dns = {
@@ -49,7 +51,7 @@ in {
               server_port = 443;
             };
             private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path; };
-            short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
+            short_id = [{ _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; }];
           };
         });
       }];

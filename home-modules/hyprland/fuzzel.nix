@@ -1,6 +1,8 @@
-{ config, lib, ... }: let
+{ config, lib, ... }:
+let
   cfg = config.wayland.windowManager.hyprland;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     programs.fuzzel = {
       enable = true;

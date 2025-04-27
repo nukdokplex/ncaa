@@ -1,4 +1,5 @@
-args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
+args@{ pkgs, lib, config, flakeRoot, inputs, ... }:
+let
   generatePasswordCommand = name:
     if ((builtins.hasAttr "osConfig" args) && (builtins.hasAttr "${name}-password" args.osConfig.age.secrets))
     then "'${lib.getExe' pkgs.coreutils "cat"}' ${lib.escapeShellArg args.osConfig.age.secrets."${name}-password".path}"
@@ -14,21 +15,21 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       address = with lib; concatStringsSep "@" (reverseList [ "nukdokplex.ru" "nukdokplex" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "nukdokplex-ru-has-nukdokplex";
-  
+
       inherit gpg realName;
-  
+
       imap = {
         host = inputs.self.nixosConfigurations.gler.config.mailserver.fqdn; # wow! so cool reuse!
         port = 993;
         tls.enable = true;
       };
-  
+
       smtp = {
         inherit (self.imap) host;
         port = 465;
         tls.enable = true;
       };
-  
+
       himalaya = {
         enable = !builtins.isNull self.passwordCommand;
       };
@@ -40,15 +41,15 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
         };
       };
     }))
-  
+
     (lib.fix (self: {
       address = with lib; concatStringsSep "@" (reverseList [ "gmail.com" "nukdokplex" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "gmail-com-has-nukdokplex";
-  
+
       inherit gpg realName;
       flavor = "gmail.com";
-  
+
       himalaya = {
         enable = !builtins.isNull self.passwordCommand;
       };
@@ -60,15 +61,15 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
         };
       };
     }))
-  
+
     (lib.fix (self: {
       address = with lib; concatStringsSep "@" (reverseList [ "gmail.com" "vik.titoff2014" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "gmail-com-has-vik-titoff2014";
-  
+
       inherit gpg realName;
       flavor = "gmail.com";
-  
+
       himalaya = {
         enable = !builtins.isNull self.passwordCommand;
       };
@@ -78,18 +79,18 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
           "mail.server.server_${id}.authMethod" = 3;
           "mail.smtpserver.smtp_${id}.authMethod" = 3;
         };
-  
+
       };
     }))
-  
+
     (lib.fix (self: {
       address = with lib; concatStringsSep "@" (reverseList [ "outlook.com" "NukDokPlex" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "outlook-com-has-nukdokplex";
-  
+
       inherit gpg realName;
       flavor = "outlook.office365.com";
-  
+
       himalaya = {
         enable = !builtins.isNull self.passwordCommand;
       };
@@ -101,12 +102,12 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
         };
       };
     }))
-  
+
     (lib.fix (self: {
       address = with lib; concatStringsSep "@" (reverseList [ "yandex.ru" "vik.titoff2014" ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "yandex-ru-has-vik-titoff2014";
-  
+
       inherit gpg realName;
       flavor = "yandex.com";
 
@@ -123,11 +124,12 @@ args@{ pkgs, lib, config, flakeRoot, inputs, ... }: let
       };
     }))
   ];
-in {
+in
+{
   programs.thunderbird = {
     enable = lib.mkDefault config.home.isDesktop;
     package = pkgs.thunderbird;
-    profiles.default = { 
+    profiles.default = {
       isDefault = true;
       accountsOrder = builtins.map
         (a: a.address)

@@ -1,7 +1,9 @@
-{ pkgs, lib, config, inputs, ... }@args: let
+{ pkgs, lib, config, inputs, ... }@args:
+let
   cfg = config.wayland.windowManager.sway;
   wm-utils = "'${lib.getExe inputs.self.packages.${pkgs.system}.wm-utils}'";
-in {
+in
+{
   options.wayland.windowManager.sway = {
     enableCustomConfiguration = lib.mkEnableOption "sway custom configuration";
     usesBattery = lib.mkEnableOption "Hyprland configuration to enable battery management";
@@ -21,22 +23,25 @@ in {
         };
       });
     };
-    programs = let 
-      mkExeOption = name: default: lib.mkOption {
-        inherit default;
-        description = "Default ${name} program to use";
-        type = lib.types.string;
+    programs =
+      let
+        mkExeOption = name: default: lib.mkOption {
+          inherit default;
+          description = "Default ${name} program to use";
+          type = lib.types.string;
+        };
+      in
+      {
+        fileManager = mkExeOption "file manager" "thunar";
+        webBrowser = mkExeOption "web browser" "firefox";
       };
-    in {
-      fileManager = mkExeOption "file manager" "thunar";
-      webBrowser = mkExeOption "web browser" "firefox";
-    };
   };
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     wayland.windowManager.sway = {
       checkConfig = false;
-      package = if (builtins.hasAttr "osConfig" args)
+      package =
+        if (builtins.hasAttr "osConfig" args)
         then args.osConfig.programs.sway.package
         else pkgs.sway;
       wrapperFeatures.gtk.enable = true;
@@ -160,8 +165,8 @@ in {
 
           "--no-repeat ${modifier}+r" = "mode resize";
 
-          "--locked XF86MonBrightnessUp" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%+"; 
-          "--locked XF86MonBrightnessDown" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%-";  
+          "--locked XF86MonBrightnessUp" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%+";
+          "--locked XF86MonBrightnessDown" = "exec '${lib.getExe pkgs.brightnessctl}' set 5%-";
           "--locked XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+";
           "--locked XF86AudioLowerVolume" = "exec wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%-";
           "--no-repeat --locked XF86AudioMute" = "exec ${wm-utils} toggle_sound_mute @DEFAULT_SINK@";
@@ -171,10 +176,10 @@ in {
         for_window [app_id="dragon-drop"] floating enable, sticky enable
       '' + "\n" + lib.concatStringsSep "\n" (
         builtins.map
-        (elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}") 
-        (lib.reverseList (
-          lib.sortOn (x: x.workspaceNumber) cfg.workspaceBoundStartup
-        ))
+          (elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}")
+          (lib.reverseList (
+            lib.sortOn (x: x.workspaceNumber) cfg.workspaceBoundStartup
+          ))
       ) + "\n" + lib.optionalString (cfg.package.pname == "swayfx") ''
         blur ${if cfg.beEnergyEfficient then "disable" else "enable"}
         blur_xray disable

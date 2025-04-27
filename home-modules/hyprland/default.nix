@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, ... }: 
+{ pkgs, lib, config, inputs, ... }:
 let
   cfg = config.wayland.windowManager.hyprland;
 in
@@ -7,17 +7,19 @@ in
     enableCustomConfiguration = lib.mkEnableOption "custom Hyprland configuration";
     usesBattery = lib.mkEnableOption "Hyprland configuration to enable battery management";
     beEnergyEfficient = lib.mkEnableOption "make Hyprland be energy efficient";
-    programs = let 
-      mkExeOption = name: default: lib.mkOption {
-        inherit default;
-        description = "Default ${name} program to use";
-        type = lib.types.str;
+    programs =
+      let
+        mkExeOption = name: default: lib.mkOption {
+          inherit default;
+          description = "Default ${name} program to use";
+          type = lib.types.str;
+        };
+      in
+      {
+        fileManager = mkExeOption "file manager" "thunar";
+        terminal = mkExeOption "terminal" "kitty";
+        webBrowser = mkExeOption "web browser" "firefox";
       };
-    in {
-      fileManager = mkExeOption "file manager" "thunar";
-      terminal = mkExeOption "terminal" "kitty";
-      webBrowser = mkExeOption "web browser" "firefox";
-    };
   };
 
 

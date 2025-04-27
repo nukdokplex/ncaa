@@ -1,9 +1,7 @@
 { config, flakeRoot, lib, ... }: {
   networking.useDHCP = false;
   systemd.network.enable = true;
-  systemd.network.networks."10-uplink" = {
-
-  };
+  systemd.network.networks."10-uplink" = { };
 
   # systemd drop-in to keep address secret
   age.secrets.uplink-address = {

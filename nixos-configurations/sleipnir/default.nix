@@ -1,8 +1,9 @@
 { pkgs, ezModules, inputs, ... }: {
-  imports = inputs.self.lib.umport {
-    path = ./modules;
-    exclude = [ ./modules/sway.nix ];
-  } ++ [
+  imports = inputs.self.lib.umport
+    {
+      path = ./modules;
+      exclude = [ ./modules/sway.nix ];
+    } ++ [
     ezModules.common-desktop
     ezModules.email-passwords
   ];
@@ -21,7 +22,7 @@
   };
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
-  programs.optical-disk-essentials.enable = true; 
+  programs.optical-disk-essentials.enable = true;
   programs.k3b-custom.enable = true;
 
   hardware.bluetooth.enable = true;

@@ -1,7 +1,9 @@
-{ config, flakeRoot, pkgs, lib, ... }: let
+{ config, flakeRoot, pkgs, lib, ... }:
+let
   awg0Port = 18181;
   awg0InterfaceName = "awg0";
-in {
+in
+{
   networking.firewall.allowedUDPPorts = [ awg0Port ];
   networking.nat.internalInterfaces = [ awg0InterfaceName ];
 
@@ -12,7 +14,7 @@ in {
       type = "amneziawg";
       ips = [ "10.100.1.1/24" "feee:10:100:1::1/64" ];
       listenPort = awg0Port;
-      
+
       privateKeyFile = config.age.secrets.awg0-private.path;
 
       peers = [
@@ -27,7 +29,7 @@ in {
           allowedIPs = [ "10.100.1.5/32" "feee:10:100:1::5/128" ];
         }
       ];
-      
+
       # we do not believe in lies
       extraOptions = {
         # https://github.com/amnezia-vpn/amneziawg-linux-kernel-module/tree/master?tab=readme-ov-file#configuration

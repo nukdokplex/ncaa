@@ -48,17 +48,19 @@
         name = "Noto Color Emoji";
       };
     };
-    cursor = let
-      themeVariant = "Dracula";
-      colorVariant = "Green";
-      package = pkgs.afterglow-cursors-recolored.override {
-        themeVariants = [ themeVariant ];
-        draculaColorVariants = [ colorVariant ];
+    cursor =
+      let
+        themeVariant = "Dracula";
+        colorVariant = "Green";
+        package = pkgs.afterglow-cursors-recolored.override {
+          themeVariants = [ themeVariant ];
+          draculaColorVariants = [ colorVariant ];
+        };
+      in
+      {
+        inherit package;
+        name = "Afterglow-Recolored-${themeVariant}-${colorVariant}";
+        size = 32;
       };
-    in {
-      inherit package;
-      name = "Afterglow-Recolored-${themeVariant}-${colorVariant}";
-      size = 32;
-    };
   };
 }

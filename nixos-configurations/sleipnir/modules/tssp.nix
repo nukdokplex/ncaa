@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }: {
   services.turing-smart-screen-python = {
-    enable = true; 
+    enable = true;
     systemd.enable = true;
     fonts = with inputs.tssp.packages.${pkgs.system}.resources.fonts; [
       geforce
