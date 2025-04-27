@@ -45,7 +45,7 @@ in {
               server = tls.server_name;
               server_port = 443;
             };
-            private_key = { _secret = config.age.secrets.sing-box-vless-in-private-key; };
+            private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key; };
           };
         });
       }];
