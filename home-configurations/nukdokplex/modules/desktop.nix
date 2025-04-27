@@ -14,12 +14,6 @@
       gimp
       shotwell
     ]; 
-    programs = {
-      spicetify = {
-        enable = true;
-        enableCustomConfiguration = true;
-      };
-    };
     services = {
       syncthing.enable = true;
     };
