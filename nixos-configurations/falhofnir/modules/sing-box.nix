@@ -1,17 +1,19 @@
 { lib, flakeRoot, pkgs, config, ... }: let
-  vlessPort = 8443;
+  vlessPort = 3000;
 in {
   networking.firewall.interfaces.uplink.allowedTCPPorts = [ vlessPort ];
 
   services.sing-box = {
     enable = true;
     settings = {
-      log = { };
+      log = { 
+        level = "debug";
+      };
       dns = {
         servers = [
           {
-            type = "local";
             tag = "local";
+            address = "local";
           }
         ];
         final = "local";
@@ -21,17 +23,18 @@ in {
         type = "vless";
         tag = "vless-in";
 
+        listen = "::"; # v4 will also work
         listen_port = vlessPort;
 
         users = [
           {
             name = "hrafn";
-            uuid = { _secret = config.age.secrets.sing-box-hrafn-uuid.path; };
+            uuid = { _secret = config.age.secrets.sing-box-vless-in-hrafn-uuid.path; };
             flow = "xtls-rprx-vision";
           }
           {
             name = "babushbant";
-            uuid = { _secret = config.age.secrets.sing-box-babushbant-uuid.path; };
+            uuid = { _secret = config.age.secrets.sing-box-vless-in-babushbant-uuid.path; };
             flow = "xtls-rprx-vision";
           }
         ];
@@ -46,7 +49,7 @@ in {
               server_port = 443;
             };
             private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path; };
-            short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id; } ];
+            short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
           };
         });
       }];
