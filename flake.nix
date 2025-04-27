@@ -147,6 +147,7 @@
       systems = import systems;
 
       perSystem = { config, pkgs, ... }: {
+        formatter = pkgs.nixpkgs-fmt;
         devShells.agenix-rekey = pkgs.mkShell {
           nativeBuildInputs = [ config.agenix-rekey.package pkgs.rage ];
         };
