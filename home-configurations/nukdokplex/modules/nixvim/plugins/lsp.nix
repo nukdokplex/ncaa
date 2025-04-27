@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.nixvim.plugins = {
     lsp-format = {
       enable = true;
@@ -26,9 +26,11 @@
           gt = "type_definition";
         };
       };
+
       servers = {
-        nixd = {
+        nil_ls = {
           enable = true;
+          settings.formatting.command = "'${lib.getExe pkgs.nixfmt-rfc-style}'";
         };
         pylsp = {
           enable = true;

@@ -26,8 +26,10 @@
             "<leader>s" = ":w<CR>";
             "<C-s>" = ":w<CR>";
 
-            # navigate to left/right window
+            # navigate through windows
             "<leader>h" = "<C-w>h";
+            "<leader>j" = "<C-w>j";
+            "<leader>k" = "<C-w>k";
             "<leader>l" = "<C-w>l";
 
             # press H and L to jump to start and end (first and last character) respectively
