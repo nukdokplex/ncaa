@@ -1,5 +1,10 @@
 {
   programs.nixvim = {
+    plugins.netman = {
+      # remote filesystem support for neo-tree
+      enable = true;
+      neoTreeIntegration = true;
+    };
     plugins.neo-tree = {
       enable = true;
       closeIfLastWindow = true;
