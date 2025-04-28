@@ -30,10 +30,12 @@
 
       servers = {
         nil_ls = {
+          # nix
           enable = true;
           settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.nixfmt-rfc-style)) ];
         };
         pylsp = {
+          # python
           enable = true;
           pythonPackage = pkgs.python312;
         };
