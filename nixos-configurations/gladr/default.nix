@@ -1,12 +1,19 @@
-{ pkgs, ezModules, inputs, ... }: {
-  imports = inputs.self.lib.umport
-    {
+{
+  pkgs,
+  ezModules,
+  inputs,
+  ...
+}:
+{
+  imports =
+    inputs.self.lib.umport {
       path = ./modules;
       exclude = [ ./modules/sway.nix ];
-    } ++ [
-    ezModules.common-desktop
-    ezModules.email-passwords
-  ];
+    }
+    ++ [
+      ezModules.common-desktop
+      ezModules.email-passwords
+    ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.rocmSupport = true; # AMDGPU support for packages

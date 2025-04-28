@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts

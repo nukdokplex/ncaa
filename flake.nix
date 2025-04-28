@@ -130,10 +130,11 @@
     ];
   };
 
-  outputs = inputs@{ flake-parts, systems, ... }:
-    flake-parts.lib.mkFlake
-      { inherit inputs; }
-      ({ lib, ... }: {
+  outputs =
+    inputs@{ flake-parts, systems, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      {
         _module.args.flakeRoot = ./.;
         imports = [
           inputs.ez-configs.flakeModule
@@ -146,11 +147,17 @@
 
         systems = import systems;
 
-        perSystem = { config, pkgs, ... }: {
-          formatter = pkgs.nixfmt-rfc-style;
-          devShells.agenix-rekey = pkgs.mkShell {
-            nativeBuildInputs = [ config.agenix-rekey.package pkgs.rage ];
+        perSystem =
+          { config, pkgs, ... }:
+          {
+            formatter = pkgs.nixfmt-rfc-style;
+            devShells.agenix-rekey = pkgs.mkShell {
+              nativeBuildInputs = [
+                config.agenix-rekey.package
+                pkgs.rage
+              ];
+            };
           };
-        };
-      });
+      }
+    );
 }

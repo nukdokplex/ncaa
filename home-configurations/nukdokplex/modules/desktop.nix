@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   config = lib.mkIf config.home.isDesktop {
     # there we add only desktop stuff
     home.packages = with pkgs; [

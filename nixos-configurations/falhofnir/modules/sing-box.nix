@@ -1,4 +1,10 @@
-{ lib, flakeRoot, pkgs, config, ... }:
+{
+  lib,
+  flakeRoot,
+  pkgs,
+  config,
+  ...
+}:
 let
   vlessPort = 3000;
 in
@@ -21,61 +27,74 @@ in
         final = "local";
         strategy = "prefer_ipv6";
       };
-      inbounds = [{
-        type = "vless";
-        tag = "vless-in";
+      inbounds = [
+        {
+          type = "vless";
+          tag = "vless-in";
 
-        listen = "::"; # v4 will also work
-        listen_port = vlessPort;
+          listen = "::"; # v4 will also work
+          listen_port = vlessPort;
 
-        users = [
-          {
-            name = "hrafn";
-            uuid = { _secret = config.age.secrets.sing-box-vless-in-hrafn-uuid.path; };
-            flow = "xtls-rprx-vision";
-          }
-          {
-            name = "babushbant";
-            uuid = { _secret = config.age.secrets.sing-box-vless-in-babushbant-uuid.path; };
-            flow = "xtls-rprx-vision";
-          }
-        ];
+          users = [
+            {
+              name = "hrafn";
+              uuid = {
+                _secret = config.age.secrets.sing-box-vless-in-hrafn-uuid.path;
+              };
+              flow = "xtls-rprx-vision";
+            }
+            {
+              name = "babushbant";
+              uuid = {
+                _secret = config.age.secrets.sing-box-vless-in-babushbant-uuid.path;
+              };
+              flow = "xtls-rprx-vision";
+            }
+          ];
 
-        tls = lib.fix (tls: {
-          enabled = true;
-          server_name = "creativecloud.adobe.com";
-          reality = {
+          tls = lib.fix (tls: {
             enabled = true;
-            handshake = {
-              server = tls.server_name;
-              server_port = 443;
+            server_name = "creativecloud.adobe.com";
+            reality = {
+              enabled = true;
+              handshake = {
+                server = tls.server_name;
+                server_port = 443;
+              };
+              private_key = {
+                _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path;
+              };
+              short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
             };
-            private_key = { _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path; };
-            short_id = [{ _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; }];
-          };
-        });
-      }];
+          });
+        }
+      ];
     };
   };
 
   age.secrets = {
     sing-box-vless-in-hrafn-uuid = {
-      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-hrafn-uuid.age;
+      rekeyFile =
+        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-hrafn-uuid.age;
       generator.script = "uuid";
     };
 
     sing-box-vless-in-babushbant-uuid = {
-      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-babushbant-uuid.age;
+      rekeyFile =
+        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-babushbant-uuid.age;
       generator.script = "uuid";
     };
 
     sing-box-vless-in-reality-private-key = {
-      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-private-key.age;
+      rekeyFile =
+        flakeRoot
+        + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-private-key.age;
       generator.script = "reality-keypair";
     };
 
     sing-box-vless-in-reality-short-id = {
-      rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-short-id.age;
+      rekeyFile =
+        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-short-id.age;
       generator.script = "reality-short-id";
     };
   };

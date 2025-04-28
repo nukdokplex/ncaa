@@ -12,7 +12,8 @@ let
   };
 in
 {
-  age.secrets = { }
+  age.secrets =
+    { }
     // (generateEmailPasswordSecret "nukdokplex-ru-has-nukdokplex-password" nukdokplex-perms)
     // (generateEmailPasswordSecret "gmail-com-has-nukdokplex-password" nukdokplex-perms)
     // (generateEmailPasswordSecret "gmail-com-has-vik-titoff2014-password" nukdokplex-perms)

@@ -1,4 +1,10 @@
-{ flakeRoot, config, pkgs, ... }: {
+{
+  flakeRoot,
+  config,
+  pkgs,
+  ...
+}:
+{
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   users.mutableUsers = true;
@@ -20,5 +26,6 @@
     hashedPasswordFile = config.age.secrets.nukdokplex-password.path;
   };
 
-  age.secrets.nukdokplex-password.rekeyFile = flakeRoot + /secrets/generated/common/nukdokplex-password.age;
+  age.secrets.nukdokplex-password.rekeyFile =
+    flakeRoot + /secrets/generated/common/nukdokplex-password.age;
 }

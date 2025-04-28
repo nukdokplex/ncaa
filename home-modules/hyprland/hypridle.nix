@@ -1,15 +1,26 @@
-{ pkgs, lib, config, ... }@args:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}@args:
 let
   cfg = config.wayland.windowManager.hyprland;
-  systemd = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).systemd.package else pkgs.systemd;
+  systemd =
+    if (builtins.hasAttr "osConfig" args) then
+      (builtins.getAttr "osConfig" args).systemd.package
+    else
+      pkgs.systemd;
 in
 {
   options.wayland.windowManager.hyprland.hypridle-timeouts =
     let
-      mkTimeoutOption = name: lib.mkOption {
-        default = -1;
-        description = "Time in seconds to trigger ${name} timeout";
-      };
+      mkTimeoutOption =
+        name:
+        lib.mkOption {
+          default = -1;
+          description = "Time in seconds to trigger ${name} timeout";
+        };
     in
     {
       dim_backlight = mkTimeoutOption "dim backlight";
@@ -28,7 +39,8 @@ in
           ignore_dbus_inhibit = false;
           lock_cmd = "'${lib.getExe config.programs.hyprlock.package}' --immediate --no-fade-in";
         };
-        listener = with cfg.hypridle-timeouts;
+        listener =
+          with cfg.hypridle-timeouts;
           [ ]
           ++ lib.optional (dim_backlight > -1) {
             timeout = dim_backlight;

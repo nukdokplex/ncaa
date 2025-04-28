@@ -1,4 +1,9 @@
-{ config, flakeRoot, lib, ... }:
+{
+  config,
+  flakeRoot,
+  lib,
+  ...
+}:
 let
   uplinkMACAddress = "00:16:3c:63:bd:c6";
 in
@@ -38,7 +43,7 @@ in
 
   networking.nat = {
     enable = true;
-    enableIPv6 = true; # Viatcheslav negoduet 
+    enableIPv6 = true; # Viatcheslav negoduet
     externalInterface = "uplink";
   };
 }

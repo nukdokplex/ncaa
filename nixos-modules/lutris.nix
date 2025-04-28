@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.programs.lutris;
 in
@@ -13,16 +18,16 @@ in
       (pkgs.lutris.override {
         steamSupport = false;
         extraLibraries = pkgs: with pkgs; [ ];
-        extraPkgs = pkgs: with pkgs; [
-          wineWowPackages.stableFull
-          libgudev
-          libvdpau
-          libsoup_2_4
-          libusb1
-          speex
-        ];
+        extraPkgs =
+          pkgs: with pkgs; [
+            wineWowPackages.stableFull
+            libgudev
+            libvdpau
+            libsoup_2_4
+            libusb1
+            speex
+          ];
       })
     ];
   };
 }
-

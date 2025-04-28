@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   programs.firefox = {
     # uncomment line below to enable
     enable = lib.mkDefault config.home.isDesktop;
@@ -62,12 +68,9 @@
             installation_mode = "normal_installed";
           };
         in
-        builtins.listToAttrs
-          (
-            builtins.map
-              (id: (lib.nameValuePair id (makeExtensionParams id)))
-              extensionIds
-          );
+        builtins.listToAttrs (
+          builtins.map (id: (lib.nameValuePair id (makeExtensionParams id))) extensionIds
+        );
 
       ExtensionUpdate = true;
 

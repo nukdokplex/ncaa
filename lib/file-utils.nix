@@ -1,4 +1,4 @@
-# thx for this functions to voronind 
+# thx for this functions to voronind
 { lib }:
 {
   # Remove tabs indentation,
@@ -33,4 +33,3 @@
   # Concat all file contents.
   readFiles = files: builtins.foldl' (acc: mod: acc + (builtins.readFile mod) + "\n") "" files;
 }
-

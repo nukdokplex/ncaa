@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   programs.yazi = {
     enable = true;
     enableNushellIntegration = true;
@@ -7,9 +8,22 @@
       custom-shell = toString inputs.custom-shell-yazi;
     };
     keymap.manager.prepend_keymap = [
-      { on = [ "b" "b" ]; run = "plugin bunny"; desc = "Start bunny.yazi"; }
-      { on = [ ";" ]; run = "plugin custom-shell -- auto --interactive"; }
-      { on = [ ":" ]; run = "plugin custom-shell -- auto --interactive --block"; }
+      {
+        on = [
+          "b"
+          "b"
+        ];
+        run = "plugin bunny";
+        desc = "Start bunny.yazi";
+      }
+      {
+        on = [ ";" ];
+        run = "plugin custom-shell -- auto --interactive";
+      }
+      {
+        on = [ ":" ];
+        run = "plugin custom-shell -- auto --interactive --block";
+      }
     ];
     initLua = ''
       require("custom-shell"):setup({

@@ -1,4 +1,10 @@
-{ lib, config, inputs, flakeRoot, ... }:
+{
+  lib,
+  config,
+  inputs,
+  flakeRoot,
+  ...
+}:
 let
   base = "/etc/nixpkgs/channels";
   nixpkgsPath = "${base}/nixpkgs";
@@ -17,7 +23,10 @@ in
       show-trace = true;
       sandbox = true;
       trusted-users = [ "@wheel" ];
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       min-free = "1G";
       max-free = "5G";
     } // (import (flakeRoot + /flake.nix)).nixConfig;

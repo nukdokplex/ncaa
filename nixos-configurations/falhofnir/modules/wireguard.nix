@@ -1,4 +1,10 @@
-{ config, flakeRoot, pkgs, lib, ... }:
+{
+  config,
+  flakeRoot,
+  pkgs,
+  lib,
+  ...
+}:
 let
   awg0Port = 18181;
   awg0InterfaceName = "awg0";
@@ -12,7 +18,10 @@ in
 
     interfaces.${awg0InterfaceName} = {
       type = "amneziawg";
-      ips = [ "10.100.1.1/24" "feee:10:100:1::1/64" ];
+      ips = [
+        "10.100.1.1/24"
+        "feee:10:100:1::1/64"
+      ];
       listenPort = awg0Port;
 
       privateKeyFile = config.age.secrets.awg0-private.path;
@@ -21,12 +30,18 @@ in
         {
           # yggdrasils
           publicKey = "we1V/v3wsZzZknibdQVPyxgMoCgVPvt/5bD2UEoHgVc=";
-          allowedIPs = [ "10.100.1.2/32" "feee:10:100:1::2/128" ];
+          allowedIPs = [
+            "10.100.1.2/32"
+            "feee:10:100:1::2/128"
+          ];
         }
         {
           # hrafn
           publicKey = "x8wbb3bFWd0loNBA/I8025rSEwXdYVhR1dkFFZ4X/Wc=";
-          allowedIPs = [ "10.100.1.5/32" "feee:10:100:1::5/128" ];
+          allowedIPs = [
+            "10.100.1.5/32"
+            "feee:10:100:1::5/128"
+          ];
         }
       ];
 

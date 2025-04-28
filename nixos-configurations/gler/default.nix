@@ -1,12 +1,21 @@
-{ pkgs, lib, ezModules, inputs, modulesPath, ... }: {
-  imports = inputs.self.lib.umport
-    {
+{
+  pkgs,
+  lib,
+  ezModules,
+  inputs,
+  modulesPath,
+  ...
+}:
+{
+  imports =
+    inputs.self.lib.umport {
       path = ./modules;
-    } ++ [
-    ezModules.common-base
-    inputs.simple-nixos-mailserver.nixosModule
-    (modulesPath + "/profiles/qemu-guest.nix") # adds virtio and 9p kernel modules
-  ];
+    }
+    ++ [
+      ezModules.common-base
+      inputs.simple-nixos-mailserver.nixosModule
+      (modulesPath + "/profiles/qemu-guest.nix") # adds virtio and 9p kernel modules
+    ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
   time.timeZone = "Europe/Moscow";

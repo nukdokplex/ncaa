@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }@args:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}@args:
 let
   cfg = config.wayland.windowManager.sway;
 in
@@ -17,7 +22,11 @@ in
       cliphist.enable = true;
       swaync.enable = true;
       playerctld.enable = true;
-      blueman-applet.enable = if (builtins.hasAttr "osConfig" args) then (builtins.getAttr "osConfig" args).services.blueman.enable else false;
+      blueman-applet.enable =
+        if (builtins.hasAttr "osConfig" args) then
+          (builtins.getAttr "osConfig" args).services.blueman.enable
+        else
+          false;
       gpg-agent.pinentryPackage = pkgs.wayprompt;
       udiskie = {
         enable = true;

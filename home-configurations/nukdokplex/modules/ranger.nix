@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   # you can get all plugin hashes this way:
   # nix env shell nixpkgs#nix-prefetch
   # for i in $(seq 0 6); do nix-prefetch "{ pkgs }: (builtins.elemAt (import ./ranger.nix { inherit pkgs; }).programs.ranger.plugins $i).src"; done
@@ -116,4 +117,3 @@
         os.remove(p)
   '';
 }
-

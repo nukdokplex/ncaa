@@ -1,4 +1,10 @@
-{ pkgs, lib, config, inputs, ... }@args:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}@args:
 let
   cfg = config.wayland.windowManager.hyprland;
   wm-utils = "'${lib.getExe inputs.self.packages.${pkgs.system}.wm-utils}'";
@@ -21,30 +27,57 @@ in
       # d -> has description, will allow you to write a description for your bind.
       # p -> bypasses the app's requests to inhibit keybinds.
 
-      bindd = [
-        "Control_L Alt_L, Delete, Open power menu, exec, ${wm-utils} fuzzel_power_menu"
-        "$mainMod, P, Screenshot screen region, exec, ${wm-utils} screenshot_region"
-        "$mainMod Shift_L, P, Screenshot active output, exec, ${wm-utils} screenshot_output"
-        "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
-        "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
-        "$mainMod, O, Open file manager, exec, '${cfg.programs.fileManager}'"
-        "$mainMod Shift_L, Q, Close active window, killactive"
-        "$mainMod, Z, Toggle split (top/side) of the current window, togglesplit"
-        "$mainMod, F, Toggle window fullscreen, fullscreen"
-        "$mainMod Shift_L, F, Toggle fake fullscreen, fullscreenstate, 0 3"
-        "$mainMod Shift_L, Space, Toggle window floating, togglefloating"
-        "$mainMod, D, Run drun menu, exec, '${lib.getExe config.programs.fuzzel.package}' --show-actions"
-        "$mainMod, Grave, Expo, hyprexpo:expo, toggle"
-      ]
-      ++ generateDirectionBinds 60 ({ key, direction, ... }: "$mainMod, ${key}, Move focus, movefocus, ${direction}")
-      ++ generateDirectionBinds 60 ({ key, direction, ... }: "$mainMod Shift_L, ${key}, Move window around, swapwindow, ${direction}")
-      ++ generateWorkspaceBinds (i: key: "$mainMod, ${key}, Switch to workspace ${builtins.toString i}, workspace, ${builtins.toString i}")
-      ++ generateWorkspaceBinds (i: key: "$mainMod Alt_L, ${key}, Switch to workspace ${builtins.toString (10+i)}, workspace, ${builtins.toString (10+i)}")
-      ++ generateWorkspaceBinds (i: key: "$mainMod Shift_L, ${key}, Move active window to workspace ${builtins.toString i}, movetoworkspace, ${builtins.toString i}")
-      ++ generateWorkspaceBinds (i: key: "$mainMod Shift_L Alt_L, ${key}, Move window to workspace ${builtins.toString (10+i)}, movetoworkspace, ${builtins.toString (10+i)}");
+      bindd =
+        [
+          "Control_L Alt_L, Delete, Open power menu, exec, ${wm-utils} fuzzel_power_menu"
+          "$mainMod, P, Screenshot screen region, exec, ${wm-utils} screenshot_region"
+          "$mainMod Shift_L, P, Screenshot active output, exec, ${wm-utils} screenshot_output"
+          "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
+          "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
+          "$mainMod, O, Open file manager, exec, '${cfg.programs.fileManager}'"
+          "$mainMod Shift_L, Q, Close active window, killactive"
+          "$mainMod, Z, Toggle split (top/side) of the current window, togglesplit"
+          "$mainMod, F, Toggle window fullscreen, fullscreen"
+          "$mainMod Shift_L, F, Toggle fake fullscreen, fullscreenstate, 0 3"
+          "$mainMod Shift_L, Space, Toggle window floating, togglefloating"
+          "$mainMod, D, Run drun menu, exec, '${lib.getExe config.programs.fuzzel.package}' --show-actions"
+          "$mainMod, Grave, Expo, hyprexpo:expo, toggle"
+        ]
+        ++ generateDirectionBinds 60 (
+          { key, direction, ... }: "$mainMod, ${key}, Move focus, movefocus, ${direction}"
+        )
+        ++ generateDirectionBinds 60 (
+          { key, direction, ... }: "$mainMod Shift_L, ${key}, Move window around, swapwindow, ${direction}"
+        )
+        ++ generateWorkspaceBinds (
+          i: key:
+          "$mainMod, ${key}, Switch to workspace ${builtins.toString i}, workspace, ${builtins.toString i}"
+        )
+        ++ generateWorkspaceBinds (
+          i: key:
+          "$mainMod Alt_L, ${key}, Switch to workspace ${builtins.toString (10 + i)}, workspace, ${builtins.toString (10 + i)}"
+        )
+        ++ generateWorkspaceBinds (
+          i: key:
+          "$mainMod Shift_L, ${key}, Move active window to workspace ${builtins.toString i}, movetoworkspace, ${builtins.toString i}"
+        )
+        ++ generateWorkspaceBinds (
+          i: key:
+          "$mainMod Shift_L Alt_L, ${key}, Move window to workspace ${builtins.toString (10 + i)}, movetoworkspace, ${builtins.toString (10 + i)}"
+        );
 
-      bindde = with inputs.self.lib.hyprland-utils; [ ]
-        ++ generateDirectionBinds 60 ({ key, resizeX, resizeY, ... }: "$mainMod Control_L, ${key}, Resize window, resizeactive, ${builtins.toString resizeX} ${builtins.toString resizeY}");
+      bindde =
+        with inputs.self.lib.hyprland-utils;
+        [ ]
+        ++ generateDirectionBinds 60 (
+          {
+            key,
+            resizeX,
+            resizeY,
+            ...
+          }:
+          "$mainMod Control_L, ${key}, Resize window, resizeactive, ${builtins.toString resizeX} ${builtins.toString resizeY}"
+        );
 
       binddm = [
         "$mainMod, mouse:272, Move window, movewindow"

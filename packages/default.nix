@@ -1,4 +1,9 @@
-{ inputs, flakeRoot, lib, ... }:
+{
+  inputs,
+  flakeRoot,
+  lib,
+  ...
+}:
 let
   packages = inputs.self.lib.umport {
     path = ./.;
@@ -7,11 +12,11 @@ let
   };
 in
 {
-  perSystem = { pkgs, ... }: {
-    packages = lib.mergeAttrsList (
-      builtins.map
-        (package: pkgs.callPackage package { inherit inputs flakeRoot; })
-        packages
-    );
-  };
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages = lib.mergeAttrsList (
+        builtins.map (package: pkgs.callPackage package { inherit inputs flakeRoot; }) packages
+      );
+    };
 }

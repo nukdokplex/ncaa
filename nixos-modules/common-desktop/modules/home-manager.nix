@@ -1,5 +1,7 @@
 {
-  home-manager.sharedModules = [{
-    home.isDesktop = true;
-  }];
+  home-manager.sharedModules = [
+    {
+      home.isDesktop = true;
+    }
+  ];
 }

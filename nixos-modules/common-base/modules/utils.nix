@@ -1,4 +1,11 @@
-{ pkgs, lib, config, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
+{
   environment.systemPackages = with pkgs; [
     # please sort list of packages alphabetically!
     atop

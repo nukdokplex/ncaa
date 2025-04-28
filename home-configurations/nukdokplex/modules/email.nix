@@ -1,9 +1,25 @@
-args@{ pkgs, lib, config, flakeRoot, inputs, ... }:
+args@{
+  pkgs,
+  lib,
+  config,
+  flakeRoot,
+  inputs,
+  ...
+}:
 let
-  generatePasswordCommand = name:
-    if ((builtins.hasAttr "osConfig" args) && (builtins.hasAttr "${name}-password" args.osConfig.age.secrets))
-    then "'${lib.getExe' pkgs.coreutils "cat"}' ${lib.escapeShellArg args.osConfig.age.secrets."${name}-password".path}"
-    else null;
+  generatePasswordCommand =
+    name:
+    if
+      (
+        (builtins.hasAttr "osConfig" args)
+        && (builtins.hasAttr "${name}-password" args.osConfig.age.secrets)
+      )
+    then
+      "'${lib.getExe' pkgs.coreutils "cat"}' ${
+        lib.escapeShellArg args.osConfig.age.secrets."${name}-password".path
+      }"
+    else
+      null;
   gpg = {
     signByDefault = true;
     key = "2CA70354EA1707B9";
@@ -12,7 +28,12 @@ let
   accounts = [
     (lib.fix (self: {
       primary = true;
-      address = with lib; concatStringsSep "@" (reverseList [ "nukdokplex.ru" "nukdokplex" ]);
+      address =
+        with lib;
+        concatStringsSep "@" (reverseList [
+          "nukdokplex.ru"
+          "nukdokplex"
+        ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "nukdokplex-ru-has-nukdokplex";
 
@@ -43,7 +64,12 @@ let
     }))
 
     (lib.fix (self: {
-      address = with lib; concatStringsSep "@" (reverseList [ "gmail.com" "nukdokplex" ]);
+      address =
+        with lib;
+        concatStringsSep "@" (reverseList [
+          "gmail.com"
+          "nukdokplex"
+        ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "gmail-com-has-nukdokplex";
 
@@ -63,7 +89,12 @@ let
     }))
 
     (lib.fix (self: {
-      address = with lib; concatStringsSep "@" (reverseList [ "gmail.com" "vik.titoff2014" ]);
+      address =
+        with lib;
+        concatStringsSep "@" (reverseList [
+          "gmail.com"
+          "vik.titoff2014"
+        ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "gmail-com-has-vik-titoff2014";
 
@@ -84,7 +115,12 @@ let
     }))
 
     (lib.fix (self: {
-      address = with lib; concatStringsSep "@" (reverseList [ "outlook.com" "NukDokPlex" ]);
+      address =
+        with lib;
+        concatStringsSep "@" (reverseList [
+          "outlook.com"
+          "NukDokPlex"
+        ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "outlook-com-has-nukdokplex";
 
@@ -104,13 +140,17 @@ let
     }))
 
     (lib.fix (self: {
-      address = with lib; concatStringsSep "@" (reverseList [ "yandex.ru" "vik.titoff2014" ]);
+      address =
+        with lib;
+        concatStringsSep "@" (reverseList [
+          "yandex.ru"
+          "vik.titoff2014"
+        ]);
       userName = self.address;
       passwordCommand = generatePasswordCommand "yandex-ru-has-vik-titoff2014";
 
       inherit gpg realName;
       flavor = "yandex.com";
-
 
       himalaya = {
         enable = !builtins.isNull self.passwordCommand;
@@ -131,9 +171,7 @@ in
     package = pkgs.thunderbird;
     profiles.default = {
       isDefault = true;
-      accountsOrder = builtins.map
-        (a: a.address)
-        accounts;
+      accountsOrder = builtins.map (a: a.address) accounts;
     };
   };
 
@@ -142,9 +180,6 @@ in
   };
 
   accounts.email.accounts = lib.listToAttrs (
-    builtins.map
-      (e: lib.nameValuePair e.address e)
-      accounts
+    builtins.map (e: lib.nameValuePair e.address e) accounts
   );
 }
-

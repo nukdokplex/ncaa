@@ -1,4 +1,12 @@
-{ inputs, pkgs, lib, config, flakeRoot, ... }: {
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  flakeRoot,
+  ...
+}:
+{
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
@@ -17,7 +25,10 @@
       systemd.enable = true;
       kernelModules = [ "amdgpu" ]; # because i want make correct modeset early
     };
-    kernelModules = [ "kvm-amd" "amdgpu" ];
+    kernelModules = [
+      "kvm-amd"
+      "amdgpu"
+    ];
     loader = {
       efi = {
         canTouchEfiVariables = true;

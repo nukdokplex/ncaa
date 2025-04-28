@@ -1,4 +1,10 @@
-{ inputs, flakeRoot, config, ... }: {
+{
+  inputs,
+  flakeRoot,
+  config,
+  ...
+}:
+{
   ezConfigs = {
     globalArgs = {
       inherit inputs flakeRoot;
@@ -12,4 +18,3 @@
     };
   };
 }
-    

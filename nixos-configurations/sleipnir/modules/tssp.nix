@@ -1,4 +1,5 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
   services.turing-smart-screen-python = {
     enable = true;
     systemd.enable = true;

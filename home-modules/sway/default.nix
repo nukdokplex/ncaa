@@ -1,4 +1,10 @@
-{ pkgs, lib, config, inputs, ... }@args:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}@args:
 let
   cfg = config.wayland.windowManager.sway;
   wm-utils = "'${lib.getExe inputs.self.packages.${pkgs.system}.wm-utils}'";
@@ -10,26 +16,30 @@ in
     beEnergyEfficient = lib.mkEnableOption "make Hyprland be energy efficient";
     workspaceBoundStartup = lib.mkOption {
       description = "Workspace-bound startups";
-      type = lib.types.listOf (lib.types.submodule {
-        options = {
-          workspaceNumber = lib.mkOption {
-            type = lib.types.ints.unsigned;
-            description = "workspace number in which window should be spawned";
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            workspaceNumber = lib.mkOption {
+              type = lib.types.ints.unsigned;
+              description = "workspace number in which window should be spawned";
+            };
+            command = lib.mkOption {
+              type = lib.types.str;
+              description = "command to execute";
+            };
           };
-          command = lib.mkOption {
-            type = lib.types.str;
-            description = "command to execute";
-          };
-        };
-      });
+        }
+      );
     };
     programs =
       let
-        mkExeOption = name: default: lib.mkOption {
-          inherit default;
-          description = "Default ${name} program to use";
-          type = lib.types.string;
-        };
+        mkExeOption =
+          name: default:
+          lib.mkOption {
+            inherit default;
+            description = "Default ${name} program to use";
+            type = lib.types.string;
+          };
       in
       {
         fileManager = mkExeOption "file manager" "thunar";
@@ -41,9 +51,7 @@ in
     wayland.windowManager.sway = {
       checkConfig = false;
       package =
-        if (builtins.hasAttr "osConfig" args)
-        then args.osConfig.programs.sway.package
-        else pkgs.sway;
+        if (builtins.hasAttr "osConfig" args) then args.osConfig.programs.sway.package else pkgs.sway;
       wrapperFeatures.gtk.enable = true;
       config = rec {
         startup = lib.mkBefore [
@@ -66,7 +74,8 @@ in
           "--no-repeat Ctrl+Alt+Delete" = "exec ${wm-utils} fuzzel_power_menu";
           "--no-repeat ${modifier}+p" = "exec ${wm-utils} screenshot_region";
           "--no-repeat ${modifier}+Shift+p" = "exec ${wm-utils} screenshot_output";
-          "--no-repeat ${modifier}+t" = "exec '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
+          "--no-repeat ${modifier}+t" =
+            "exec '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'";
           "--no-repeat ${modifier}+Insert" = "mode passthrough; floating_modifer none";
           "--no-repeat ${modifier}+Shift+q" = "kill";
           "--no-repeat ${modifier}+Return" = "exec ${cfg.config.terminal}";
@@ -147,16 +156,26 @@ in
           "--no-repeat ${modifier}+Shift+9" = "move container to workspace number 9; workspace number 9";
           "--no-repeat ${modifier}+Shift+0" = "move container to workspace number 10; workspace number 10";
 
-          "--no-repeat ${modifier}+Shift+Alt+1" = "move container to workspace number 11; workspace number 11";
-          "--no-repeat ${modifier}+Shift+Alt+2" = "move container to workspace number 12; workspace number 12";
-          "--no-repeat ${modifier}+Shift+Alt+3" = "move container to workspace number 13; workspace number 13";
-          "--no-repeat ${modifier}+Shift+Alt+4" = "move container to workspace number 14; workspace number 14";
-          "--no-repeat ${modifier}+Shift+Alt+5" = "move container to workspace number 15; workspace number 15";
-          "--no-repeat ${modifier}+Shift+Alt+6" = "move container to workspace number 16; workspace number 16";
-          "--no-repeat ${modifier}+Shift+Alt+7" = "move container to workspace number 17; workspace number 17";
-          "--no-repeat ${modifier}+Shift+Alt+8" = "move container to workspace number 18; workspace number 18";
-          "--no-repeat ${modifier}+Shift+Alt+9" = "move container to workspace number 19; workspace number 19";
-          "--no-repeat ${modifier}+Shift+Alt+0" = "move container to workspace number 20; workspace number 20";
+          "--no-repeat ${modifier}+Shift+Alt+1" =
+            "move container to workspace number 11; workspace number 11";
+          "--no-repeat ${modifier}+Shift+Alt+2" =
+            "move container to workspace number 12; workspace number 12";
+          "--no-repeat ${modifier}+Shift+Alt+3" =
+            "move container to workspace number 13; workspace number 13";
+          "--no-repeat ${modifier}+Shift+Alt+4" =
+            "move container to workspace number 14; workspace number 14";
+          "--no-repeat ${modifier}+Shift+Alt+5" =
+            "move container to workspace number 15; workspace number 15";
+          "--no-repeat ${modifier}+Shift+Alt+6" =
+            "move container to workspace number 16; workspace number 16";
+          "--no-repeat ${modifier}+Shift+Alt+7" =
+            "move container to workspace number 17; workspace number 17";
+          "--no-repeat ${modifier}+Shift+Alt+8" =
+            "move container to workspace number 18; workspace number 18";
+          "--no-repeat ${modifier}+Shift+Alt+9" =
+            "move container to workspace number 19; workspace number 19";
+          "--no-repeat ${modifier}+Shift+Alt+0" =
+            "move container to workspace number 20; workspace number 20";
 
           "--no-repeat ${modifier}+Shift+minus" = "move scratchpad";
           "--no-repeat ${modifier}+minus" = "scratchpad show";
@@ -172,25 +191,28 @@ in
           "--no-repeat --locked XF86AudioMute" = "exec ${wm-utils} toggle_sound_mute @DEFAULT_SINK@";
         };
       };
-      extraConfig = ''
-        for_window [app_id="dragon-drop"] floating enable, sticky enable
-      '' + "\n" + lib.concatStringsSep "\n" (
-        builtins.map
-          (elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}")
-          (lib.reverseList (
-            lib.sortOn (x: x.workspaceNumber) cfg.workspaceBoundStartup
-          ))
-      ) + "\n" + lib.optionalString (cfg.package.pname == "swayfx") ''
-        blur ${if cfg.beEnergyEfficient then "disable" else "enable"}
-        blur_xray disable
-        blur_passes 3
-        blur_radius 1
-        blur_noise 0
-        blur_brightness 1
-        blur_contrast 1
-        blur_saturation 1
+      extraConfig =
+        ''
+          for_window [app_id="dragon-drop"] floating enable, sticky enable
+        ''
+        + "\n"
+        + lib.concatStringsSep "\n" (
+          builtins.map (
+            elem: "workspace number ${builtins.toString elem.workspaceNumber}; exec ${elem.command}"
+          ) (lib.reverseList (lib.sortOn (x: x.workspaceNumber) cfg.workspaceBoundStartup))
+        )
+        + "\n"
+        + lib.optionalString (cfg.package.pname == "swayfx") ''
+          blur ${if cfg.beEnergyEfficient then "disable" else "enable"}
+          blur_xray disable
+          blur_passes 3
+          blur_radius 1
+          blur_noise 0
+          blur_brightness 1
+          blur_contrast 1
+          blur_saturation 1
 
-        shadows disable'';
+          shadows disable'';
     };
   };
 

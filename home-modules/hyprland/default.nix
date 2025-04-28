@@ -1,4 +1,10 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 let
   cfg = config.wayland.windowManager.hyprland;
 in
@@ -9,11 +15,13 @@ in
     beEnergyEfficient = lib.mkEnableOption "make Hyprland be energy efficient";
     programs =
       let
-        mkExeOption = name: default: lib.mkOption {
-          inherit default;
-          description = "Default ${name} program to use";
-          type = lib.types.str;
-        };
+        mkExeOption =
+          name: default:
+          lib.mkOption {
+            inherit default;
+            description = "Default ${name} program to use";
+            type = lib.types.str;
+          };
       in
       {
         fileManager = mkExeOption "file manager" "thunar";
@@ -21,7 +29,6 @@ in
         webBrowser = mkExeOption "web browser" "firefox";
       };
   };
-
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
     wayland.windowManager.hyprland = {
@@ -99,7 +106,6 @@ in
           layout = "dwindle";
           allow_tearing = false;
         };
-
 
         layerrule = [
           "noanim, selection" # disable animation for some utilities like slurp
