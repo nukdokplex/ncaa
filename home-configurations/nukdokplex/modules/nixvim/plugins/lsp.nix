@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   programs.nixvim.plugins = {
     lsp-format = {
       enable = true;
@@ -30,7 +31,7 @@
       servers = {
         nil_ls = {
           enable = true;
-          settings.formatting.command = "'${lib.getExe pkgs.nixfmt-rfc-style}'";
+          settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.nixfmt-rfc-style)) ];
         };
         pylsp = {
           enable = true;
