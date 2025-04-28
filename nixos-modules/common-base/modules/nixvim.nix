@@ -5,7 +5,11 @@
   ...
 }:
 let
-  nixvim = inputs.self.packages.${pkgs.system}.nixvim.extend config.lib.stylix.nixvim.config;
+  nixvim =
+    if config.stylix.enable && config.stylix.target.nixvim.enable then
+      inputs.self.packages.${pkgs.system}.nixvim.extend config.lib.stylix.nixvim.config
+    else
+      inputs.self.packages.${pkgs.system}.nixvim;
 in
 {
   environment.systemPackages = [ nixvim ];
