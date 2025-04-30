@@ -28,7 +28,7 @@ in
         strategy = "prefer_ipv6";
       };
       inbounds = [
-        {
+        (lib.fix (vless-in: {
           type = "vless";
           tag = "vless-in";
 
@@ -36,6 +36,13 @@ in
           listen_port = vlessPort;
 
           users = [
+            {
+              name = "sleipnir";
+              uuid = {
+                _secret = config.age.secrets.sing-box-vless-in-sleipnir-uuid.path;
+              };
+              flow = "xtls-rprx-vision";
+            }
             {
               name = "hrafn";
               uuid = {
@@ -52,13 +59,22 @@ in
             }
           ];
 
-          tls = lib.fix (tls: {
+          transport = {
+            type = "ws";
+            path = "/account/0/services/cloud/getContents";
+
+            headers = {
+              Host = vless-in.tls.server_name;
+            };
+          };
+
+          tls = {
             enabled = true;
             server_name = "creativecloud.adobe.com";
             reality = {
               enabled = true;
               handshake = {
-                server = tls.server_name;
+                server = vless-in.tls.server_name;
                 server_port = 443;
               };
               private_key = {
@@ -66,13 +82,25 @@ in
               };
               short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
             };
-          });
-        }
+          };
+
+          multiplex = {
+            enabled = true;
+            padding = false;
+            brutal.enabled = false;
+          };
+        }))
       ];
     };
   };
 
   age.secrets = {
+    sing-box-vless-in-sleipnir-uuid = {
+      rekeyFile =
+        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-sleipnir-uuid.age;
+      generator.script = "uuid";
+    };
+
     sing-box-vless-in-hrafn-uuid = {
       rekeyFile =
         flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-hrafn-uuid.age;
