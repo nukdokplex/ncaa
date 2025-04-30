@@ -1,3 +1,9 @@
+let
+  sing-box-rand-base64 =
+    keyLength:
+    { pkgs, lib, ... }:
+    "'${lib.getExe pkgs.sing-box}' generate rand --base64 ${builtins.toString keyLength}";
+in
 {
   age.generators = {
     wireguard-priv =
@@ -34,6 +40,9 @@
       '';
 
     reality-short-id = { pkgs, lib, ... }: "'${lib.getExe pkgs.sing-box}' generate rand --hex 8";
+
+    sing-box-rand-base64-16 = sing-box-rand-base64 16;
+    sing-box-rand-base64-32 = sing-box-rand-base64 32;
   };
 
 }
