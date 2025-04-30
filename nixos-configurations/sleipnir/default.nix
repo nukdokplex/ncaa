@@ -29,9 +29,6 @@
   };
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
-  programs.optical-disk-essentials.enable = true;
-  programs.k3b-custom.enable = true;
-
   hardware.bluetooth.enable = true;
 
   home-manager.sharedModules = [
