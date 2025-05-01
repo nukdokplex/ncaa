@@ -26,7 +26,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFX3BPaOblXcbg/frl0PtdJdHp008Pt7N3qqe82+GOSW (none)"
       ];
 
-      hashedPasswordFile = config.age.secrets.nukdokplex-password.path;
+      hashedPasswordFile = config.age.secrets.nukdokplex-hashed-password.path;
     };
 
     users.root.openssh.authorizedKeys.keys = users.users.nukdokplex.openssh.authorizedKeys.keys;
