@@ -13,6 +13,7 @@ let
     "common-desktop"
     "email-passwords"
     "default"
+    "dyndns"
   ];
 in
 {
