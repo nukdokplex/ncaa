@@ -58,10 +58,12 @@ in
     certificateFile = "${
       config.security.acme.certs.${config.networking.hostName}.directory
     }/fullchain.pem";
+    keyFile = "${config.security.acme.certs.${config.networking.hostName}.directory}/key.pem";
+
   };
 
   # this services must be reloaded after cert renewal
-  security.acme.certs.${config.netwokring.hostName}.reloadServices = [
+  security.acme.certs.${config.networking.hostName}.reloadServices = [
     "postfix.service"
     "dovecot2.service"
   ];
