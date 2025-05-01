@@ -54,8 +54,10 @@ in
           ]
         ) nukdokplexAliases;
       };
-    certificateScheme = "manual";;
-    certificateFile = "${config.security.acme.certs.${config.networking.hostName}.directory}/fullchain.pem";
+    certificateScheme = "manual";
+    certificateFile = "${
+      config.security.acme.certs.${config.networking.hostName}.directory
+    }/fullchain.pem";
   };
 
   # this services must be reloaded after cert renewal
