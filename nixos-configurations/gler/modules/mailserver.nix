@@ -54,12 +54,14 @@ in
           ]
         ) nukdokplexAliases;
       };
-    certificateScheme = "acme-nginx";
+    certificateScheme = "manual";;
+    certificateFile = "${config.security.acme.certs.${config.networking.hostName}.directory}/fullchain.pem";
   };
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = builtins.concatStringsSep "@" [
-    "admin"
-    "nukdokplex.ru"
+
+  # this services must be reloaded after cert renewal
+  security.acme.certs.${config.netwokring.hostName}.reloadServices = [
+    "postfix.service"
+    "dovecot2.service"
   ];
 
   age.secrets.nukdokplex-mail-hashed-password.generator.script = "mail-hashed-password";
