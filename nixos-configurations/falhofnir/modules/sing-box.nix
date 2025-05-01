@@ -95,35 +95,10 @@ in
   };
 
   age.secrets = {
-    sing-box-vless-in-sleipnir-uuid = {
-      rekeyFile =
-        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-sleipnir-uuid.age;
-      generator.script = "uuid";
-    };
-
-    sing-box-vless-in-hrafn-uuid = {
-      rekeyFile =
-        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-hrafn-uuid.age;
-      generator.script = "uuid";
-    };
-
-    sing-box-vless-in-babushbant-uuid = {
-      rekeyFile =
-        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-babushbant-uuid.age;
-      generator.script = "uuid";
-    };
-
-    sing-box-vless-in-reality-private-key = {
-      rekeyFile =
-        flakeRoot
-        + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-private-key.age;
-      generator.script = "reality-keypair";
-    };
-
-    sing-box-vless-in-reality-short-id = {
-      rekeyFile =
-        flakeRoot + /secrets/generated/${config.networking.hostName}/sing-box-vless-in-reality-short-id.age;
-      generator.script = "reality-short-id";
-    };
+    sing-box-vless-in-sleipnir-uuid.generator.script = "uuid";
+    sing-box-vless-in-hrafn-uuid.generator.script = "uuid";
+    sing-box-vless-in-babushbant-uuid.generator.script = "uuid";
+    sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
+    sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
   };
 }

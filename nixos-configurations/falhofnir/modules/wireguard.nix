@@ -62,8 +62,5 @@ in
     };
   };
 
-  age.secrets.awg0-private = {
-    rekeyFile = flakeRoot + /secrets/generated/${config.networking.hostName}/awg0-private.age;
-    generator.script = "wireguard-priv";
-  };
+  age.secrets.awg0-private.generator.script = "wireguard-priv";
 }

@@ -62,18 +62,5 @@ in
     "nukdokplex.ru"
   ];
 
-  age.secrets.nukdokplex-mail-hashed-password = {
-    rekeyFile =
-      flakeRoot + /secrets/generated/${config.networking.hostName}/nukdokplex-mail-hashed-password.age;
-    generator.script = "mail-hashed-password";
-  };
-
-  age.generators.mail-hashed-password =
-    {
-      pkgs,
-      lib,
-      file,
-      ...
-    }:
-    "'${lib.getExe pkgs.pwgen}' -s 32 1 | '${lib.getExe' pkgs.coreutils "tee"}' ${lib.escapeShellArg (lib.removeSuffix ".age" file)} | '${lib.getExe pkgs.mkpasswd}' -sm bcrypt";
+  age.secrets.nukdokplex-mail-hashed-password.generator.script = "mail-hashed-password";
 }

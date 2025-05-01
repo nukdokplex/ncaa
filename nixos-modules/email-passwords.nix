@@ -7,7 +7,7 @@ let
   };
   generateEmailPasswordSecret = name: attrs: {
     ${name} = {
-      rekeyFile = flakeRoot + /secrets/generated/common/${name}.age;
+      rekeyFile = flakeRoot + /secrets/common/${name}.age;
     } // attrs;
   };
 in

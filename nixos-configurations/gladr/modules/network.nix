@@ -60,6 +60,5 @@
     };
   };
 
-  age.secrets.networkmanager_env.rekeyFile =
-    flakeRoot + /secrets/generated/${config.networking.hostName}/networkmanager_env.age;
+  age.secrets.networkmanager_env = { };
 }

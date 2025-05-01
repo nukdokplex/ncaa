@@ -32,6 +32,6 @@
     users.root.openssh.authorizedKeys.keys = users.users.nukdokplex.openssh.authorizedKeys.keys;
   });
 
-  age.secrets.nukdokplex-password.rekeyFile =
-    flakeRoot + /secrets/generated/common/nukdokplex-password.age;
+  age.secrets.nukdokplex-hashed-password.rekeyFile =
+    flakeRoot + /secrets/common/nukdokplex-hashed-password.age;
 }

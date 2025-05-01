@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  flakeRoot,
   ...
 }:
 {
@@ -11,6 +10,5 @@
     openMulticastPort = true;
   };
 
-  age.secrets.yggdrasil.rekeyFile =
-    flakeRoot + /secrets/generated/${config.networking.hostName}/yggdrasil.age;
+  age.secrets.yggdrasil = { };
 }
