@@ -32,6 +32,7 @@ in
         enable = true;
         notify = true;
         tray = "always";
+        automount = lib.mkDefault false;
       };
     };
   };
