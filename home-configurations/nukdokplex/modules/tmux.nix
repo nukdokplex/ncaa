@@ -26,6 +26,7 @@
       bind . next-window
       bind n new-window
       bind enter next-layout
+      bind e new-session
 
       bind v split-window -h
       bind s split-window -v
@@ -35,9 +36,22 @@
       bind k select-pane -U
       bind l select-pane -R
 
-      # Setup 'v' to begin selection as in Vim
+      bind x kill-pane
+      bind q kill-window
+
+      # Copy stuff
+
+      ## Setup 'v' to begin selection as in Vim
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+
+      ## bind copy mode
+      bind y copy-mode
+      bind p paste-buffer
+
+      ## Update default binding of `Enter` to also use copy-pipe
+      unbind -T copy-mode-vi Enter
+      bind -T copy-mode-vi Enter send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 
       # smart pane switching with awareness of vim splits
       bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
@@ -52,15 +66,6 @@
       bind + select-layout main-horizontal
       bind = select-layout main-vertical
 
-      bind a last-pane
-      bind q display-panes
-
-      bind [ copy-mode
-      bind ] paste-buffer
-
-      # Update default binding of `Enter` to also use copy-pipe
-      unbind -T copy-mode-vi Enter
-      bind -T copy-mode-vi Enter send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 
       set-window-option -g other-pane-height 25
       set-window-option -g other-pane-width 80

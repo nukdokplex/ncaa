@@ -22,6 +22,11 @@ in
   programs.zsh = {
     enable = true;
 
+    sessionVariables = {
+      ZSH_TMUX_AUTOSTART = "true";
+      ZSH_TMUX_AUTOCONNECT = "true";
+    };
+
     shellAliases = {
       nrs = "sudo nixos-rebuild --flake ${flakePath}#${hostName} --accept-flake-config switch";
       nrt = "sudo nixos-rebuild --flake ${flakePath}#${hostName} --accept-flake-config test";
@@ -32,6 +37,7 @@ in
 
     oh-my-zsh = {
       enable = true;
+      plugins = [ "tmux" ];
     };
   };
 }
