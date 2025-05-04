@@ -1,49 +1,38 @@
+{ config, ... }:
 {
+  # https://nixos.wiki/wiki/Bootloader#Keeping_kernels.2Finitrd_on_the_main_partition
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
   disko.devices = {
-    disk.main = {
+    disk.nvme0 = {
       type = "disk";
       device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNZFN703254E";
       content = {
         type = "gpt";
         partitions = {
           ESP = {
-            end = "1G";
+            end = "128M";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/boot";
+              mountpoint = config.boot.loader.efi.efiSysMountPoint;
               mountOptions = [ "umask=0077" ];
             };
           };
           root = {
             end = "-36G";
-            priority = 1000;
             content = {
               type = "filesystem";
-              format = "f2fs";
+              format = "ext4";
               mountpoint = "/";
-              extraArgs = [
-                "-O"
-                "extra_attr,inode_checksum,sb_checksum,compression"
-              ];
-              mountOptions = [
-                "compress_algorithm=zstd:6,compress_chksum,atgc,gc_merge,lazytime,nodiscard"
-              ];
-            };
-          };
-          swap = {
-            end = "-0";
-            priority = 9000;
-            content = {
-              type = "swap";
-              resumeDevice = true;
             };
           };
         };
       };
     };
   };
+
   systemd.mounts = [
     {
       name = "data-archive.mount";

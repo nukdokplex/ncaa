@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
@@ -15,15 +15,12 @@
       "amdgpu"
     ];
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
+      efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
         efiSupport = true;
-        useOSProber = true;
-        device = "nodev"; # this affects only BIOS system
+        useOSProber = true; # searches for other operating systems
+        device = "nodev"; # we don't need it on efi systems
       };
     };
   };
