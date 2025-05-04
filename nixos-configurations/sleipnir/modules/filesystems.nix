@@ -3,6 +3,11 @@
   boot.loader.efi.efiSysMountPoint =
     config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
 
+  services.fstrim = {
+    enable = true;
+    interval = "daily";
+  };
+
   disko.devices = {
     disk.nixos = {
       type = "disk";
@@ -27,6 +32,14 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";
+            };
+          };
+          swap = {
+            size = "100%";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true;
             };
           };
         };
