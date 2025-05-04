@@ -1,10 +1,10 @@
 { config, ... }:
 {
-  # https://nixos.wiki/wiki/Bootloader#Keeping_kernels.2Finitrd_on_the_main_partition
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint =
+    config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
 
   disko.devices = {
-    disk.nvme0 = {
+    disk.nixos = {
       type = "disk";
       device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNZFN703254E";
       content = {
@@ -16,7 +16,8 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = config.boot.loader.efi.efiSysMountPoint;
+              # https://nixos.wiki/wiki/Bootloader#Keeping_kernels.2Finitrd_on_the_main_partition
+              mountpoint = "/boot/efi";
               mountOptions = [ "umask=0077" ];
             };
           };
