@@ -22,7 +22,7 @@
   system.stateVersion = "25.05";
   hardware.enableAllFirmware = true;
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImflw7aBhpCAkjmlblGq4kCzKMHdq9GPJDPUj3bW7Au root@sleipnir";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaAX/h4AJGEDMfHpzaw4vmGNz44j9ZaGaqFdvljJURu root@sleipnir";
 
   networking.firewall.interfaces.enp42s0 = {
     allowedUDPPorts = [ 22000 ];
