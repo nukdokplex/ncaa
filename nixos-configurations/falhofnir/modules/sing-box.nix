@@ -1,12 +1,21 @@
 {
   lib,
-  flakeRoot,
-  pkgs,
   config,
+  inputs,
   ...
 }:
 let
   vlessPort = 3000;
+  vlessExcludeHostNames = [ "gler" ];
+  vlessHostNames =
+    builtins.filter (
+      hostName:
+      (!builtins.elem hostName vlessExcludeHostNames) && (hostName != config.networking.hostName)
+    ) (builtins.attrNames inputs.self.outputs.nixosConfigurations)
+    ++ [
+      "hrafn"
+      "babushbant"
+    ];
 in
 {
   networking.firewall.interfaces.uplink.allowedTCPPorts = [ vlessPort ];
@@ -35,29 +44,13 @@ in
           listen = "::"; # v4 will also work
           listen_port = vlessPort;
 
-          users = [
-            {
-              name = "sleipnir";
-              uuid = {
-                _secret = config.age.secrets.sing-box-vless-in-sleipnir-uuid.path;
-              };
-              flow = "xtls-rprx-vision";
-            }
-            {
-              name = "hrafn";
-              uuid = {
-                _secret = config.age.secrets.sing-box-vless-in-hrafn-uuid.path;
-              };
-              flow = "xtls-rprx-vision";
-            }
-            {
-              name = "babushbant";
-              uuid = {
-                _secret = config.age.secrets.sing-box-vless-in-babushbant-uuid.path;
-              };
-              flow = "xtls-rprx-vision";
-            }
-          ];
+          users = builtins.map (hostName: {
+            name = hostName;
+            uuid = {
+              _secret = config.age.secrets."sing-box-vless-in-${hostName}-uuid".path;
+            };
+            flow = "xtls-rprx-vision";
+          }) vlessHostNames;
 
           transport = {
             type = "ws";
@@ -94,11 +87,14 @@ in
     };
   };
 
-  age.secrets = {
-    sing-box-vless-in-sleipnir-uuid.generator.script = "uuid";
-    sing-box-vless-in-hrafn-uuid.generator.script = "uuid";
-    sing-box-vless-in-babushbant-uuid.generator.script = "uuid";
-    sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
-    sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
-  };
+  age.secrets =
+    {
+      sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
+      sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
+    }
+    // builtins.listToAttrs (
+      builtins.map (
+        hostName: lib.nameValuePair "sing-box-vless-in-${hostName}-uuid" { generator.script = "uuid"; }
+      ) vlessHostNames
+    );
 }
