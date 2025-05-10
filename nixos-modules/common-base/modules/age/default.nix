@@ -14,7 +14,7 @@
     ];
     storageMode = "local";
     localStorageDir = flakeRoot + /secrets/rekeyed/${config.networking.hostName};
-    secretsDir = flakeRoot + /secrets/${config.networking.hostName};
-    generatedSecretsDir = rekey.secretsDir;
+    secretsDir = flakeRoot + /secrets/non-generated/${config.networking.hostName};
+    generatedSecretsDir = flakeRoot + /secrets/generated/${config.networking.hostName};
   });
 }
