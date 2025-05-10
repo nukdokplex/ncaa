@@ -68,5 +68,5 @@ in
     "dovecot2.service"
   ];
 
-  age.secrets.nukdokplex-mail-hashed-password.generator.script = "mail-hashed-password";
+  age.secrets.nukdokplex-mail-hashed-password = { };
 }
