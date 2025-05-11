@@ -16,6 +16,7 @@
     ++ (with ezModules; [
       gaming
       is-desktop
-      wayprompt
+      hyprland
+      sway
     ]);
 }
