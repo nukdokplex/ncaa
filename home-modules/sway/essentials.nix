@@ -18,6 +18,11 @@ in
       brightnessctl
     ];
 
+    programs.wayprompt = {
+      enable = true;
+      settings.general.corner-radius = 0;
+    };
+
     services = {
       cliphist.enable = true;
       swaync.enable = true;
@@ -27,7 +32,7 @@ in
           (builtins.getAttr "osConfig" args).services.blueman.enable
         else
           false;
-      gpg-agent.pinentryPackage = pkgs.wayprompt;
+      gpg-agent.pinentryPackage = config.programs.wayprompt.package;
       udiskie = {
         enable = true;
         notify = true;
