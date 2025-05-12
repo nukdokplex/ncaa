@@ -2,6 +2,7 @@
 {
   services.turing-smart-screen-python = {
     enable = true;
+    stopOnSleep = true;
     fonts = with pkgs.tsspPackages.resources.fonts; [
       geforce
       generale-mono
