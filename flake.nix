@@ -102,7 +102,10 @@
     };
     tssp = {
       url = "github:nukdokplex/tssp-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
 
     # yazi plugins
