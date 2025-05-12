@@ -1,22 +1,8 @@
+{ pkgs, ... }:
 {
-  inputs,
-  pkgs,
-  lib,
-  ...
-}:
-{
-
-  systemd.services.turing-smart-screen-python = {
-    # TODO: fix screen not starting after exiting sleep mode
-    conflicts = lib.mkForce [ "sleep.target" ];
-    before = lib.mkForce [ "sleep.target" ];
-    wantedBy = lib.mkForce [ "multi-user.target" ];
-  };
-
   services.turing-smart-screen-python = {
     enable = true;
-    systemd.enable = true;
-    fonts = with inputs.tssp.packages.${pkgs.system}.resources.fonts; [
+    fonts = with pkgs.tsspPackages.resources.fonts; [
       geforce
       generale-mono
       jetbrains-mono
@@ -24,7 +10,7 @@
       roboto
       roboto-mono
     ];
-    themes = with inputs.tssp.packages.${pkgs.system}.resources.themes; [
+    themes = with pkgs.tsspPackages.resources.themes; [
       LandscapeEarth
       Landscape6Grid
     ];
