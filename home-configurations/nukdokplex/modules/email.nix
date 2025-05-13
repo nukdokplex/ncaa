@@ -82,8 +82,8 @@ let
       thunderbird = {
         enable = true;
         settings = id: {
-          "mail.server.server_${id}.authMethod" = 3;
-          "mail.smtpserver.smtp_${id}.authMethod" = 3;
+          "mail.server.server_${id}.authMethod" = 10;
+          "mail.smtpserver.smtp_${id}.authMethod" = 10;
         };
       };
     }))
@@ -107,8 +107,8 @@ let
       thunderbird = {
         enable = true;
         settings = id: {
-          "mail.server.server_${id}.authMethod" = 3;
-          "mail.smtpserver.smtp_${id}.authMethod" = 3;
+          "mail.server.server_${id}.authMethod" = 10;
+          "mail.smtpserver.smtp_${id}.authMethod" = 10;
         };
 
       };
@@ -133,8 +133,8 @@ let
       thunderbird = {
         enable = true;
         settings = id: {
-          "mail.server.server_${id}.authMethod" = 4;
-          "mail.smtpserver.smtp_${id}.authMethod" = 4;
+          "mail.server.server_${id}.authMethod" = 10;
+          "mail.smtpserver.smtp_${id}.authMethod" = 10;
         };
       };
     }))
@@ -158,8 +158,8 @@ let
       thunderbird = {
         enable = true;
         settings = id: {
-          "mail.server.server_${id}.authMethod" = 3;
-          "mail.smtpserver.smtp_${id}.authMethod" = 3;
+          "mail.server.server_${id}.authMethod" = 10;
+          "mail.smtpserver.smtp_${id}.authMethod" = 10;
         };
       };
     }))
