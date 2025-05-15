@@ -81,6 +81,14 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    picokeys-nix = {
+      url = "github:ViZiD/picokeys-nix";
+      # i don't want to picokeys imports global nixpkgs
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pkgs-by-name-for-flake-parts = {
+      url = "github:drupol/pkgs-by-name-for-flake-parts";
+    };
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
@@ -142,8 +150,9 @@
         imports = [
           inputs.ez-configs.flakeModule
           inputs.agenix-rekey.flakeModule
+          inputs.pkgs-by-name-for-flake-parts.flakeModule
           ./ez-configs.nix
-          ./packages
+          ./picokeys.nix
         ];
 
         flake.lib = import ./lib { inherit lib; };
@@ -151,13 +160,35 @@
         systems = import systems;
 
         perSystem =
-          { config, pkgs, ... }:
+          {
+            config,
+            pkgs,
+            system,
+            ...
+          }:
           {
             formatter = pkgs.nixfmt-rfc-style;
+
+            # pkgs-by-name-for-flake-parts configuration
+            pkgsDirectory = ./packages;
+            pkgsNameSeparator = "/";
+
             devShells.agenix-rekey = pkgs.mkShell {
               nativeBuildInputs = [
                 config.agenix-rekey.package
                 pkgs.rage
+              ];
+            };
+
+            # modification of pkgs
+            _module.args.pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [
+                (final: prev: {
+                  lib = prev.lib // (import ./lib { inherit (prev) lib; });
+                  flakeRoot = ./.;
+                })
+                inputs.nixvim.overlays.default
               ];
             };
           };
