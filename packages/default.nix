@@ -15,8 +15,12 @@ in
   perSystem =
     { pkgs, ... }:
     {
-      packages = lib.mergeAttrsList (
-        builtins.map (package: pkgs.callPackage package { inherit inputs flakeRoot; }) packages
+      packages = inputs.flake-utils.lib.flattenTree (
+        pkgs.recurseIntoAttrs (
+          lib.mergeAttrsList (
+            builtins.map (package: pkgs.callPackage package { inherit inputs flakeRoot; }) packages
+          )
+        )
       );
     };
 }
