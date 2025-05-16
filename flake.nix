@@ -174,6 +174,8 @@
               nativeBuildInputs = [
                 config.agenix-rekey.package
                 pkgs.rage
+                pkgs.age-plugin-yubikey
+                pkgs.age-plugin-fido2-hmac
               ];
             };
           };
