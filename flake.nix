@@ -15,6 +15,9 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
     ez-configs = {
       url = "github:ehllie/ez-configs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -81,6 +84,12 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    picokeys-nix = {
+      # url = "github:ViZiD/picokeys-nix";
+      url = "github:nukdokplex/picokeys-nix";
+      # i don't want to picokeys imports global nixpkgs
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
@@ -144,6 +153,7 @@
           inputs.agenix-rekey.flakeModule
           ./ez-configs.nix
           ./packages
+          ./picokeys.nix
         ];
 
         flake.lib = import ./lib { inherit lib; };
@@ -151,9 +161,15 @@
         systems = import systems;
 
         perSystem =
-          { config, pkgs, ... }:
+          {
+            config,
+            pkgs,
+            system,
+            ...
+          }:
           {
             formatter = pkgs.nixfmt-rfc-style;
+
             devShells.agenix-rekey = pkgs.mkShell {
               nativeBuildInputs = [
                 config.agenix-rekey.package
