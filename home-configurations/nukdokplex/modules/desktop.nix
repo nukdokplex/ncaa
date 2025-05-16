@@ -19,6 +19,7 @@
       font-manager
       gimp
       shotwell
+      yubioath-flutter
     ];
     services = {
       syncthing.enable = true;
