@@ -4,7 +4,8 @@
 
   services.pcscd = {
     enable = true;
-    plugins = [
+    plugins = with pkgs; [
+      ccid
     ];
   };
 }
