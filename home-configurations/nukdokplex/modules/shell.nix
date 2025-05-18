@@ -22,9 +22,16 @@ in
   programs.zsh = {
     enable = true;
 
+    initContent = lib.mkBefore ''
+      ZSH_TMUX_AUTOSTART=true
+      if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        ZSH_TMUX_AUTOSTART=false
+      fi
+    '';
+
     sessionVariables = {
-      ZSH_TMUX_AUTOSTART = "true";
       ZSH_TMUX_AUTOCONNECT = "true";
+      ZSH_TMUX_AUTOQUIT = "false";
     };
 
     shellAliases = {
