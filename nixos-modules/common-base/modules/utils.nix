@@ -23,7 +23,6 @@
     nix-search-cli
     nixpkgs-fmt
     psmisc
-    qmk
     sl
     vim
     w3m
@@ -31,7 +30,8 @@
     fzf
     usbutils
     rage
-    nushell
+    age-plugin-yubikey
+    age-plugin-fido2-hmac
     bash
   ];
 }
