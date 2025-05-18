@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   security.polkit.enable = true;
 
@@ -7,5 +7,11 @@
     plugins = with pkgs; [
       ccid
     ];
+  };
+
+  home-manager.sharedModules = lib.singleton {
+    programs.gpg.scdaemonSettings = {
+      disable-ccid = true;
+    };
   };
 }
