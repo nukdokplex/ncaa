@@ -32,4 +32,6 @@ in
       ];
     };
   };
+
+  services.udiskie.automount = true;
 }
