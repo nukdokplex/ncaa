@@ -23,7 +23,7 @@
         "podman"
       ];
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatzKUrvt0471LtM+558AKJRVEJMK3qQL9P/DCoE/X0 nukdokplex"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5+elt9Z1Nwj6unJsK6UJNH3Ly2+oUxjRUuPtn7u6Th nukdokplex"
       ];
 
       hashedPasswordFile = config.age.secrets.nukdokplex-hashed-password.path;
