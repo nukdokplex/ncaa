@@ -50,10 +50,6 @@
         pre-commit-hooks-nix.follows = "";
       };
     };
-    nixos-nftables-firewall = {
-      url = "github:thelegy/nixos-nftables-firewall";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
