@@ -18,7 +18,6 @@ let
     ];
 in
 {
-  networking.firewall.interfaces.uplink.allowedTCPPorts = [ vlessPort ];
 
   services.sing-box = {
     enable = true;
@@ -86,6 +85,12 @@ in
       ];
     };
   };
+
+  networking.nftables.tables.filter.content = ''
+    chain post_input_hook {
+      iifname uplink tcp dport ${builtins.toString vlessPort} counter accept
+    }
+  '';
 
   age.secrets =
     {

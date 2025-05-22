@@ -40,10 +40,4 @@ in
 
     };
   });
-
-  networking.nat = {
-    enable = true;
-    enableIPv6 = true; # Viatcheslav negoduet
-    externalInterface = "uplink";
-  };
 }
