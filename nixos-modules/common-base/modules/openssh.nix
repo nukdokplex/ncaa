@@ -2,7 +2,6 @@
 {
   services.openssh = {
     enable = true;
-    openFirewall = true;
     settings = {
       PasswordAuthentication = false;
       AllowGroups = [
@@ -11,4 +10,10 @@
       ];
     };
   };
+
+  networking.nftables.tables.filter.content = ''
+    chain post_input_hook {
+      tcp dport 22 counter accept comment "OpenSSH open port"
+    }
+  '';
 }
