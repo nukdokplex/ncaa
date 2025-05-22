@@ -20,8 +20,11 @@ in
     ssl = true;
     server = "update.dedyn.io"; # deSEC
 
-    usev4 = "cmdv4, cmdv4=\"'${lib.getExe pkgs.curl}' https://checkipv4.dedyn.io/\"";
-    usev6 = "cmdv6, cmdv6=\"'${lib.getExe pkgs.curl}' https://checkipv6.dedyn.io/\"";
+    usev4 = lib.mkDefault "cmdv4, cmdv4=\"'${lib.getExe pkgs.curl}' https://checkipv4.dedyn.io/\"";
+    # usev6 = "cmdv6, cmdv6=\"'${lib.getExe pkgs.curl}' https://checkipv6.dedyn.io/\"";
+    usev6 = lib.mkDefault "cmdv6, cmdv6=\"'${
+      lib.getExe inputs.self.packages.${pkgs.system}.getv6addresses
+    }' -p -e -x | tr '\\n' ',' | sed 's/,*$//'\"";
 
     username = tld;
     passwordFile = config.age.secrets.desec.path;
