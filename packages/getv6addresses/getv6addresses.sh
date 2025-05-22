@@ -64,7 +64,7 @@ exclude_ranges() {
 
 addresses=""
 for ip in $(get_raw_addresses) ; do
-  addresses="$(extend_address $ip)\n$addresses"
+  addresses="$(extend_address "$ip")\n$addresses"
 done
 addresses=$(echo -ne "$addresses" | sed -z 's/\n*$//')
 
