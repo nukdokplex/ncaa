@@ -16,7 +16,6 @@
       hyprland.nixosModules.default
       disko.nixosModules.disko
       tssp.nixosModules.default
-      nixos-nftables-firewall.nixosModules.default
     ])
     ++ (with ezModules; [
       k3b-custom
