@@ -4,7 +4,7 @@
   inputs,
   flakeRoot,
   ...
-}:
+}
 {
   # import all modules in this module so this ("default") module become super-module that inherits all nixos modules in this flake
   imports =
@@ -16,6 +16,7 @@
       hyprland.nixosModules.default
       disko.nixosModules.disko
       tssp.nixosModules.default
+      nixos-nftables-firewall.nixosModules.default
     ])
     ++ (with ezModules; [
       k3b-custom
