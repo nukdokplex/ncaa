@@ -36,7 +36,7 @@ table inet filter {
     counter jump base_hook
     counter jump post_forward_hook
     
-    log prefix "Dropped forwarded traffic: " counter drop
+    log prefix "Rejected forwarded traffic: " counter reject with icmpx type host-unreachable
   }
   
   chain pre_forward_hook { }
@@ -56,7 +56,18 @@ table inet filter {
     iifname lo counter accept
     oifname lo counter accept
 
+    ip protocol icmp jump icmp_filter
+    ip6 nexthdr icmpv6 jump icmpv6_filter
+
     counter jump post_base_hook
+  }
+
+  chain icmp_filter {
+    icmp type { echo-reply, echo-request } counter accept
+  }
+
+  chain icmpv6_filter {
+    icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, echo-request, echo-reply } counter accept
   }
 
   chain pre_base_hook { }
@@ -65,12 +76,12 @@ table inet filter {
 
 table inet nat {
   chain prerouting {
-    type nat hook prerouting priority 0;
+    type nat hook prerouting priority -100; policy accept;
     counter jump prerouting_hook
   }
 
   chain postrouting {
-    type nat hook postrouting priority 0;
+    type nat hook postrouting priority 100; policy accept;
     counter jump postrouting_hook
   }
 
