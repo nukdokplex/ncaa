@@ -68,12 +68,13 @@ in
 
     chain post_forward_hook {
       iifname ${awg0InterfaceName} oifname uplink counter accept
+      iifname uplink oifname ${awg0InterfaceName} ct state established,related counter accept
     }
   '';
 
   networking.nftables.tables.nat.content = ''
-    chain postrouting {
-      iifname ${awg0InterfaceName} oifname uplink masquerade
+    chain postrouting_hook {
+      oifname uplink masquerade
     }
   '';
 }
