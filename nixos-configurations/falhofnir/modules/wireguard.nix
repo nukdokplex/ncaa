@@ -10,9 +10,6 @@ let
   awg0InterfaceName = "awg0";
 in
 {
-  networking.firewall.allowedUDPPorts = [ awg0Port ];
-  networking.nat.internalInterfaces = [ awg0InterfaceName ];
-
   networking.wireguard = {
     enable = true;
 
@@ -63,4 +60,21 @@ in
   };
 
   age.secrets.awg0-private.generator.script = "wireguard-priv";
+
+  networking.nftables.tables.filter.content = ''
+    chain post_input_hook {
+      iifname uplink udp dport ${builtins.toString awg0Port} counter accept
+    }
+
+    chain post_forward_hook {
+      iifname ${awg0InterfaceName} oifname uplink counter accept
+      iifname uplink oifname ${awg0InterfaceName} ct state established,related counter accept
+    }
+  '';
+
+  networking.nftables.tables.nat.content = ''
+    chain postrouting_hook {
+      oifname uplink masquerade
+    }
+  '';
 }

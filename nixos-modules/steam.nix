@@ -11,10 +11,14 @@ in
   options.programs.steam.enableCustomConfiguration = lib.mkEnableOption "custom Steam configuration";
 
   config = lib.mkIf (cfg.enable && cfg.enableCustomConfiguration) {
+    networking.nftables.tables.filter.content = ''
+      chain post_input_hook {
+        tcp dport { 27036, 27015, 27040 } counter accept comment "Accept Steam TCP ports"
+        udp dport { 27036, 27031-27035, 27015 } counter accept comment "Accept Steam UDP ports"
+      }
+    '';
+
     programs.steam = {
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
       extraPackages = with pkgs; [
         libgudev
         libvdpau

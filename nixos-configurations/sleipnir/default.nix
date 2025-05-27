@@ -14,6 +14,7 @@
       ezModules.common-desktop
       ezModules.email-passwords
       ezModules.dyndns
+      ezModules.sing-box-client
     ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -24,10 +25,6 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDrS2sugOWzdcYzL7PfkMHbhfWwReIJOyB7wo5qNcSW root@sleipnir";
 
-  networking.firewall.interfaces.enp42s0 = {
-    allowedUDPPorts = [ 22000 ];
-    allowedTCPPorts = [ 22000 ];
-  };
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
   hardware.bluetooth.enable = true;

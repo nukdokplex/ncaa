@@ -10,9 +10,25 @@ in
 {
   networking.useDHCP = false;
 
-  boot.initrd.services.udev.rules = ''
-    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
-  '';
+  boot = {
+    initrd.services.udev.rules = ''
+      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
+    '';
+    kernelModules = [ "nf_nat_ftp" ];
+    kernel.sysctl = {
+      "net.ipv4.conf.all.forwarding" = lib.mkOverride 99 true;
+      "net.ipv4.conf.default.forwarding" = lib.mkOverride 99 true;
+
+      # Do not prevent IPv6 autoconfiguration.
+      # See <http://strugglers.net/~andy/blog/2011/09/04/linux-ipv6-router-advertisements-and-forwarding/>.
+      "net.ipv6.conf.all.accept_ra" = lib.mkOverride 99 2;
+      "net.ipv6.conf.default.accept_ra" = lib.mkOverride 99 2;
+
+      # Forward IPv6 packets.
+      "net.ipv6.conf.all.forwarding" = lib.mkOverride 99 true;
+      "net.ipv6.conf.default.forwarding" = lib.mkOverride 99 true;
+    };
+  };
 
   systemd.network = lib.fix (self: {
     enable = true;
@@ -40,10 +56,4 @@ in
 
     };
   });
-
-  networking.nat = {
-    enable = true;
-    enableIPv6 = true; # Viatcheslav negoduet
-    externalInterface = "uplink";
-  };
 }
