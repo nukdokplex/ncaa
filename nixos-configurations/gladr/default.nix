@@ -14,6 +14,7 @@
       ezModules.common-desktop
       ezModules.email-passwords
       ezModules.dyndns
+      ezModules.sing-box-client
     ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
