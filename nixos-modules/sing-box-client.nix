@@ -8,16 +8,6 @@
 }:
 let
   falhofnir = inputs.self.nixosConfigurations.falhofnir.config;
-  dnscryPtTlsServer =
-    bld:
-    lib.fix (self: {
-      tag = "dnscry-pt-${bld}";
-      type = "tls";
-      server = "tls://${bld}.dnscry.pt";
-      address_resolver = "google";
-      address_strategy = "prefer_ipv4";
-      detour = "direct-out";
-    });
 in
 {
   services.sing-box = {
@@ -61,7 +51,7 @@ in
             "fdfe:dcba:9876::1/126"
           ];
 
-          mtu = 9000;
+          mtu = 65535;
           auto_route = true;
           auto_redirect = true;
           strict_route = false;
@@ -94,7 +84,7 @@ in
           type = "direct";
         }
         {
-          tag = "vless-out";
+          tag = "proxy-out";
           type = "vless";
 
           server = "${falhofnir.networking.hostName}.nukdokplex.ru";
@@ -123,7 +113,7 @@ in
           };
 
           multiplex = {
-            enabled = true;
+            enabled = false;
             protocol = "yamux";
             # TODO maybe other values?
             max_streams = 16;
@@ -167,23 +157,53 @@ in
             ]
           );
 
-        final = "dnscry-pt-mow01";
+        final = "dnscry-pt-ams01";
         strategy = "prefer_ipv6";
       };
 
       route = {
         rules = [
           {
-            inbound = "tun-in";
-            action = "sniff";
-          }
-          {
-            inbound = "tun-in";
-            protocol = "dns";
+            port = 53;
             action = "hijack-dns";
           }
+          {
+            ip_is_private = true;
+            outbound = "direct-out";
+          }
+          { action = "sniff"; }
+          {
+            rule_set = [
+              "ru-bundle"
+              "discord-voice-ip-list"
+            ];
+            outbound = "proxy-out";
+          }
+          {
+            # just to test proxy is working properly
+            domain_suffix = "myip.com";
+            outbound = "proxy-out";
+          }
         ];
-        final = "vless-out";
+        rule_set = [
+          {
+            tag = "ru-bundle";
+            type = "remote";
+            format = "binary";
+            url = "https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.srs";
+            download_detour = "direct-out";
+            update_interval = "168h0m0s";
+          }
+          {
+            tag = "discord-voice-ip-list";
+            type = "remote";
+            format = "binary";
+            url = "https://github.com/legiz-ru/sb-rule-sets/raw/main/discord-voice-ip-list.srs";
+            download_detour = "direct-out";
+            update_interval = "168h0m0s";
+          }
+        ];
+        final = "direct-out";
         auto_detect_interface = true;
       };
     };
