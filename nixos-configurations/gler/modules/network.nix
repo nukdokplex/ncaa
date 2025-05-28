@@ -2,6 +2,8 @@
   config,
   flakeRoot,
   lib,
+  pkgs,
+  inputs,
   ...
 }:
 let
@@ -39,4 +41,8 @@ in
       };
     };
   });
+
+  services.ddclient.usev6 = lib.mkDefault "cmdv6, cmdv6=\"'${
+    lib.getExe inputs.self.packages.${pkgs.system}.getv6addresses
+  }' -p -x | tr '\\n' ',' | sed 's/,*$//'\"";
 }
