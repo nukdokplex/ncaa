@@ -1,14 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   services.printing.drivers = [
-    pkgs.nur.repos.nukdokplex.epson_201310w
+    inputs.self.packages.${pkgs.system}.epson_201310w
   ];
 
   hardware.printers.ensurePrinters = [
     {
       name = "Epson_L120_Series";
       location = "Home";
-      deviceUri = "socket://192.168.1.11:9109";
+      deviceUri = "socket://192.168.1.11:9101";
       model = "EPSON_L120.ppd";
     }
   ];
