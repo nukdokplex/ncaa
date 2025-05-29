@@ -19,5 +19,6 @@
       hyprland
       sway
       nemo
+      file-roller
     ]);
 }
