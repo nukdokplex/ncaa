@@ -18,5 +18,6 @@
       is-desktop
       hyprland
       sway
+      nemo
     ]);
 }
