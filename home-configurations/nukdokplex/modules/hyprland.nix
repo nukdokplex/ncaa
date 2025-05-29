@@ -6,6 +6,7 @@ in
   wayland.windowManager.hyprland = {
     programs.webBrowser = "firefox";
     programs.terminal = lib.getExe config.programs.foot.package;
+    programs.fileManager = lib.getExe config.programs.nemo.finalPackage;
     settings = {
       input = {
         kb_layout = "us,ru";
@@ -34,4 +35,10 @@ in
   };
 
   services.udiskie.automount = true;
+
+  programs = lib.mkIf cfg.enable {
+    nemo.enable = true;
+    file-roller.enable = true;
+  };
+
 }
