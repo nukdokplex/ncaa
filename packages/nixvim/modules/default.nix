@@ -1,9 +1,8 @@
-{ inputs, lib, ... }:
+{ lib, ... }:
 {
-  imports = inputs.self.lib.umport {
+  imports = lib.custom.umport {
     path = ./.;
-    recursive = true;
-    exclude = [ ./default.nix ];
+    exclude = lib.singleton ./default.nix; # self
   };
 
   opts = lib.fix (opts: {

@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-411842 = {
+      url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/411842.patch";
+      flake = false;
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -90,6 +94,7 @@
       # i don't want to picokeys imports global nixpkgs
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
@@ -151,6 +156,7 @@
         imports = [
           inputs.ez-configs.flakeModule
           inputs.agenix-rekey.flakeModule
+          inputs.pkgs-by-name-for-flake-parts.flakeModule
           ./ez-configs.nix
           ./packages
           ./picokeys.nix
@@ -163,16 +169,41 @@
         perSystem =
           {
             config,
-            pkgs,
             system,
             ...
           }:
-          {
-            _module.args.pkgs = import inputs.nixpkgs {
+          let
+            nixpkgsArgs = {
               inherit system;
-              config.allowUnfree = true;
+              config = {
+                allowUnfree = true;
+              };
+              overlays = [
+                (final: prev: {
+                  lib = prev.lib.recursiveUpdate prev.lib {
+                    custom = inputs.self.lib;
+                  };
+                })
+                inputs.nixvim.overlays.default
+              ];
             };
+
+            prevPkgs = import inputs.nixpkgs nixpkgsArgs;
+
+            patchedNixpkgs = prevPkgs.applyPatches {
+              src = pkgs.path;
+              patches = [
+                # here go patches
+                inputs.nixpkgs-411842
+              ];
+            };
+            pkgs = import patchedNixpkgs nixpkgsArgs;
+          in
+          {
+            _module.args.pkgs = pkgs;
+
             formatter = pkgs.nixfmt-rfc-style;
+            pkgsDirectory = ./packages;
 
             devShells.agenix-rekey = pkgs.mkShell {
               nativeBuildInputs = [

@@ -1,36 +1,3 @@
-# thx to voronind for this functions
-function sound_output_cycle() {
-  # TODO: REWRITE, it doesn't work
-  local IFS=$'\n'
-  local current=$(pactl get-default-sink)
-  local all=($(pactl list short sinks | cut -f2))
-  local i_current=$(_index_of ${current} ${all[@]})
-  local i_total=${#all[@]}
-  ((i_total--))
-  local i_target=0
-
-  [[ ${i_current} -lt ${i_total} ]] && i_target=$((i_current + 1))
-
-  pactl set-default-sink ${all[${i_target}]}
-  notify_sound single-click
-}
-
-function sound_input_cycle() {
-  # TODO: REWRITE, it doesn't work
-  notify_sound single-click
-  local IFS=$'\n'
-  local current=$(pactl get-default-source)
-  local all=($(pactl list short sources | cut -f2 | rg input))
-  local i_current=$(_index_of ${current} ${all[@]})
-  local i_total=${#all[@]}
-  ((i_total--))
-  local i_target=0
-
-  [[ ${i_current} -lt ${i_total} ]] && i_target=$((i_current + 1))
-
-  pactl set-default-source ${all[${i_target}]}
-}
-
 function wp_get_id() {
   wpctl inspect $1 | head --lines 1 | awk -F ', ' '{print $1}' | awk '{print $2}'
 }

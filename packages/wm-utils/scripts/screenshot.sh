@@ -1,6 +1,8 @@
 function screenshot_region() {
-  geometry=$('@slurp@/bin/slurp')
-  '@grim@/bin/grim' -l 6 -t png -g "$geometry" - | '@swappy@/bin/swappy' -f -
+  geometry=$(slurp)
+  data=$(grim -l 6 -t png -g "$geometry" -)
+  notify_sound camera-shutter
+  echo -ne "$data" | swappy -f -
 }
 
 function screenshot_output() {
@@ -10,12 +12,15 @@ function screenshot_output() {
   fi
 
   if [ "$DESKTOP_SESSION" = "sway" ]; then
-    active_output=$(swaymsg -t get_workspaces | '@jq@/bin/jq' -r '.[] | select(.focused==true).output')
+    active_output=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused==true).output')
   elif [ "$DESKTOP_SESSION" = "hyprland" ]; then
-    active_output=$(hyprctl activeworkspace -j | '@jq@/bin/jq' -r '.monitor')
+    active_output=$(hyprctl activeworkspace -j | jq -r '.monitor')
   else
     echo "unsupported $$DESKTOP_SESSION=$DESKTOP_SESSION"
     exit 1
   fi
-  '@grim@/bin/grim' -c -l 5 -t png -o "$active_output" - | '@swappy@/bin/swappy' -f -
+  data=$(grim -c -l 5 -t png -o "$active_output" -)
+
+  notify_sound camera-shutter
+  echo -ne "$data" | swappy -f -
 }

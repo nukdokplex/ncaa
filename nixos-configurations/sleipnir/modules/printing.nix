@@ -1,8 +1,6 @@
 { pkgs, inputs, ... }:
 {
-  services.printing.drivers = [
-    inputs.self.packages.${pkgs.system}.epson_201310w
-  ];
+  services.printing.drivers = [ pkgs.epson_201310w ];
 
   hardware.printers.ensurePrinters = [
     {
