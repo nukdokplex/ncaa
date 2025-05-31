@@ -25,6 +25,4 @@
       usb-essentials
       via
     ]);
-
-  nixpkgs.config = import /${flakeRoot}/nixpkgs-config.nix;
 }
