@@ -150,19 +150,19 @@
   outputs =
     inputs@{ flake-parts, systems, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { lib, ... }:
+      { lib, config, ... }:
       {
+        flake.lib = import ./lib { inherit lib; };
         _module.args.flakeRoot = ./.;
+        _module.args.lib-custom = config.lib;
+
         imports = [
           inputs.ez-configs.flakeModule
           inputs.agenix-rekey.flakeModule
           inputs.pkgs-by-name-for-flake-parts.flakeModule
           ./ez-configs.nix
-          ./packages
           ./picokeys.nix
         ];
-
-        flake.lib = import ./lib { inherit lib; };
 
         systems = import systems;
 
@@ -179,11 +179,7 @@
                 allowUnfree = true;
               };
               overlays = [
-                (final: prev: {
-                  lib = prev.lib.recursiveUpdate prev.lib {
-                    custom = inputs.self.lib;
-                  };
-                })
+                (final: prev: { lib-custom = inputs.self.outputs.lib; })
                 inputs.nixvim.overlays.default
               ];
             };
@@ -191,7 +187,7 @@
             prevPkgs = import inputs.nixpkgs nixpkgsArgs;
 
             patchedNixpkgs = prevPkgs.applyPatches {
-              src = pkgs.path;
+              src = prevPkgs.path;
               patches = [
                 # here go patches
                 inputs.nixpkgs-411842
