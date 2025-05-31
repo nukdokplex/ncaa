@@ -26,36 +26,38 @@ let
     + "\n\${@}"; # ${@} to call function by script arg
 
 in
-writeShellApplication (final: {
-  name = "wm-utils";
+writeShellApplication (
+  lib.fix (final: {
+    name = "wm-utils";
 
-  text = rawCombinedScript;
+    text = rawCombinedScript;
 
-  runtimeInputs = [
-    # parsers
-    jq
+    runtimeInputs = [
+      # parsers
+      jq
 
-    # screenshot stuff
-    grim
-    slurp
-    swappy
+      # screenshot stuff
+      grim
+      slurp
+      swappy
 
-    # TODO: make separated fuzzel helper package
-    fuzzel
-  ];
+      # TODO: make separated fuzzel helper package
+      fuzzel
+    ];
 
-  runtimeEnv = {
-    SOUNDS = "${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo";
-    SOUNDS_EXTENSION = ".ogg";
-  };
+    runtimeEnv = {
+      SOUNDS = "${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo";
+      SOUNDS_EXTENSION = ".ogg";
+    };
 
-  meta = {
-    homepage = "https://github.com/nukdokplex/ncaa";
-    description = "Window manager (Hyprland and Sway) helper utilities.";
-    shortDescription = final.meta.description;
-    license = [ lib.licenses.gpl3-only ];
-    sourceProvenance = [ lib.sourceTypes.fromSource ];
-    maintainers = [ lib.maintainers.nukdokplex ];
-    platforms = [ lib.platforms.all ];
-  };
-})
+    meta = {
+      homepage = "https://github.com/nukdokplex/ncaa";
+      description = "Window manager (Hyprland and Sway) helper utilities.";
+      shortDescription = final.meta.description;
+      license = [ lib.licenses.gpl3-only ];
+      sourceProvenance = [ lib.sourceTypes.fromSource ];
+      maintainers = [ lib.maintainers.nukdokplex ];
+      platforms = [ lib.platforms.all ];
+    };
+  })
+)
