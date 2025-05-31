@@ -1,14 +1,11 @@
 {
-  inputs,
   pkgs,
   ...
 }:
-{
-  nixvim = pkgs.makeNixvimWithModule {
-    inherit pkgs;
+pkgs.nixvim.makeNixvimWithModule {
+  inherit pkgs;
 
-    extraSpecialArgs = { inherit inputs; };
+  extraSpecialArgs = { inherit (pkgs) lib-custom; };
 
-    module.imports = [ ./modules ];
-  };
+  module.imports = [ ./modules ];
 }

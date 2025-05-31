@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ lib, lib-custom, ... }:
 {
-  imports = lib.custom.umport {
+  imports = lib-custom.umport {
     path = ./.;
     exclude = lib.singleton ./default.nix; # self
   };
