@@ -54,7 +54,7 @@ writeShellApplication (
       homepage = "https://github.com/nukdokplex/ncaa";
       description = "Window manager (Hyprland and Sway) helper utilities.";
       shortDescription = final.meta.description;
-      license = [ lib.licenses.gpl3-only ];
+      license = [ lib.licenses.gpl3Only ];
       sourceProvenance = [ lib.sourceTypes.fromSource ];
       maintainers = [ lib.maintainers.nukdokplex ];
       platforms = [ lib.platforms.all ];
