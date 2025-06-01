@@ -3,19 +3,20 @@
   lib,
   writeShellApplication,
 
-  kdePackages,
-  jq,
-  grim,
-  slurp,
   fuzzel,
+  grim,
+  jq,
+  kdePackages,
+  slurp,
   swappy,
+  wireplumber,
 }:
 let
   scriptsDir = ./scripts;
 
   isScript = name: value: value == "regular" && lib.hasSuffix ".sh" name;
 
-  files = builtins.mapAttrs (name: value: { inherit name value; }) (builtins.readDir scriptsDir);
+  files = lib.attrsToList (builtins.readDir scriptsDir);
   scriptNames = builtins.map (elem: elem.name) (
     builtins.filter (elem: isScript elem.name elem.value) files
   );
@@ -23,32 +24,28 @@ let
 
   rawCombinedScript =
     builtins.concatStringsSep "\n\n" (builtins.map (path: builtins.readFile path) scriptPaths)
-    + "\n\${@}"; # ${@} to call function by script arg
+    + "\n\n\"\${@}\""; # ${@} to call function by script arg
 
 in
 writeShellApplication (
   lib.fix (final: {
     name = "wm-utils";
 
-    text = rawCombinedScript;
+    text =
+      ''
+        SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
+        SOUNDS_EXTENSION='.ogg'
+      ''
+      + rawCombinedScript;
 
     runtimeInputs = [
-      # parsers
-      jq
-
-      # screenshot stuff
+      fuzzel
       grim
+      jq
       slurp
       swappy
-
-      # TODO: make separated fuzzel helper package
-      fuzzel
+      wireplumber
     ];
-
-    runtimeEnv = {
-      SOUNDS = "${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo";
-      SOUNDS_EXTENSION = ".ogg";
-    };
 
     meta = {
       homepage = "https://github.com/nukdokplex/ncaa";
@@ -57,7 +54,7 @@ writeShellApplication (
       license = [ lib.licenses.gpl3Only ];
       sourceProvenance = [ lib.sourceTypes.fromSource ];
       maintainers = [ lib.maintainers.nukdokplex ];
-      platforms = [ lib.platforms.all ];
+      platforms = lib.platforms.all;
     };
   })
 )

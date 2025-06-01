@@ -1,7 +1,7 @@
 function screenshot_region() {
   geometry=$(slurp)
   data=$(grim -l 6 -t png -g "$geometry" -)
-  notify_sound camera-shutter
+  notify_sound camera-shutter &
   echo -ne "$data" | swappy -f -
 }
 
@@ -21,6 +21,6 @@ function screenshot_output() {
   fi
   data=$(grim -c -l 5 -t png -o "$active_output" -)
 
-  notify_sound camera-shutter
+  notify_sound camera-shutter &
   echo -ne "$data" | swappy -f -
 }

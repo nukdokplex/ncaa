@@ -16,7 +16,7 @@ function power_menu_provider() {
 }
 
 function fuzzel_power_menu() {
-  notify_sound dialog-question
+  notify_sound dialog-question &
   power_menu_requester | fuzzel --dmenu --no-run-if-empty --prompt="What do you want to do?" | power_menu_provider
 }
 

@@ -1,35 +1,50 @@
 function wp_get_id() {
-  wpctl inspect $1 | head --lines 1 | awk -F ', ' '{print $1}' | awk '{print $2}'
+  wpctl inspect "$1" | head --lines 1 | awk -F ', ' '{print $1}' | awk '{print $2}'
 }
 
 function pw_get_mute_state() {
-  result=$(pw-dump | '@jq@/bin/jq' -r ".[] | select(.id==$1) | .info.params.Props | map(select(has(\"mute\")))[0] | .mute")
-  if [ "$result" = "true" ]; then
-    exit 0
-  elif [ "$result" = "false" ]; then
-    exit 1
-  fi
-  exit 2
+  local id
+  local result
+
+  id="$1"
+  result=$(pw-dump | jq -r ".[] | select(.id==$id) | .info.params.Props | map(select(has(\"mute\")))[0] | .mute")
+
+  [ "$result" = "false" ] || [ "$result" = "true" ] || return 1
+
+  echo -ne "$result"
+  return 0
 }
 
 function toggle_sound_mute() {
   # supposed to use @DEFAULT_SINK@ or @DEFAULT_INPUT@ in $1
-  id=$(wp_get_id $1)
-  pw_get_mute_state $id
+  local id
+  local state
 
-  if [ $? -eq 0 ]; then
-    # it's muted now
-    wpctl set-mute $id 0
-    notify_sound single-click
-    exit 0
-  elif [ $? -eq 1 ]; then
-    # it's not muted now
-    notify_sound double-click
-    wpctl set-mute $id 1
-    exit 0
-  fi
+  id=$(wp_get_id "$1")
+  echo "got $1 id - $id" 1>&2
 
-  # main algo didn't worked, fallback to simple toggle
-  wpctl set-mute $1 toggle
-  exit 1
+  {
+    state=$(pw_get_mute_state "$id") 
+  } || {
+    echo "got error while trying to get mute state, toggling without sound notification..." 1>&2
+    wpctl set-mute "$1" toggle
+    return 1
+  }
+
+  case "$state" in
+    true)
+      echo "unmuting..." 1>&2
+      wpctl set-mute "$id" 0
+      notify_sound device-added
+      return 0 ;;
+    false)
+      echo "muting..." 1>&2
+      notify_sound device-removed
+      wpctl set-mute "$id" 1
+      return 0 ;;
+    *)
+      echo "unexpected mute state, toggling without sound notification..." 1>&2
+      wpctl set-mute "$1" toggle
+      return 1 
+  esac
 }
