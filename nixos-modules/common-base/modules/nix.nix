@@ -10,6 +10,7 @@ let
   nixpkgsPath = "${base}/nixpkgs";
 in
 {
+  nixpkgs.config.allowUnfree = true;
   systemd.tmpfiles.rules = [
     "L+ ${nixpkgsPath} - - - - ${inputs.nixpkgs}"
   ];
