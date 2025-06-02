@@ -373,6 +373,29 @@
         "type": "github"
       }
     },
+    "flake-input-patcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "patcher-system"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748453490,
+        "narHash": "sha256-9+DQ7kxm1Fn+RHBABHuNvKJA4YlJ+Aq+cO+5g2UAXm0=",
+        "owner": "jfly",
+        "repo": "flake-input-patcher",
+        "rev": "4e2f56655bad5fba4aa5d2d5ad10db0e52cb0164",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfly",
+        "repo": "flake-input-patcher",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -1058,18 +1081,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-411842": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-I6+rTZj0CPTR6Hm2fq23EBNTWtXAib4lU8rqCvVboL8=",
-        "type": "file",
-        "url": "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/411842.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/411842.patch"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1739863612,
@@ -1161,6 +1172,21 @@
         "type": "github"
       }
     },
+    "patcher-system": {
+      "locked": {
+        "lastModified": 1680978846,
+        "narHash": "sha256-Gtqg8b/v49BFDpDetjclCYXm8mAnTrUzR0JnE2nv5aw=",
+        "owner": "nix-systems",
+        "repo": "x86_64-linux",
+        "rev": "2ecfcac5e15790ba6ce360ceccddb15ad16d08a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "x86_64-linux",
+        "type": "github"
+      }
+    },
     "picokeys-nix": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -1225,6 +1251,7 @@
         "custom-shell-yazi": "custom-shell-yazi",
         "disko": "disko",
         "ez-configs": "ez-configs",
+        "flake-input-patcher": "flake-input-patcher",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
@@ -1233,9 +1260,9 @@
         "lanzaboote": "lanzaboote",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-411842": "nixpkgs-411842",
         "nixvim": "nixvim",
         "nur": "nur",
+        "patcher-system": "patcher-system",
         "picokeys-nix": "picokeys-nix",
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
