@@ -34,7 +34,6 @@ writeShellApplication (
     text =
       ''
         SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
-        SOUNDS_EXTENSION='.ogg'
       ''
       + rawCombinedScript;
 

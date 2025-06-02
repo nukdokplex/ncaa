@@ -1,3 +1,4 @@
 function notify_sound() {
-  pw-cat -p --media-role event "${SOUNDS}/${1}${SOUNDS_EXTENSION}"
+  sound_file=$(find "$SOUNDS" -name "$1.*" -print -quit)
+  pw-cat -p --media-role event "$sound_file"
 }
