@@ -32,7 +32,7 @@ in
           (builtins.getAttr "osConfig" args).services.blueman.enable
         else
           false;
-      gpg-agent.pinentryPackage = config.programs.wayprompt.package;
+      gpg-agent.pinentry.package = config.programs.wayprompt.package;
       udiskie = {
         enable = true;
         notify = true;
