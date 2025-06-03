@@ -17,10 +17,12 @@
       bind-key R source-file ${config.home.homeDirectory}/${
         config.xdg.configFile."tmux/tmux.conf".target
       } \; display-message "tmux configuration reloaded"
-
-      bind : command-prompt
       bind r refresh-client
+      bind : command-prompt
       bind L clear-history
+
+      # --- GLOBAL OPTIONS ---
+      set -sg escape-time 0 # this disables tmux waiting key after pressing escape to make a combo, useful with vim
 
       # --- SESSIONS ---
       bind e new-session
@@ -32,8 +34,10 @@
       bind , previous-window
       bind . next-window
       bind n new-window
+      bind < swap-window -dt '{previous}'
+      bind > swap-window -dt '{next}'
       unbind &
-      bind & rename-window
+      bind & command-prompt -I "#S" { rename-window "%%" }
       bind v split-window -h
       bind s split-window -v
       bind q kill-window
@@ -55,14 +59,19 @@
       bind + select-layout main-horizontal
       bind = select-layout main-vertical
 
-      bind -nr M-h resize-pane -L 5
-      bind -nr M-j resize-pane -D 5
-      bind -nr M-k resize-pane -U 5
-      bind -nr M-l resize-pane -R 5
-      bind M-h send-keys 'C-h'
-      bind M-j send-keys 'C-j'
-      bind M-k send-keys 'C-k'
-      bind M-l send-keys 'C-l'
+      bind -nr M-h resize-pane -L 2
+      bind -nr M-j resize-pane -D 2
+      bind -nr M-k resize-pane -U 2
+      bind -nr M-l resize-pane -R 2
+      bind M-h send-keys 'M-h'
+      bind M-j send-keys 'M-j'
+      bind M-k send-keys 'M-k'
+      bind M-l send-keys 'M-l'
+
+      bind -nr M-H swap-pane -s '{left-of}'
+      bind -nr M-J swap-pane -s '{down-of}'
+      bind -nr M-K swap-pane -s '{up-of}'
+      bind -nr M-L swap-pane -s '{right-of}'
 
       bind -n 'C-\' run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys 'C-\\') || tmux select-pane -l"
       bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
@@ -79,7 +88,8 @@
       unbind -T copy-mode-vi Enter
       bind -T copy-mode-vi Enter send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 
-      # Status Bar
+      # --- STATUS BAR ---
+
       set -g status-interval 1
       set -g status-style bg=black
       set -g status-style fg=white
