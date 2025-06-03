@@ -18,7 +18,7 @@
             "<Space>" = "<NOP>";
 
             # Esc to clear search results
-            "<esc>" = ":noh<CR>";
+            "<Esc>" = ":noh<CR>";
 
             # close by Ctrl+x
             "<C-x>" = ":close<CR>";
@@ -36,7 +36,6 @@
             "<leader>k" = "<C-w>k";
             "<leader>l" = "<C-w>l";
 
-            # press H and L to jump to start and end (first and last character) respectively
             "L" = "$";
             "H" = "^";
           };
@@ -44,6 +43,21 @@
         mode = "v";
         inherit key action;
       }) { };
+      insert = lib.mapAttrsToList (key: action: {
+        mode = "i";
+        inherit key action;
+      }) { };
     in
-    lib.nixvim.keymaps.mkKeymaps { options.silent = true; } (normal ++ visual);
+    lib.nixvim.keymaps.mkKeymaps { options.silent = true; } (normal ++ visual ++ insert)
+    ++ [
+      (lib.fix (self: {
+        mode = "i";
+        key = "<Esc>";
+        action = self.key;
+        options = {
+          silent = true;
+          noremap = true;
+        };
+      }))
+    ];
 }
