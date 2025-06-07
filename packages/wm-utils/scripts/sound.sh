@@ -35,11 +35,19 @@ function toggle_sound_mute() {
     true)
       echo "unmuting..." 1>&2
       wpctl set-mute "$id" 0
-      notify_sound device-added
+      if [[ -v NONBLOCKING_NOTIFY ]] && [[ "$NONBLOCKING_NOTIFY" == "true" ]]; then
+        notify_sound device-added &
+      else
+        notify_sounds device-added
+      fi
       return 0 ;;
     false)
       echo "muting..." 1>&2
-      notify_sound device-removed
+      if [[ -v NONBLOCKING_NOTIFY ]] && [[ "$NONBLOCKING_NOTIFY" == "true" ]]; then
+        notify_sound device-removed &
+      else
+        notify_sounds device-removed
+      fi
       wpctl set-mute "$id" 1
       return 0 ;;
     *)

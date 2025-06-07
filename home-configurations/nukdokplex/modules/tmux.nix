@@ -49,35 +49,43 @@
       set -g pane-active-border-style fg=yellow
       set -g pane-border-style fg=cyan
 
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
       bind x kill-pane
       bind z next-layout
       bind M-z next-layout
       bind + select-layout main-horizontal
       bind = select-layout main-vertical
 
-      bind -nr M-h resize-pane -L 2
-      bind -nr M-j resize-pane -D 2
-      bind -nr M-k resize-pane -U 2
-      bind -nr M-l resize-pane -R 2
-      bind M-h send-keys 'M-h'
-      bind M-j send-keys 'M-j'
-      bind M-k send-keys 'M-k'
-      bind M-l send-keys 'M-l'
+      # resize panes
+      bind -nr C-M-h resize-pane -L 2
+      bind -nr C-M-j resize-pane -D 2
+      bind -nr C-M-k resize-pane -U 2
+      bind -nr C-M-l resize-pane -R 2
+      bind C-M-h send-keys 'C-M-h'
+      bind C-M-j send-keys 'C-M-j'
+      bind C-M-k send-keys 'C-M-k'
+      bind C-M-l send-keys 'C-M-l'
 
+      # move panes
       bind -nr M-H swap-pane -s '{left-of}'
       bind -nr M-J swap-pane -s '{down-of}'
       bind -nr M-K swap-pane -s '{up-of}'
       bind -nr M-L swap-pane -s '{right-of}'
+      bind M-H send-keys 'M-h'
+      bind M-J send-keys 'M-j'
+      bind M-K send-keys 'M-k'
+      bind M-L send-keys 'M-l'
 
-      bind -n 'C-\' run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys 'C-\\') || tmux select-pane -l"
-      bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
-      bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-j) || tmux select-pane -D"
-      bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-k) || tmux select-pane -U"
-      bind -n C-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-l) || tmux select-pane -R"
+      # focus panes
+      bind -n 'M-\' run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys 'C-\\') || tmux select-pane -l"
+      bind -n M-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
+      bind -n M-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-j) || tmux select-pane -D"
+      bind -n M-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-k) || tmux select-pane -U"
+      bind -n M-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-l) || tmux select-pane -R"
+      bind 'M-\' send-keys 'M-\'
+      bind 'M-h' send-keys 'M-h'
+      bind 'M-j' send-keys 'M-j'
+      bind 'M-k' send-keys 'M-k'
+      bind 'M-l' send-keys 'M-l'
 
       # --- COPY MODE ---
 
