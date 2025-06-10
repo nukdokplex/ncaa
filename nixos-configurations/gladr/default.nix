@@ -1,14 +1,17 @@
 {
   pkgs,
+  lib,
+  lib',
   ezModules,
+  config,
   inputs,
   ...
 }:
 {
   imports =
-    inputs.self.lib.umport {
+    lib'.umport {
       path = ./modules;
-      exclude = [ ./modules/sway.nix ];
+      recursive = false;
     }
     ++ [
       ezModules.common-desktop
@@ -26,4 +29,5 @@
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDo2pi5x42hS1jbB9gHvMfr3iiDWr4Mpe5CPNhpddIGH root@gladr";
 
   hardware.bluetooth.enable = true;
+  services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
 }

@@ -1,6 +1,6 @@
-{ lib, final, ... }:
+{ lib, ... }:
 {
-  network.ipv6.genEUI64Suffix =
+  genEUI64Suffix =
     mac:
     let
       sanitizedMac = builtins.replaceStrings [ ":" "." ] [ "" "" ] (lib.toLower mac);
@@ -12,6 +12,4 @@
       ];
     in
     lib.toLower (builtins.concatStringsSep ":" resultHextets);
-
-  inherit (final.network.ipv6) getEUI64Suffix;
 }

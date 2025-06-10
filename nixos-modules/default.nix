@@ -25,4 +25,8 @@
       usb-essentials
       via
     ]);
+
+  nixpkgs.overlays = [
+    inputs.self.outputs.overlays.pkgs
+  ];
 }

@@ -14,11 +14,11 @@
       inputs.nix-index-database.hmModules.nix-index
     ]
     ++ (with ezModules; [
+      file-roller
       gaming
       is-desktop
-      hyprland
-      sway
       nemo
-      file-roller
+      nm-applet
+      wm-settings
     ]);
 }

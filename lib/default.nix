@@ -7,9 +7,17 @@ let
     exclude = [ ./default.nix ];
   };
 
-  modifications = lib.fix (final: builtins.map (file: import file { inherit final lib; }) files);
-
+  callLib = lib: file: (import file) { inherit lib; };
 in
 {
-  flake.lib = builtins.foldl' (acc: elem: lib.recursiveUpdate acc elem) lib modifications;
+  # this is nixpkgs lib + custom lib
+  # aware of ton evaluation warnings you will encounter
+  flake.lib = lib.extend (
+    final: prev: builtins.foldl' (acc: elem: acc // (callLib final elem)) { } files
+  );
+
+  # only custom lib
+  flake.lib' = lib.fix (
+    final: builtins.foldl' (acc: elem: acc // (callLib (lib // final) elem)) { } files
+  );
 }

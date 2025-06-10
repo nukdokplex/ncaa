@@ -1,13 +1,12 @@
 {
   config,
   lib,
+  lib',
   pkgs,
   inputs,
   ...
 }:
 let
-  obfuscatedMail = "moc_liamg[has]nukdokplex";
-  deobfuscatedMail = inputs.self.lib.deobfuscateMail obfuscatedMail;
   tld = "nukdokplex.ru";
 in
 {
@@ -35,7 +34,7 @@ in
     acceptTerms = true;
     useRoot = true;
     defaults = {
-      email = deobfuscatedMail;
+      email = "nukdokplex@gmail.com";
       renewInterval = "daily";
       environmentFile = "${pkgs.writeText "desec-acme-credentials" ''
         DESEC_TOKEN_FILE=${config.age.secrets.desec.path}

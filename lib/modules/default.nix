@@ -1,6 +1,4 @@
-{ lib, final, ... }:
+{ lib, ... }:
 {
-  modules.umport = (import ./umport.nix) lib;
-
-  inherit (final.modules) umport;
+  umport = (import ./umport.nix) lib;
 }

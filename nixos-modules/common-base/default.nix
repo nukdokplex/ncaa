@@ -1,8 +1,13 @@
-{ inputs, ezModules, ... }:
+{
+  inputs,
+  ezModules,
+  lib',
+  ...
+}:
 {
   imports =
     [ ]
-    ++ inputs.self.lib.umport {
+    ++ lib'.umport {
       path = ./modules;
       recursive = false;
     };

@@ -11,7 +11,7 @@
     pkgs =
       final: prev:
       withSystem prev.stdenv.hostPlatform.system (
-        { system, ... }:
+        { system, config, ... }:
         let
           packageNameValuePairs = lib.attrsToList config.packages;
           packagePathPkgPairs = builtins.map (elem: {
@@ -24,18 +24,9 @@
         ) { } packagePathPkgPairs
       );
 
-    # library functions
-    # there is a reason why i don't modify lib
-    lib-custom = final: prev: { lib-custom = inputs.self.outputs.lib; };
-
-    # imports pkgs and custom-lib
-    default = lib.composeManyExtensions (
-      with inputs.self.outputs.overlays;
-      [
-        pkgs
-        custom-lib
-      ]
-    );
+    lib-custom = final: prev: {
+      lib-custom = config.flake.lib';
+    };
 
     # imports flake inputs' overlays
     imported = lib.composeManyExtensions (

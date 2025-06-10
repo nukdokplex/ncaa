@@ -2,13 +2,16 @@
   pkgs,
   ezModules,
   inputs,
+  lib',
+  lib,
+  config,
   ...
 }:
 {
   imports =
-    inputs.self.lib.umport {
+    lib'.umport {
       path = ./modules;
-      exclude = [ ./modules/sway.nix ];
+      recursive = false;
     }
     ++ [
       ezModules.common-desktop
@@ -28,6 +31,7 @@
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
   hardware.bluetooth.enable = true;
+  services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
 
   home-manager.sharedModules = [
     {

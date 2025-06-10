@@ -1,12 +1,16 @@
-{ inputs, ezModules, ... }:
+{
+  inputs,
+  ezModules,
+  lib',
+  ...
+}:
 {
   imports =
     [
       ezModules.common-base
     ]
-    ++ inputs.self.lib.umport {
+    ++ lib'.umport {
       path = ./modules;
       recursive = false;
-      exclude = [ ./modules/hyprland.nix ];
     };
 }

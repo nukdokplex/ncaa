@@ -1,13 +1,16 @@
-{ lib, final, ... }:
+{ lib, ... }:
 let
   directionKeys = lib.fix (keys: {
     # up right down left
+    _count = builtins.length keys.direction;
     direction = [
       "up"
       "right"
       "down"
       "left"
     ];
+    hyprland.direction = builtins.map (key: builtins.substring 0 1 key) keys.direction;
+
     wasd = [
       "w"
       "d"
@@ -38,8 +41,14 @@ let
         y = 0;
       }
     ];
+    swayResize = [
+      "resize shrink height"
+      "resize grow width"
+      "resize grow height"
+      "resize shrink width"
+    ];
     xkbNoPrefix = {
-      arrow = map (key: "${key}arrow") keys.direction;
+      arrow = map (key: "${lib.capitalizeString key}") keys.direction;
       wasd = map (key: lib.toUpper key) keys.wasd;
       hjkl = map (key: lib.toUpper key) keys.hjkl;
     };
@@ -49,6 +58,7 @@ let
   });
 
   numberKeys = lib.fix (keys: {
+    _count = builtins.length keys.number;
     number = builtins.genList (x: x + 1) 10;
     digit = builtins.map (
       x:
@@ -79,23 +89,17 @@ let
   });
 
   genParams =
-    params: count:
+    params:
     let
-      attrsList = lib.mapAttrsRecursive (path: value: { inherit path value; }) params;
+      attrsList = lib.attrsToListRecursive params;
     in
     builtins.genList (
       i:
-      builtins.foldl' (
-        acc: elem: lib.recursiveUpdate acc (lib.setAttrByPath elem.path (builtins.elemAt elem.value i))
-      ) { } attrsList
-    ) count;
+      lib.mapAttrsRecursive (_: value: if lib.isList value then builtins.elemAt value i else value) params
+    ) params._count;
 in
 {
-  keyboard.withDirections =
-    f: builtins.map (e: f e) (genParams directionKeys (builtins.length directionKeys.direction));
+  withDirections = f: builtins.map (e: f e) (genParams directionKeys);
 
-  keyboard.withNumbers =
-    f: builtins.map (e: f e) (genParams numberKeys (builtins.length numberKeys.digits));
-
-  inherit (final.keyboard) withDirections withNumbers;
+  withNumbers = f: builtins.map (e: f e) (genParams numberKeys);
 }

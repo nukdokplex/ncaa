@@ -3,6 +3,8 @@
   config,
   ezModules,
   inputs,
+  lib',
+  lib,
   ...
 }:
 {
@@ -10,7 +12,7 @@
     [
       ezModules.common
     ]
-    ++ (inputs.self.lib.umport {
+    ++ (lib'.umport {
       path = ./modules;
     });
 

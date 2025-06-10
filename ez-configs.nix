@@ -8,6 +8,7 @@
   ezConfigs = {
     globalArgs = {
       inherit inputs flakeRoot;
+      lib' = config.flake.lib';
     };
     root = ./.;
     nixos.hosts = {

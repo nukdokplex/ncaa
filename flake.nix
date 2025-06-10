@@ -102,14 +102,14 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
       { lib, config, ... }:
       {
-        flake.lib = import ./lib { inherit lib; };
         _module.args.flakeRoot = ./.;
-        _module.args.lib-custom = config.lib;
+        _module.args.lib-custom = config.flake.lib';
 
         imports = [
           inputs.ez-configs.flakeModule
           inputs.agenix-rekey.flakeModule
           inputs.pkgs-by-name-for-flake-parts.flakeModule
+          ./lib
           ./overlays.nix
           ./ez-configs.nix
           ./picokeys.nix
