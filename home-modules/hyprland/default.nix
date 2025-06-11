@@ -107,9 +107,9 @@
 
       # appearance
       decoration = {
-        shadow.enabled = config.wm-settings.beEnergyEfficient;
+        shadow.enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
         blur = {
-          enabled = config.wm-settings.beEnergyEfficient;
+          enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
           size = 1;
           passes = 3;
           new_optimizations = true;
@@ -120,7 +120,7 @@
       };
 
       animations = {
-        enabled = true;
+        enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
 
         bezier = [
           "linear, 0, 0, 1, 1"
@@ -158,7 +158,7 @@
         ];
       };
 
-      misc.vfr = config.wm-settings.beEnergyEfficient;
+      misc.vfr = lib.mkDefault config.wm-settings.beEnergyEfficient;
 
       xwayland.force_zero_scaling = true;
     };
