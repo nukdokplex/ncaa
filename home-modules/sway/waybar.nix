@@ -19,8 +19,8 @@ in
     Unit = {
       Description = "Highly customizable Wayland bar for Sway and Wlroots based compositors.";
       Documentation = "https://github.com/Alexays/Waybar/wiki";
-      PartOf = [ "sway.target" ];
-      After = [ "sway.target" ];
+      PartOf = [ "sway-session.target" ];
+      After = [ "sway-session.target" ];
       ConditionEnvironment = "WAYLAND_DISPLAY";
       X-Restart-Triggers = [
         "${config.xdg.configFile."waybar/sway".source}"
@@ -38,7 +38,7 @@ in
       Restart = "on-failure";
     };
 
-    Install.WantedBy = [ "sway.target" ];
+    Install.WantedBy = [ "sway-session.target" ];
   };
 
   imports = [
