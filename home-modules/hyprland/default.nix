@@ -10,10 +10,14 @@
 {
   wayland.windowManager.hyprland = {
     enable = lib.mkDefault (lib.attrByPath [ "osConfig" "programs" "hyprland" "enable" ] false args);
-    plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
-      # hyprbars
-      hyprexpo
-    ];
+    plugins =
+      with inputs.hyprland-plugins.packages.${pkgs.system};
+      with inputs.hy3.packages.${pkgs.system};
+      [
+        # hyprbars
+        hyprexpo
+        hy3
+      ];
     settings = {
       "$mainMod" = "SUPER";
       # autostarts
@@ -85,7 +89,7 @@
         gaps_out = 10;
 
         border_size = 3;
-        layout = "dwindle";
+        layout = "hy3";
         allow_tearing = false;
       };
 
