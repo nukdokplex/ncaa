@@ -4,14 +4,20 @@
   lib,
   inputs,
   flakeRoot,
+  ezModules,
   ...
 }:
 let
   falhofnir = inputs.self.nixosConfigurations.falhofnir.config;
 in
 {
+  imports = [
+    ezModules.dnscrypt
+  ];
+
   services.sing-box = {
     enable = lib.mkDefault true;
+    # there is template to pin sing-box version
     # package = pkgs.sing-box.overrideAttrs (
     #   final: prev: {
     #     version = "1.12.0-beta.18";
@@ -129,35 +135,25 @@ in
         }
       ];
       dns = {
-        servers =
-          [
-            {
-              tag = "google";
-              address = "tcp://8.8.8.8";
-              detour = "direct-out";
-            }
-            {
-              tag = "cloudflare";
-              address = "tcp://1.1.1.1";
-              detour = "direct-out";
-            }
-          ]
-          ++ (builtins.map
-            (name: {
-              tag = "dnscry-pt-${name}";
-              address = "tls://${name}.dnscry.pt";
-              address_resolver = "google";
-              address_strategy = "prefer_ipv4";
-              detour = "direct-out";
-            })
-            [
-              "mow01"
-              "ams01"
-              "ams02"
-            ]
-          );
-
-        final = "dnscry-pt-ams01";
+        servers = [
+          {
+            tag = "google";
+            address = "tcp://8.8.8.8";
+            detour = "direct-out";
+          }
+          {
+            tag = "cloudflare";
+            address = "tcp://1.1.1.1";
+            detour = "direct-out";
+          }
+          {
+            tag = "local-dnscrypt";
+            address = "udp://[::1]:53";
+            detour = "direct-out";
+          }
+        ];
+        final = "local-dnscrypt";
+        disable_cache = true; # we don't need dns cache since we use dnscrypt-proxy2
         strategy = "prefer_ipv6";
       };
 
