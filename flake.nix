@@ -58,7 +58,7 @@
     nur.inputs.flake-parts.follows = "flake-parts";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
-    picokeys-nix.url = "github:nukdokplex/picokeys-nix";
+    picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
     pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
