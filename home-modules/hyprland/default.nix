@@ -24,7 +24,7 @@
       exec-once =
         [
           "'${lib.getExe' pkgs.pipewire "pw-cat"}' --media-role Notification -p '${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg' &"
-          "'${lib.getExe pkgs.soteria}'"
+          "'${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent'"
         ]
         ++ builtins.map (
           e: "[workspace ${toString e.workspaceNumber} silent] ${e.command}"
