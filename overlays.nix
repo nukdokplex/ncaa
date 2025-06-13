@@ -24,6 +24,21 @@
         ) { } packagePathPkgPairs
       );
 
+    overrides = final: prev: {
+      wl-clipboard = prev.wl-clipboard.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          version = "2.2-unstable-2024-04-24";
+
+          src = prev.fetchFromGitHub {
+            owner = "bugaevc";
+            repo = "wl-clipboard";
+            rev = "aaa927ee7f7d91bcc25a3b68f60d01005d3b0f7f";
+            hash = "sha256-V8JAai4gZ1nzia4kmQVeBwidQ+Sx5A5on3SJGSevrUU=";
+          };
+        }
+      );
+    };
+
     lib-custom = final: prev: {
       lib-custom = config.flake.lib';
     };
