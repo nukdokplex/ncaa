@@ -7,6 +7,7 @@
 {
   services.hypridle = {
     enable = true;
+    systemdTarget = "hyprland-session.target";
     settings = {
       general = {
         after_sleep_cmd = "hyprctl dispatch dpms on";
@@ -34,13 +35,6 @@
           timeout = systemSuspend;
           on-timeout = "systemctl suspend";
         };
-    };
-  };
-  systemd.user.services.hypridle = {
-    Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
-    Unit = {
-      After = lib.mkForce [ "hyprland-session.target" ];
-      PartOf = lib.mkForce [ "hyprland-session.target" ];
     };
   };
 }
