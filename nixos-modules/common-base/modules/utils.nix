@@ -22,6 +22,7 @@
     nix-index
     nix-search-cli
     nixpkgs-fmt
+    nurl
     psmisc
     sl
     vim
