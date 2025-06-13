@@ -130,7 +130,7 @@ in
       ", XF86AudioPrev, Previous media in playlist, exec, '${lib.getExe pkgs.playerctl}' previous"
       ", XF86AudioNext, Next media in playlist, exec, '${lib.getExe pkgs.playerctl}' next"
       "$mainMod, M, Toggle mute for default audio sink, exec, '${wm-utils}' toggle_sound_mute @DEFAULT_SINK@"
-      "$mainMod Shift_L, M, Toggle mute for default audio source, exec, '${wm-utils}' toggle_sound_mute @DEFAULT_SOURCE@"
+      "$mainMod Shift_L, M, Toggle mute for default audio source, exec, NONBLOCKING_NOTIFY=true '${wm-utils}' toggle_sound_mute @DEFAULT_SOURCE@"
     ];
   };
 
