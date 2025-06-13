@@ -131,9 +131,10 @@
               config = {
                 allowUnfree = true;
               };
-              overlays = [
-                config.flake.overlays.imported
-                config.flake.overlays.lib-custom
+              overlays = with config.flake.overlays; [
+                imported
+                lib-custom
+                overrides
                 # do not use pkgs overlay, you will encounter infinite recursion
               ];
             };
