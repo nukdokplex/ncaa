@@ -173,6 +173,17 @@ in
       isDefault = true;
       accountsOrder = builtins.map (a: a.address) accounts;
     };
+    settings = {
+      "mail.biff.play_sound" = true;
+      "mail.biff.play_sound.type" = 1;
+      "mail.biff.play_sound.url" =
+        "file://${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/message-new-email.ogg";
+
+      "mail.chat.play_sound" = true;
+      "mail.chat.play_sound.type" = 1;
+      "mail.chat.play_sound.url" =
+        "file://${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/message-new-instant.ogg";
+    };
   };
 
   programs.himalaya = {
