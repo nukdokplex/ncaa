@@ -124,7 +124,8 @@
       };
 
       animations = {
-        enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
+        # enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
+        enabled = lib.mkDefault false;
 
         bezier = [
           "linear, 0, 0, 1, 1"
