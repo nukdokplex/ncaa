@@ -32,6 +32,7 @@ in
 
   mailserver = {
     enable = true;
+    stateVersion = 1;
     fqdn = "${config.networking.hostName}.nukdokplex.ru";
     domains = [
       "nukdokplex.ru"
