@@ -42,7 +42,7 @@ in
     };
   });
 
-  services.ddclient.usev6 = lib.mkDefault "cmdv6, cmdv6=\"'${
+  services.ddclient.usev6 = "cmdv6, cmdv6=\"'${
     lib.getExe inputs.self.packages.${pkgs.system}.getv6addresses
   }' -p -x | tr '\\n' ',' | sed 's/,*$//'\"";
 }
