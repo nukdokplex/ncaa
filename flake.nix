@@ -12,8 +12,10 @@
 
     # systems
     systems.url = "github:nix-systems/default-linux";
+
     # this system is made to be a simple manipulator of flake-input-patcher's system since there is no any
     patcher-system.url = "github:nix-systems/x86_64-linux";
+
     # alphabetically ordered
     agenix-rekey.inputs.flake-parts.follows = "flake-parts";
     agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
@@ -31,9 +33,9 @@
     ez-configs.inputs.flake-parts.follows = "flake-parts";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
     ez-configs.url = "github:ehllie/ez-configs";
-    flake-input-patcher.url = "github:jfly/flake-input-patcher";
     flake-input-patcher.inputs.nixpkgs.follows = "nixpkgs";
     flake-input-patcher.inputs.systems.follows = "patcher-system";
+    flake-input-patcher.url = "github:jfly/flake-input-patcher";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -60,6 +62,7 @@
     nur.url = "github:nix-community/nur";
     picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
     pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
@@ -107,14 +110,16 @@
         _module.args.flakeRoot = ./.;
         _module.args.lib-custom = config.flake.lib';
 
-        imports = [
-          inputs.ez-configs.flakeModule
-          inputs.agenix-rekey.flakeModule
-          inputs.pkgs-by-name-for-flake-parts.flakeModule
+        imports = with inputs; [
+          ez-configs.flakeModule
+          agenix-rekey.flakeModule
+          pkgs-by-name-for-flake-parts.flakeModule
           ./lib
           ./overlays.nix
           ./ez-configs.nix
           ./picokeys.nix
+          ./devshells.nix
+          ./checks.nix
         ];
 
         systems = import inputs.systems;
@@ -141,18 +146,8 @@
           in
           {
             _module.args.pkgs = import inputs.nixpkgs nixpkgsArgs;
-
             formatter = pkgs.nixfmt-rfc-style;
             pkgsDirectory = ./packages;
-
-            devShells.agenix-rekey = pkgs.mkShell {
-              nativeBuildInputs = [
-                pkgs.agenix-rekey.package
-                pkgs.rage
-                pkgs.age-plugin-yubikey
-                pkgs.age-plugin-fido2-hmac
-              ];
-            };
           };
       }
     );
