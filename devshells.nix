@@ -19,11 +19,13 @@
 
         inputsFrom = [ ];
 
-        shellHook = ''
-          export SHELL=$(which zsh)
-          exec $SHELL -i
-          echo "You are in devshell, cowboy!
-        '';
+        shellHook =
+          config.checks.pre-commit-check.shellHook
+          + ''
+            export SHELL=$(which zsh)
+            exec $SHELL -i
+            echo "You are in devshell, cowboy!
+          '';
       };
     };
 }
