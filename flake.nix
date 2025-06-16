@@ -148,6 +148,7 @@
             _module.args.pkgs = import inputs.nixpkgs nixpkgsArgs;
             formatter = pkgs.nixfmt-rfc-style;
             pkgsDirectory = ./packages;
+            agenix-rekey.agePackage = pkgs.age;
           };
       }
     );
