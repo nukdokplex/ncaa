@@ -169,15 +169,19 @@ in
           }
           { action = "sniff"; }
           {
-            rule_set = [
-              "ru-bundle"
-              "discord-voice-ip-list"
+            # my own list
+            domain_suffix = [
+              "myip.com" # that one is just to test if proxy is working
+              "sing-box-sagernet.org" # sing-box docs, expected to be blocked some time
+              "paheal.net" # not present it lists for some reason
             ];
             outbound = "proxy-out";
           }
           {
-            # just to test proxy is working properly
-            domain_suffix = "myip.com";
+            rule_set = [
+              "ru-bundle"
+              "discord-voice-ip-list"
+            ];
             outbound = "proxy-out";
           }
         ];
@@ -187,7 +191,7 @@ in
             type = "remote";
             format = "binary";
             url = "https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.srs";
-            download_detour = "direct-out";
+            download_detour = "proxy-out";
             update_interval = "168h0m0s";
           }
           {
@@ -195,7 +199,7 @@ in
             type = "remote";
             format = "binary";
             url = "https://github.com/legiz-ru/sb-rule-sets/raw/main/discord-voice-ip-list.srs";
-            download_detour = "direct-out";
+            download_detour = "proxy-out";
             update_interval = "168h0m0s";
           }
         ];
