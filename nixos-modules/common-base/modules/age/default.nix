@@ -13,8 +13,8 @@
     ];
     masterIdentities = [
       {
-        identity = ./pico-fido-1.pub;
-        pubkey = "age10crup2cf6jkhytl0xm03wns6heewn3rvxaan7jp85990mwwas3fs8392z9";
+        identity = ./fido2-identity.txt;
+        pubkey = "age1xgn3qvls0p7gp5hwkk65zzfak8wfluy3r8z466j0tvg3d9ssyaasp05k8q";
       }
     ];
     extraEncryptionPubkeys = [
