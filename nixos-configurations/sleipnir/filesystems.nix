@@ -93,10 +93,8 @@
               "documents"
               "music"
               "pictures"
-              "publicShare"
               "templates"
               "videos"
-              "keepass"
             ]
         );
       }
