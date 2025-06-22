@@ -16,6 +16,7 @@
       tssp.nixosModules.default
     ])
     ++ (with ezModules; [
+      agenix-rekey-generators
       k3b-custom
       lutris
       nixpkgs-overlays
