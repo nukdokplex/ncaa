@@ -8,6 +8,48 @@
 let
   getDeviceId = hostname: builtins.readFile (flakeRoot + /secrets/generated/${hostname}/syncthing-id);
   getPublicKeyPath = hostname: flakeRoot + /secrets/generated/${hostname}/syncthing-public.pem;
+  cfg = config.services.syncthing;
+  isUnixGui = (builtins.substring 0 1 cfg.guiAddress) == "/";
+
+  # Syncthing supports serving the GUI over Unix sockets. If that happens, the
+  # API is served over the Unix socket as well.  This function returns the correct
+  # curl arguments for the address portion of the curl command for both network
+  # and Unix socket addresses.
+  curlAddressArgs =
+    path:
+    if
+      isUnixGui
+    # if cfg.guiAddress is a unix socket, tell curl explicitly about it
+    # note that the dot in front of `${path}` is the hostname, which is
+    # required.
+    then
+      "--unix-socket ${cfg.guiAddress} http://.${path}"
+    # no adjustments are needed if cfg.guiAddress is a network address
+    else
+      "${cfg.guiAddress}${path}";
+
+  updateGuiCredentials = pkgs.writers.writeBash "update-syncthing-gui-credentials" ''
+    set -efu
+
+    # be careful not to leak secrets in the filesystem or in process listings
+    umask 0077
+
+    curl() {
+        # get the api key by parsing the config.xml
+        while
+            ! ${pkgs.libxml2}/bin/xmllint \
+                --xpath 'string(configuration/gui/apikey)' \
+                ${cfg.configDir}/config.xml \
+                >"$RUNTIME_DIRECTORY/api_key"
+        do sleep 1; done
+        (printf "X-API-Key: "; cat "$RUNTIME_DIRECTORY/api_key") >"$RUNTIME_DIRECTORY/headers"
+        ${pkgs.curl}/bin/curl -sSLk -H "@$RUNTIME_DIRECTORY/headers" \
+            --retry 1000 --retry-delay 1 --retry-all-errors \
+            "$@"
+    }
+
+    curl -X PUT -d "{ \"user\": \"nukdokplex\", \"password\": \"$(cat ${config.age.secrets.syncthing-hashed-password.path})\" }" ${curlAddressArgs "/rest/config/gui"}
+  '';
 in
 {
   services.syncthing = {
@@ -131,6 +173,8 @@ in
     PrivateUsers = lib.mkForce false;
   };
 
+  systemd.services.syncthing-init.serviceConfig.ExecStartPre = updateGuiCredentials;
+
   networking.nftables.tables.filter.content =
     lib.mkIf (config.services.syncthing.enable && config.services.syncthing.openDefaultPorts)
       ''
@@ -146,4 +190,12 @@ in
     owner = config.services.syncthing.user;
     group = config.services.syncthing.group;
   };
+
+  age.secrets.syncthing-hashed-password = {
+    rekeyFile = flakeRoot + /secrets/non-generated/common/syncthing-hashed-password.age;
+    mode = "400";
+    owner = config.services.syncthing.user;
+    group = config.services.syncthing.group;
+  };
+
 }
