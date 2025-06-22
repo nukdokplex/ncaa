@@ -31,10 +31,6 @@
         pkgs.system == "x86_64-linux"
       ) inputs.picokeys-nix.packages.x86_64-linux.pico-fido-tool;
 
-    services = {
-      syncthing.enable = true;
-    };
-
     programs.obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
