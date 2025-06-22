@@ -13,7 +13,7 @@
     ];
     masterIdentities = [
       {
-        identity = ./fido2-identity.txt;
+        identity = ./fido2-identity.pub;
         pubkey = "age1xgn3qvls0p7gp5hwkk65zzfak8wfluy3r8z466j0tvg3d9ssyaasp05k8q";
       }
     ];
