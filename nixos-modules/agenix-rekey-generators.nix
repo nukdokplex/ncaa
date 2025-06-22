@@ -52,6 +52,24 @@ in
 
     sing-box-rand-base64-16 = sing-box-rand-base64 16;
     sing-box-rand-base64-32 = sing-box-rand-base64 32;
+
+    syncthing-keypair =
+      {
+        pkgs,
+        lib,
+        file,
+        ...
+      }:
+      ''
+        tmp=$(mktemp -d)
+        '${lib.getExe pkgs.syncthing}' generate --home="$tmp"
+
+        cat "$tmp/cert.pem" > ${lib.escapeShellArg (lib.removeSuffix ".age" file + "-public.pem")}
+        '${lib.getExe pkgs.xmlstarlet}' sel -T -t -v '(//configuration/device)[1]/@id' "$tmp/config.xml" > ${
+          lib.escapeShellArg (lib.removeSuffix ".age" file + "-id")
+        }
+        cat "$tmp/key.pem"
+      '';
   };
 
 }
