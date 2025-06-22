@@ -45,17 +45,16 @@ in
         "nukdokplex"
         "nukdokplex.ru"
       ]
-    } =
-      {
-        hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
-        aliases = builtins.map (
-          alias:
-          builtins.concatStringsSep "@" [
-            alias.username
-            alias.domain
-          ]
-        ) nukdokplexAliases;
-      };
+    } = {
+      hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
+      aliases = builtins.map (
+        alias:
+        builtins.concatStringsSep "@" [
+          alias.username
+          alias.domain
+        ]
+      ) nukdokplexAliases;
+    };
     certificateScheme = "manual";
     certificateFile = "${
       config.security.acme.certs.${config.networking.hostName}.directory

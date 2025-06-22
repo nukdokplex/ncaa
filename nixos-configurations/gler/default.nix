@@ -9,7 +9,9 @@
 {
   imports =
     lib'.umport {
-      path = ./modules;
+      path = ./.;
+      exclude = [ ./default.nix ];
+      recursive = false;
     }
     ++ [
       ezModules.common-base
