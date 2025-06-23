@@ -39,5 +39,15 @@
         obs-pipewire-audio-capture
       ];
     };
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+
+    home.sessionVariables = {
+      GTK_USE_PORTAL = "1";
+      NIXOS_XDG_OPEN_USE_PORTAL = "1";
+    };
   };
 }

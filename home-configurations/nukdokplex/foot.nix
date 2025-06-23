@@ -3,7 +3,6 @@
   programs.foot = {
     enable = lib.mkDefault config.home.isDesktop;
     settings = {
-      colors.alpha = lib.mkForce "0.7";
       mouse = {
         hide-when-typing = "yes";
       };

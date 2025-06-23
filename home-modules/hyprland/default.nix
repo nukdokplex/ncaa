@@ -9,7 +9,14 @@
 }@args:
 {
   wayland.windowManager.hyprland = {
-    enable = lib.mkDefault (lib.attrByPath [ "osConfig" "programs" "hyprland" "enable" ] false args);
+    enable = lib.mkDefault (
+      lib.attrByPath [
+        "osConfig"
+        "programs"
+        "hyprland"
+        "enable"
+      ] false args
+    );
     plugins =
       with inputs.hyprland-plugins.packages.${pkgs.system};
       with inputs.hy3.packages.${pkgs.system};
@@ -96,6 +103,7 @@
 
       layerrule = [
         "noanim, selection" # disable animation for some utilities like slurp
+        "blur, waybar" # enable blur for waybar layer because it's not enabled by default for some reason
       ];
 
       # window rules
@@ -115,8 +123,8 @@
         shadow.enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
         blur = {
           enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
-          size = 1;
-          passes = 3;
+          size = 7;
+          passes = 4;
           new_optimizations = true;
         };
 
@@ -171,6 +179,7 @@
       env = [
         "NIXOS_OZONE_WL,1"
         "ELECTRON_OZONE_PLATFORM_HINT,wayland"
+        "GTK_USE_PORTAL,1"
       ];
     };
 
