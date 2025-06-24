@@ -26,10 +26,12 @@
 
         environment.systemPackages = with pkgs; [
           nautilus
+          file-roller
         ];
 
         services.dbus.packages = with pkgs; [
           nautilus
+          file-roller
         ];
 
         services.gnome.sushi.enable = true;
