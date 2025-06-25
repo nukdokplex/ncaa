@@ -53,6 +53,8 @@
     lanzaboote.url = "github:nix-community/lanzaboote";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.url = "github:nix-community/nix-index-database";
+    nixcord.inputs.nixpkgs.follows = "nixpkgs";
+    nixcord.url = "github:KaylorBen/nixcord";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nuschtosSearch.follows = "";
