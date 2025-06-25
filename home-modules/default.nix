@@ -12,6 +12,7 @@
       inputs.nixvim.homeManagerModules.nixvim
       inputs.hyprland.homeManagerModules.default
       inputs.nix-index-database.hmModules.nix-index
+      inputs.nixcord.homeModules.nixcord
     ]
     ++ (with ezModules; [
       file-roller

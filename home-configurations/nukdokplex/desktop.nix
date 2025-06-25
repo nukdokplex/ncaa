@@ -12,7 +12,6 @@
       with pkgs;
       [
         onlyoffice-desktopeditors
-        vesktop
         keepassxc
         ayugram-desktop
         qbittorrent
