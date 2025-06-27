@@ -99,9 +99,9 @@
       inputs = patcher.patch unpatchedInputs {
         nixpkgs.patches = [
           (patcher.fetchpatch {
-            name = "epson_201310w: init at 1.0.1";
-            url = "https://github.com/NixOS/nixpkgs/pull/411842.patch";
-            hash = "sha256-S5ykGoC0Gs/yaqn7LKuYtivV23CjBZ3wFsykT/nmBIA=";
+            name = "age-plugin-openpgp-card: init at 0.1.1";
+            url = "https://github.com/NixOS/nixpkgs/pull/417923.patch";
+            hash = "sha256-vtvVgo8DX1kPJejYLk8XMneS5sYn0tpJdNuHrgqOg9Q=";
           })
         ];
       };

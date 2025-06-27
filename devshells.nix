@@ -10,7 +10,7 @@
           [
             age-plugin-fido2-hmac
             age-plugin-yubikey
-            config.packages.age-plugin-openpgp-card
+            age-plugin-openpgp-card
             agenix-rekey
             git
             age
