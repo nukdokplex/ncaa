@@ -27,7 +27,7 @@
         openpgp-card-tools
       ]
       ++ lib.optional (
-        pkgs.system == "x86_64-linux"
+        pkgs.stdenv.hostPlatform.system == "x86_64-linux"
       ) inputs.picokeys-nix.packages.x86_64-linux.pico-fido-tool;
 
     programs.obs-studio = {
