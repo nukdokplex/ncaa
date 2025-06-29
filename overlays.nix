@@ -8,12 +8,14 @@
 {
   flake.overlays = {
     # this adds all packages under outputs.packages.${system}
-    pkgs =
+    packages =
       final: prev:
-      withSystem prev.stdenv.hostPlatform.system (
-        { system, config, ... }:
+      let
+        system = prev.stdenv.hostPlatform.system;
+      in
+      if builtins.elem system config.systems then
         let
-          packageNameValuePairs = lib.attrsToList config.packages;
+          packageNameValuePairs = lib.attrsToList inputs.self.outputs.packages.${system};
           packagePathPkgPairs = builtins.map (elem: {
             path = lib.splitString "/" elem.name;
             pkg = elem.value;
@@ -22,7 +24,8 @@
         builtins.foldl' (
           acc: elem: lib.recursiveUpdate acc (lib.setAttrByPath elem.path elem.pkg)
         ) { } packagePathPkgPairs
-      );
+      else
+        { };
 
     overrides = final: prev: {
       wl-clipboard = prev.wl-clipboard.overrideAttrs (
@@ -43,13 +46,9 @@
       lib-custom = config.flake.lib';
     };
 
-    # imports flake inputs' overlays
-    imported = lib.composeManyExtensions (
-      with inputs;
-      [
-        nixvim.overlays.default
-        agenix-rekey.overlays.default
-      ]
-    );
+    imports = lib.composeManyExtensions [
+      inputs.nixvim.overlays.default
+      inputs.agenix-rekey.overlays.default
+    ];
   };
 }
