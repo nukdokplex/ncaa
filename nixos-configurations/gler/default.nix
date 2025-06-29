@@ -20,7 +20,7 @@
       (modulesPath + "/profiles/qemu-guest.nix") # adds virtio and 9p kernel modules
     ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.localSystem.system = "x86_64-linux";
   time.timeZone = "Europe/Moscow";
   system.stateVersion = "25.05";
   hardware.enableAllFirmware = true;
