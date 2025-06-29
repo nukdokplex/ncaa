@@ -18,8 +18,8 @@
       ] false args
     );
     plugins =
-      with inputs.hyprland-plugins.packages.${pkgs.system};
-      with inputs.hy3.packages.${pkgs.system};
+      with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
+      with inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system};
       [
         # hyprbars
         hyprexpo
