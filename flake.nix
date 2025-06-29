@@ -3,7 +3,7 @@
 
   inputs = {
     # pinned inputs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -73,9 +73,8 @@
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
-    tssp.inputs.flake-parts.follows = "flake-parts";
+    tssp.url = "github:nukdokplex/tssp-nix?ref=dev";
     tssp.inputs.nixpkgs.follows = "nixpkgs";
-    tssp.url = "github:nukdokplex/tssp-nix";
   };
 
   # notice that this nixConfig is being imported by nixosModules.common.base
@@ -139,9 +138,9 @@
                 allowUnfree = true;
               };
               overlays = with config.flake.overlays; [
-                imported
                 lib-custom
                 overrides
+                imports
                 # do not use pkgs overlay, you will encounter infinite recursion
               ];
             };
@@ -150,7 +149,6 @@
             _module.args.pkgs = import inputs.nixpkgs nixpkgsArgs;
             formatter = pkgs.nixfmt-rfc-style;
             pkgsDirectory = ./packages;
-            agenix-rekey.agePackage = pkgs.age;
           };
       }
     );
