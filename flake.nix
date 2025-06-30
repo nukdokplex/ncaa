@@ -3,7 +3,7 @@
 
   inputs = {
     # pinned inputs
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
