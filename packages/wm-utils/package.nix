@@ -10,6 +10,9 @@
   slurp,
   swappy,
   wireplumber,
+  tesseract,
+  tts-custom,
+  ...
 }:
 let
   scriptsDir = ./scripts;
@@ -36,6 +39,10 @@ writeShellApplication {
     ''
     + rawCombinedScript;
 
+  runtimeEnv = {
+    TESSDATA_PREFIX = "${tesseract}/share/tessdata";
+  };
+
   runtimeInputs = [
     fuzzel
     grim
@@ -43,6 +50,8 @@ writeShellApplication {
     slurp
     swappy
     wireplumber
+    tesseract
+    tts-custom
   ];
 
   meta = {
