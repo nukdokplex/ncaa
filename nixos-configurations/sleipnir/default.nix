@@ -41,6 +41,13 @@
     }
   ];
 
+  home-manager.users.nukdokplex = {
+    services.ollama = {
+      enable = true;
+      acceleration = "rocm";
+    };
+  };
+
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
