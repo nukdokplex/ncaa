@@ -8,6 +8,7 @@
 }:
 let
   wm-utils = lib.getExe pkgs.wm-utils;
+  tts-custom = lib.getExe pkgs.tts-custom;
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -30,12 +31,16 @@ in
       [
         # menus
         "Control_L Alt_L, Delete, Open power menu, exec, '${wm-utils}' fuzzel_power_menu"
-        "$mainMod, T, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
+        "$mainMod, V, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
         "$mainMod, D, Run drun menu, exec, '${lib.getExe config.programs.fuzzel.package}' --show-actions"
 
         # screenshots
         "$mainMod, P, Screenshot screen region, exec, '${wm-utils}' screenshot_region"
         "$mainMod Shift_L, P, Screenshot active output, exec, '${wm-utils}' screenshot_output"
+
+        # Text-to-speech
+        "$mainMod, T, Text-to-speech (russian), exec, '${wm-utils}' tts ru"
+        "$mainMod Shift_L, T, Text-to-speech (english), exec, '${wm-utils}' tts en"
 
         # submaps
         "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
