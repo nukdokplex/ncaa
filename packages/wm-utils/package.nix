@@ -27,33 +27,29 @@ let
     + "\n\n\"\${@}\""; # ${@} to call function by script arg
 
 in
-writeShellApplication (
-  lib.fix (final: {
-    name = "wm-utils";
+writeShellApplication {
+  name = "wm-utils";
 
-    text =
-      ''
-        SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
-      ''
-      + rawCombinedScript;
+  text =
+    ''
+      SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
+    ''
+    + rawCombinedScript;
 
-    runtimeInputs = [
-      fuzzel
-      grim
-      jq
-      slurp
-      swappy
-      wireplumber
-    ];
+  runtimeInputs = [
+    fuzzel
+    grim
+    jq
+    slurp
+    swappy
+    wireplumber
+  ];
 
-    meta = {
-      homepage = "https://github.com/nukdokplex/ncaa";
-      description = "Window manager (Hyprland and Sway) helper utilities.";
-      shortDescription = final.meta.description;
-      license = [ lib.licenses.gpl3Only ];
-      sourceProvenance = [ lib.sourceTypes.fromSource ];
-      maintainers = [ lib.maintainers.nukdokplex ];
-      platforms = lib.platforms.all;
-    };
-  })
-)
+  meta = {
+    homepage = "https://github.com/nukdokplex/ncaa";
+    description = "Window manager (Hyprland and Sway) helper utilities.";
+    license = lib.licenses.gpl3Only;
+    maintainers = [ lib.maintainers.nukdokplex ];
+    platforms = lib.platforms.all;
+  };
+}
