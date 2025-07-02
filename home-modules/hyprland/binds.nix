@@ -38,9 +38,13 @@ in
         "$mainMod, P, Screenshot screen region, exec, '${wm-utils}' screenshot_region"
         "$mainMod Shift_L, P, Screenshot active output, exec, '${wm-utils}' screenshot_output"
 
-        # Text-to-speech
-        "$mainMod, T, Text-to-speech (russian), exec, '${wm-utils}' tts ru"
-        "$mainMod Shift_L, T, Text-to-speech (english), exec, '${wm-utils}' tts en"
+        # OCR narrator
+        "$mainMod, T, Text-to-speech (russian), exec, '${wm-utils}' ocr_narrator ru"
+        "$mainMod Shift_L, T, Text-to-speech (english), exec, '${wm-utils}' ocr_narrator en"
+
+        # OCR copy
+        "$mainMod, C, OCR screenshot copy (russian), exec, '${wm-utils}' ocr_copy ru"
+        "$mainMod Shift_L, C, OCR screenshot copy (english), exec, '${wm-utils}' ocr_copy en"
 
         # submaps
         "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
