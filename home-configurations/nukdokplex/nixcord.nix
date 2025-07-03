@@ -13,8 +13,6 @@
       vesktop.enable = true;
 
       config = {
-        notifyAboutUpdates = true;
-        autoUpdate = false;
         transparent = true;
         plugins = {
           alwaysTrust.enable = true;
