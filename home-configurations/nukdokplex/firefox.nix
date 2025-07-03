@@ -11,6 +11,7 @@
 
     nativeMessagingHosts = with pkgs; [
       tridactyl-native
+      keepassxc
     ];
 
     languagePacks = [
@@ -54,27 +55,25 @@
       ExtensionSettings =
         let
           extensionIds = [
-            "batterdarkerdocs@threethan.github.io" # Better Darker Docs
             "addon@darkreader.org" # Dark Reader
             "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" # Stylus
-            "firefox@tampermonkey.net" # Tampermonkey
             "twitchinventoryclaimer@schulzjona" # Twitch Inventory Claimer
             "uBlock0@raymondhill.net" # uBlock Origin
             "jid1-KKzOGWgsW3Ao4Q@jetpack" # I don't care about cookies
             "jid1-MnnxcxisBPnSXQ@jetpack" # Privacy badger
-            "simple-translate@sienori" # Simple Traslate
             "sponsorBlocker@ajay.app" # SponsorBlock for YouTube
             "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
             "tridactyl.vim@cmcaine.co.uk" # Tridactyl
+            "keepassxc-browser@keepassxc.org" # KeePassXC-Browser
           ];
           makeExtensionParams = id: {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
             installation_mode = "normal_installed";
           };
         in
-        builtins.listToAttrs (
+        (builtins.listToAttrs (
           builtins.map (id: (lib.nameValuePair id (makeExtensionParams id))) extensionIds
-        );
+        ));
 
       ExtensionUpdate = true;
 
