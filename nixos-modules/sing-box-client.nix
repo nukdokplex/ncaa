@@ -4,16 +4,13 @@
   lib,
   inputs,
   flakeRoot,
-  ezModules,
   ...
 }:
 let
   falhofnir = inputs.self.nixosConfigurations.falhofnir.config;
 in
 {
-  imports = [
-    ezModules.dnscrypt
-  ];
+  imports = [ ./dnscrypt.nix ];
 
   services.sing-box = {
     enable = lib.mkDefault true;

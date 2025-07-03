@@ -1,6 +1,5 @@
 {
   inputs,
-  ezModules,
   lib',
   ...
 }:

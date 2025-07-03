@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  ezModules,
   ...
 }:
 let
@@ -42,6 +41,6 @@ in
   };
 
   imports = [
-    ezModules.waybar
+    ../waybar.nix
   ];
 }

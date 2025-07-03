@@ -2,7 +2,6 @@
   pkgs,
   lib,
   lib',
-  ezModules,
   config,
   inputs,
   ...
@@ -207,7 +206,7 @@
 
   imports =
     [
-      ezModules.wm-essentials
+      ../wm-essentials.nix
     ]
     ++ lib'.umport {
       path = ./.;

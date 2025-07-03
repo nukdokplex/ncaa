@@ -4,14 +4,25 @@
   lib',
   config,
   inputs,
-  ezModules,
   ...
 }@args:
 {
   wayland.windowManager.sway = lib.fix (final: {
-    enable = lib.mkDefault (lib.attrByPath [ "osConfig" "programs" "sway" "enable" ] false args);
+    enable = lib.mkDefault (
+      lib.attrByPath [
+        "osConfig"
+        "programs"
+        "sway"
+        "enable"
+      ] false args
+    );
     checkConfig = false;
-    package = lib.attrByPath [ "osConfig" "programs" "sway" "package" ] pkgs.sway args;
+    package = lib.attrByPath [
+      "osConfig"
+      "programs"
+      "sway"
+      "package"
+    ] pkgs.sway args;
     wrapperFeatures.gtk.enable = true;
     config = {
       startup = lib.mkBefore [
@@ -54,7 +65,7 @@
 
   imports =
     [
-      ezModules.wm-essentials
+      ../wm-essentials.nix
     ]
     ++ lib'.umport {
       path = ./.;

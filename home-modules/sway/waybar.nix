@@ -42,6 +42,6 @@ in
   };
 
   imports = [
-    ezModules.waybar
+    ../waybar.nix
   ];
 }

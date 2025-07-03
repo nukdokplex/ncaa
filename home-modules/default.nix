@@ -1,6 +1,5 @@
 {
   lib,
-  ezModules,
   inputs,
   ...
 }:
@@ -15,11 +14,11 @@
       inputs.nixcord.homeModules.nixcord
     ]
     ++ (with ezModules; [
-      file-roller
-      gaming
-      is-desktop
-      nemo
-      nm-applet
-      wm-settings
+      ./file-roller.nix
+      ./gaming.nix
+      ./is-desktop.nix
+      ./nemo.nix
+      ./nm-applet.nix
+      ./wm-settings.nix
     ]);
 }

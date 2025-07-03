@@ -16,13 +16,13 @@
       tssp.nixosModules.default
     ])
     ++ (with ezModules; [
-      agenix-rekey-generators
-      k3b-custom
-      lutris
-      nixpkgs-overlays
-      optical-disk-essentials
-      steam
-      usb-essentials
-      via
+      ./agenix-rekey-generators.nix
+      ./k3b-custom.nix
+      ./lutris.nix
+      ./nixpkgs-overlays.nix
+      ./optical-disk-essentials.nix
+      ./steam.nix
+      ./usb-essentials.nix
+      ./via.nix
     ]);
 }
