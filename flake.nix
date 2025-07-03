@@ -13,9 +13,6 @@
     # systems
     systems.url = "github:nix-systems/default-linux";
 
-    # this system is made to be a simple manipulator of flake-input-patcher's system since there is no any
-    patcher-system.url = "github:nix-systems/x86_64-linux";
-
     # alphabetically ordered
     agenix-rekey.inputs.flake-parts.follows = "flake-parts";
     agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,9 +30,6 @@
     ez-configs.inputs.flake-parts.follows = "flake-parts";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
     ez-configs.url = "github:ehllie/ez-configs";
-    flake-input-patcher.inputs.nixpkgs.follows = "nixpkgs";
-    flake-input-patcher.inputs.systems.follows = "patcher-system";
-    flake-input-patcher.url = "github:jfly/flake-input-patcher";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -92,20 +86,8 @@
   };
 
   outputs =
-    unpatchedInputs@{ flake-input-patcher, patcher-system, ... }:
-    let
-      patcher = flake-input-patcher.lib.${builtins.elemAt (import patcher-system) 0};
-      inputs = patcher.patch unpatchedInputs {
-        nixpkgs.patches = [
-          (patcher.fetchpatch {
-            name = "age-plugin-openpgp-card: init at 0.1.1";
-            url = "https://github.com/NixOS/nixpkgs/pull/417923.patch";
-            hash = "sha256-vtvVgo8DX1kPJejYLk8XMneS5sYn0tpJdNuHrgqOg9Q=";
-          })
-        ];
-      };
-    in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
       { lib, config, ... }:
       {
         _module.args.flakeRoot = ./.;

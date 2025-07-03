@@ -6,9 +6,13 @@
 }:
 {
   programs.firefox = {
-    # uncomment line below to enable
     enable = lib.mkDefault config.home.isDesktop;
     package = pkgs.firefox;
+
+    nativeMessagingHosts = with pkgs; [
+      tridactyl-native
+    ];
+
     languagePacks = [
       "ru"
       "en-US"
@@ -56,12 +60,12 @@
             "firefox@tampermonkey.net" # Tampermonkey
             "twitchinventoryclaimer@schulzjona" # Twitch Inventory Claimer
             "uBlock0@raymondhill.net" # uBlock Origin
-            "{d7742d87-e61d-4b78-b8a1-b469842139fa}" # Vimium
             "jid1-KKzOGWgsW3Ao4Q@jetpack" # I don't care about cookies
             "jid1-MnnxcxisBPnSXQ@jetpack" # Privacy badger
             "simple-translate@sienori" # Simple Traslate
             "sponsorBlocker@ajay.app" # SponsorBlock for YouTube
             "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
+            "tridactyl.vim@cmcaine.co.uk" # Tridactyl
           ];
           makeExtensionParams = id: {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";

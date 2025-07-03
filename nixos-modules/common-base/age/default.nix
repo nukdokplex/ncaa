@@ -7,10 +7,7 @@
 }:
 {
   age.rekey = lib.fix (rekey: {
-    agePlugins = [
-      pkgs.age-plugin-fido2-hmac
-      pkgs.age-plugin-openpgp-card
-    ];
+    agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
         identity = ./fido2-identity.pub;
