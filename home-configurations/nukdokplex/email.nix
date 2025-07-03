@@ -40,7 +40,7 @@ let
       inherit gpg realName;
 
       imap = {
-        host = inputs.self.nixosConfigurations.gler.config.mailserver.fqdn; # wow! so cool reuse!
+        host = "gler.nukdokplex.ru";
         port = 993;
         tls.enable = true;
       };
