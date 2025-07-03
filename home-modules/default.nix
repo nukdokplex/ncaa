@@ -11,6 +11,7 @@
       inputs.hyprland.homeManagerModules.default
       inputs.nix-index-database.hmModules.nix-index
       inputs.nixcord.homeModules.nixcord
+      inputs.stylix.homeModules.stylix
     ]
     ++ [
       ./file-roller.nix

@@ -1,6 +1,12 @@
+{ config, lib, ... }:
 {
   home-manager = {
-    useGlobalPkgs = true;
+    useGlobalPkgs = false;
     backupFileExtension = "hm-bak";
+    sharedModules = lib.singleton {
+      nixpkgs = {
+        inherit (config.nixpkgs) config overlays;
+      };
+    };
   };
 }
