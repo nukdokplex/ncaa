@@ -9,4 +9,9 @@
       };
     };
   };
+
+  stylix.homeManagerIntegration = {
+    autoImport = true;
+    followSystem = true;
+  };
 }
