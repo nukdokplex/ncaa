@@ -21,16 +21,14 @@
     agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
-    bunny-yazi.flake = false;
-    bunny-yazi.url = "github:stelcodes/bunny.yazi";
-    custom-shell-yazi.flake = false;
-    custom-shell-yazi.url = "github:AnirudhG07/custom-shell.yazi";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     ez-configs.inputs.flake-parts.follows = "flake-parts";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
     ez-configs.url = "github:ehllie/ez-configs";
     flake-utils.url = "github:numtide/flake-utils";
+    git-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
+    git-hooks-nix.url = "github:cachix/git-hooks.nix";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     hy3.inputs.hyprland.follows = "hyprland";
@@ -58,7 +56,6 @@
     nur.url = "github:nix-community/nur";
     picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
     pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
@@ -67,8 +64,8 @@
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
-    tssp.url = "github:nukdokplex/tssp-nix?ref=dev";
     tssp.inputs.nixpkgs.follows = "nixpkgs";
+    tssp.url = "github:nukdokplex/tssp-nix?ref=dev";
   };
 
   # notice that this nixConfig is being imported by nixosModules.common.base
@@ -88,7 +85,7 @@
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { lib, config, ... }:
+      { config, ... }:
       {
         _module.args.flakeRoot = ./.;
         _module.args.lib-custom = config.flake.lib';
@@ -102,7 +99,6 @@
           ./ez-configs.nix
           ./picokeys.nix
           ./devshells.nix
-          ./checks.nix
         ];
 
         systems = import inputs.systems;

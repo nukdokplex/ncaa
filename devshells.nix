@@ -1,9 +1,22 @@
+{ inputs, ... }:
 {
+  imports = [ inputs.git-hooks-nix.flakeModule ];
+
   perSystem =
     { pkgs, config, ... }:
     {
+      pre-commit = {
+        check.enable = true;
+        settings.hooks = {
+          nixfmt-rfc-style.enable = true;
+          deadnix.enable = true;
+        };
+      };
+
       devShells.default = pkgs.mkShellNoCC {
         name = "default";
+
+        shellHook = config.pre-commit.installationScript;
 
         packages =
           with pkgs;
@@ -15,9 +28,7 @@
             age
             zsh
           ]
-          ++ config.checks.pre-commit-check.enabledPackages;
-
-        shellHook = config.checks.pre-commit-check.shellHook;
+          ++ config.pre-commit.settings.enabledPackages;
       };
     };
 }
