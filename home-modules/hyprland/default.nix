@@ -118,6 +118,10 @@
 
         # steam
         "float, class:steam, initialTitle:negative:^(Steam)$"
+
+        # firefox picture-in-picture
+        "float, class:firefox, initialTitle:Picture-in-Picture"
+        "pin, class:firefox, initialTitle:Picture-in-Picture"
       ];
 
       # appearance
