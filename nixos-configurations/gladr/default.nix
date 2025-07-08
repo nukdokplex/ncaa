@@ -39,7 +39,7 @@
         "https://w.wallhaven.cc/full/9m/wallhaven-9m59md.png"
         "https://web.archive.org/web/https://w.wallhaven.cc/full/9m/wallhaven-9m59md.png"
       ];
-      sha256 = "0r2v8q70zljp26lz2mphdrhs0q1gj63idk8znb1mzipqzqadzl3y";
+      hash = "sha256-7lU7qRcQKBd/7I7SmpNmsoqLmEH0blda36jdywIzn40=";
     };
     polarity = "dark";
   };
