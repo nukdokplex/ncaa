@@ -29,6 +29,14 @@
       };
 
       servers = {
+        rust_analyzer = {
+          # rust
+          enable = true;
+          settings.formattings.command = [ (lib.escapeShellArg (lib.getExe pkgs.rust-analyzer)) ];
+          installCargo = false;
+          installRustc = false;
+          installRustfmt = false;
+        };
         nil_ls = {
           # nix
           enable = true;

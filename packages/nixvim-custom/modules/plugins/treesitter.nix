@@ -11,7 +11,9 @@
       markdown
       nix
       regex
+      rust
       toml
+      python
       vim
       vimdoc
       xml
