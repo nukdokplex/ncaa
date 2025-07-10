@@ -4,7 +4,6 @@
   lib',
   ezModules,
   config,
-  inputs,
   ...
 }:
 {
@@ -18,6 +17,7 @@
       ezModules.common-desktop
       ezModules.email-passwords
       ezModules.dyndns
+      ezModules.acme
       ezModules.sing-box-client
       ezModules.syncthing
     ];

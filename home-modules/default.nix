@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  osConfig,
   ...
 }:
 {
@@ -12,6 +13,9 @@
       inputs.nix-index-database.hmModules.nix-index
       inputs.nixcord.homeModules.nixcord
     ]
+    ++
+      # this is workaround to make stylix always been imported and prevent config conflicts
+      (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeManagerModules.stylix)
     ++ [
       ./file-roller.nix
       ./gaming.nix

@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib',
   ezModules,
   inputs,
@@ -15,7 +14,7 @@
     }
     ++ [
       ezModules.common-base
-      ezModules.dyndns
+      ezModules.acme
       inputs.simple-nixos-mailserver.nixosModule
       (modulesPath + "/profiles/qemu-guest.nix") # adds virtio and 9p kernel modules
     ];

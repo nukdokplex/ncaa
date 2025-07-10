@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  flakeRoot,
   ...
 }:
 let
@@ -29,10 +28,9 @@ let
       );
 in
 {
-
   mailserver = {
     enable = true;
-    stateVersion = 2;
+    stateVersion = 3;
     fqdn = "${config.networking.hostName}.nukdokplex.ru";
     domains = [
       "nukdokplex.ru"
@@ -45,16 +43,17 @@ in
         "nukdokplex"
         "nukdokplex.ru"
       ]
-    } = {
-      hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
-      aliases = builtins.map (
-        alias:
-        builtins.concatStringsSep "@" [
-          alias.username
-          alias.domain
-        ]
-      ) nukdokplexAliases;
-    };
+    } =
+      {
+        hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
+        aliases = builtins.map (
+          alias:
+          builtins.concatStringsSep "@" [
+            alias.username
+            alias.domain
+          ]
+        ) nukdokplexAliases;
+      };
     certificateScheme = "manual";
     certificateFile = "${
       config.security.acme.certs.${config.networking.hostName}.directory
