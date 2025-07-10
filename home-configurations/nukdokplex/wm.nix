@@ -52,9 +52,11 @@
           kb_options = "grp:ctrl_space_toggle,compose:ralt";
         };
 
-        windowrulev2 = lib.mkAfter [
+        windowrule = lib.mkAfter [
           "workspace 2 silent, class:vesktop"
+          "float, class:galculator"
         ];
+
       };
     };
 
@@ -71,6 +73,7 @@
           class = "steam";
           title = "^(?!Steam$).*";
         } # make all secondary steam windows floating
+        { class = "galculator"; }
       ];
     };
   };

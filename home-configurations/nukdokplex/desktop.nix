@@ -21,6 +21,7 @@
         font-manager
         gimp
         shotwell
+        galculator
 
         # hw keys
         yubioath-flutter
