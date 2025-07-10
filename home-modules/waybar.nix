@@ -58,7 +58,7 @@ in
       mainBar = {
         name = "main";
         id = "main";
-        layer = "top";
+        layer = "bottom";
         position = "right";
         margin = "10 10 10 0";
         battery = {
