@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, ... }:
 {
 
   stylix.iconTheme = {
@@ -8,6 +8,7 @@
     dark = "Papirus-Dark";
   };
 
-  # this config causes adding unwanted nixpkgs overlay
-  stylix.targets.gnome-text-editor.enable = false;
+  stylix.targets.gtk.extraCss = with config.lib.stylix; ''
+    @define-color view_bg_color rgba(${colors.base00-rgb-r}, ${colors.base00-rgb-g}, ${colors.base00-rgb-b}, ${toString config.stylix.opacity.applications})
+  '';
 }
