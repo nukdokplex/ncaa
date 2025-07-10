@@ -55,6 +55,7 @@
         windowrule = lib.mkAfter [
           "workspace 2 silent, class:vesktop"
           "float, class:galculator"
+          "pin, class:galculator"
         ];
 
       };
