@@ -3,30 +3,6 @@
   lib,
   ...
 }:
-let
-  nukdokplexUsernames = [
-    "nukdokplex"
-    "temporal"
-    "vk1"
-    "vk2"
-    "vk3"
-    "admin"
-    "master"
-    "postmaster"
-    "webmaster"
-    "hostmaster"
-    "grandmaster"
-  ];
-  nukdokplexAliases =
-    builtins.filter (alias: !((alias.username == "nukdokplex") && (alias.domain == "nukdokplex.ru")))
-      (
-        lib.flatten (
-          builtins.map (
-            domain: builtins.map (username: { inherit domain username; }) nukdokplexUsernames
-          ) config.mailserver.domains
-        )
-      );
-in
 {
   mailserver = {
     enable = true;
@@ -46,13 +22,10 @@ in
     } =
       {
         hashedPasswordFile = config.age.secrets.nukdokplex-mail-hashed-password.path;
-        aliases = builtins.map (
-          alias:
-          builtins.concatStringsSep "@" [
-            alias.username
-            alias.domain
-          ]
-        ) nukdokplexAliases;
+        catchAll = [
+          "nukdokplex.ru"
+          "nukdotcom.ru"
+        ];
       };
     certificateScheme = "manual";
     certificateFile = "${
