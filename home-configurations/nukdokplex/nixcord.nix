@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 {
@@ -37,6 +36,11 @@
           memberCount.enable = true;
           openInApp.enable = true;
           serverInfo.enable = true;
+          spotifyCrack = {
+            enable = true;
+            noSpotifyAutoPause = true;
+            keepSpotifyActivityOnIdle = true;
+          };
         };
       };
     };
