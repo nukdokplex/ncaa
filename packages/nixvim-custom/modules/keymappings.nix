@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, ... }:
 {
   globals = {
     mapleader = " ";
@@ -20,29 +20,31 @@
             # Esc to clear search results
             "<Esc>" = ":noh<CR>";
 
-            # close by Ctrl+x
             "<C-x>" = ":close<CR>";
-
-            # save by Space+s or Ctrl+s
-            "<leader>s" = ":w<CR>";
-            "<C-s>" = ":w<CR>";
+            "<M-x>" = ":clode<CR>";
 
             # format with lsp-format
-            "<leader>f" = ":Format";
+            "<leader>f" = ":Format<CR>";
 
             # navigate through windows
-            "<leader>h" = "<C-w>h";
-            "<leader>j" = "<C-w>j";
-            "<leader>k" = "<C-w>k";
-            "<leader>l" = "<C-w>l";
+            "<M-h>" = "<C-w>h";
+            "<M-j>" = "<C-w>j";
+            "<M-k>" = "<C-w>k";
+            "<M-l>" = "<C-w>l";
 
             "L" = "$";
             "H" = "^";
           };
-      visual = lib.mapAttrsToList (key: action: {
-        mode = "v";
-        inherit key action;
-      }) { };
+      visual =
+        lib.mapAttrsToList
+          (key: action: {
+            mode = "v";
+            inherit key action;
+          })
+          {
+            "L" = "$";
+            "H" = "^";
+          };
       insert = lib.mapAttrsToList (key: action: {
         mode = "i";
         inherit key action;
