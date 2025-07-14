@@ -9,6 +9,12 @@ let
       "down"
       "left"
     ];
+    relativeDirection = [
+      "top"
+      "right"
+      "bottom"
+      "left"
+    ];
     hyprland.direction = builtins.map (key: builtins.substring 0 1 key) keys.direction;
 
     wasd = [
@@ -47,14 +53,24 @@ let
       "resize grow height"
       "resize shrink width"
     ];
+    resize = [
+      "shrink height"
+      "grow width"
+      "grow height"
+      "shrink width"
+    ];
+
+    tmux = {
+      argument = map (d: "-${lib.toUpper (lib.substring 0 1 d)}") keys.direction;
+      paneToken = map (d: "{${d}}") keys.relativeDirection;
+      relativePaneToken = map (d: "{${d}-of}") keys.direction;
+    };
     xkbNoPrefix = {
       arrow = map (key: "${lib.capitalizeString key}") keys.direction;
       wasd = map (key: lib.toUpper key) keys.wasd;
       hjkl = map (key: lib.toUpper key) keys.hjkl;
     };
-    xkb = builtins.mapAttrs (
-      name: value: builtins.map (elem: "XKB_KEY_${elem}") value
-    ) keys.xkbNoPrefix;
+    xkb = builtins.mapAttrs (_: value: map (elem: "XKB_KEY_${elem}") value) keys.xkbNoPrefix;
   });
 
   numberKeys = lib.fix (keys: {
@@ -67,6 +83,18 @@ let
       in
       builtins.substring ((builtins.stringLength str) - 1) 1 str
     ) keys.number;
+    shiftedDigit = [
+      "!"
+      "@"
+      "#"
+      "$"
+      "%"
+      "^"
+      "&"
+      "*"
+      "("
+      ")"
+    ];
     xkbNoPrefix = {
       digit = keys.digit;
       keypadDigit = map (key: "KP_${key}") keys.digit;
@@ -83,16 +111,11 @@ let
         "Insert"
       ];
     };
-    xkb = builtins.mapAttrs (
-      name: value: builtins.map (elem: "XKB_KEY_${elem}") value
-    ) keys.xkbNoPrefix;
+    xkb = builtins.mapAttrs (_: value: builtins.map (elem: "XKB_KEY_${elem}") value) keys.xkbNoPrefix;
   });
 
   genParams =
     params:
-    let
-      attrsList = lib.attrsToListRecursive params;
-    in
     builtins.genList (
       i:
       lib.mapAttrsRecursive (_: value: if lib.isList value then builtins.elemAt value i else value) params
