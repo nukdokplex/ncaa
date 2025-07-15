@@ -11,5 +11,16 @@
     };
   });
 
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+      gui = {
+        language = "en";
+      };
+      git = {
+        autoFetch = false;
+      };
+    };
+  };
 }
