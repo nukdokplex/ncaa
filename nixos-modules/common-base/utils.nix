@@ -1,8 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
-  inputs,
   ...
 }:
 {
@@ -11,6 +8,7 @@
     atop
     bind
     btop
+    bat # woke cat
     cachix
     cmatrix
     fastfetch
@@ -30,7 +28,7 @@
     wget
     fzf
     usbutils
-    age
+    rage
     bash
   ];
 }
