@@ -47,6 +47,8 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:KaylorBen/nixcord";
+    nixos-nftables-firewall.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-nftables-firewall.url = "github:thelegy/nixos-nftables-firewall";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nuschtosSearch.follows = "";
