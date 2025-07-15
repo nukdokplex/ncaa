@@ -10,4 +10,6 @@
       key = git.userEmail;
     };
   });
+
+  programs.lazygit.enable = true;
 }
