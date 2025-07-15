@@ -26,6 +26,10 @@
             # format with lsp-format
             "<leader>f" = ":Format<CR>";
 
+            "<leader>n" = "<cmd>Yazi cwd<CR>";
+            "<leader>gi" = "<cmd>LazyGit<CR>";
+            "<leader>gf" = "<cmd>LazyGitCurrentFile<CR>";
+
             # navigate through windows
             "<M-h>" = "<C-w>h";
             "<M-j>" = "<C-w>j";
