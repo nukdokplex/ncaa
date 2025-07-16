@@ -1,12 +1,11 @@
 {
   flakeRoot,
   config,
-  lib,
   pkgs,
   ...
 }:
 {
-  age.rekey = lib.fix (rekey: {
+  age.rekey = {
     agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
@@ -21,5 +20,5 @@
     localStorageDir = flakeRoot + /secrets/rekeyed/${config.networking.hostName};
     secretsDir = flakeRoot + /secrets/non-generated/${config.networking.hostName};
     generatedSecretsDir = flakeRoot + /secrets/generated/${config.networking.hostName};
-  });
+  };
 }

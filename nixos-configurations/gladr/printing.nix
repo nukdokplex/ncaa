@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   services.printing.drivers = [ pkgs.epson_201310w ];
 

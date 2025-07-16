@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, ... }:
 {
   security.rtkit.enable = lib.mkDefault true; # pipewire uses this to acquire realtime priority
   services.pipewire = {

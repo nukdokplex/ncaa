@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  withSystem,
   config,
   ...
 }:
@@ -9,7 +8,7 @@
   flake.overlays = {
     # this adds all packages under outputs.packages.${system}
     packages =
-      final: prev:
+      _: prev:
       let
         system = prev.stdenv.hostPlatform.system;
       in
@@ -27,9 +26,9 @@
       else
         { };
 
-    overrides = final: prev: {
+    overrides = _: prev: {
       wl-clipboard = prev.wl-clipboard.overrideAttrs (
-        finalAttrs: prevAttrs: {
+        _: _: {
           version = "2.2-unstable-2024-04-24";
 
           src = prev.fetchFromGitHub {
@@ -42,7 +41,7 @@
       );
     };
 
-    lib-custom = final: prev: {
+    lib-custom = _: _: {
       lib-custom = config.flake.lib';
     };
 

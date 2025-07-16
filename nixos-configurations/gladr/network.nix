@@ -1,4 +1,4 @@
-{ config, flakeRoot, ... }:
+{ config, ... }:
 {
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [

@@ -13,7 +13,7 @@ in
   # this is nixpkgs lib + custom lib
   # aware of ton evaluation warnings you will encounter
   flake.lib = lib.extend (
-    final: prev: builtins.foldl' (acc: elem: acc // (callLib final elem)) { } files
+    final: _: builtins.foldl' (acc: elem: acc // (callLib final elem)) { } files
   );
 
   # only custom lib

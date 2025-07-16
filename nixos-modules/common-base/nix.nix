@@ -1,10 +1,4 @@
-{
-  lib,
-  config,
-  inputs,
-  flakeRoot,
-  ...
-}:
+{ inputs, flakeRoot, ... }:
 let
   base = "/etc/nixpkgs/channels";
   nixpkgsPath = "${base}/nixpkgs";

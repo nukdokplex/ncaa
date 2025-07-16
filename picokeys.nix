@@ -1,16 +1,10 @@
-{
-  inputs,
-  lib,
-  withSystem,
-  flakeRoot,
-  ...
-}:
+{ inputs, withSystem, ... }:
 let
   system = "x86_64-linux"; # this is the only system picokeys-nix support
 in
 {
   flake.packages.${system} = withSystem system (
-    { pkgs, system, ... }:
+    { system, ... }:
     let
       picokeys-pkgs = inputs.picokeys-nix.packages.${system};
     in

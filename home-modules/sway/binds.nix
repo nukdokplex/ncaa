@@ -9,7 +9,7 @@ let
   cfg = config.wayland.windowManager.sway;
 in
 {
-  wayland.windowManager.sway.config = lib.fix (final: {
+  wayland.windowManager.sway.config = {
     modifier = "Mod4";
     keybindings =
       let
@@ -97,5 +97,5 @@ in
           )
         )
       );
-  });
+  };
 }

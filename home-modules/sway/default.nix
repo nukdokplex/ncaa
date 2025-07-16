@@ -3,7 +3,6 @@
   lib,
   lib',
   config,
-  inputs,
   ...
 }@args:
 {

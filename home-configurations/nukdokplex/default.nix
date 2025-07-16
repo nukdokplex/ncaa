@@ -2,9 +2,7 @@
   pkgs,
   config,
   ezModules,
-  inputs,
   lib',
-  lib,
   ...
 }:
 {

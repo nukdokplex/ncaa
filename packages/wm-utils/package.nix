@@ -9,7 +9,6 @@
   kdePackages,
   slurp,
   swappy,
-  wl-clipboard,
   wireplumber,
   tesseract,
   tts-custom,

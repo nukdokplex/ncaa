@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib',
-  ...
-}:
+{ lib', ... }:
 {
   imports =
     [
