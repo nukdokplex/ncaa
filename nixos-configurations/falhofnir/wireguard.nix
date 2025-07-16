@@ -1,8 +1,5 @@
 {
   config,
-  flakeRoot,
-  pkgs,
-  lib,
   ...
 }:
 let
@@ -61,20 +58,20 @@ in
 
   age.secrets.awg0-private.generator.script = "wireguard-priv";
 
-  networking.nftables.tables.filter.content = ''
-    chain post_input_hook {
-      iifname uplink udp dport ${builtins.toString awg0Port} counter accept
-    }
+  networking.firewall.allowedUDPPorts = [ awg0Port ];
 
-    chain post_forward_hook {
-      iifname ${awg0InterfaceName} oifname uplink counter accept
-      iifname uplink oifname ${awg0InterfaceName} ct state established,related counter accept
-    }
-  '';
+  networking.nftables.chains.forward.forward-wireguard = {
+    after = [ "early" ];
+    before = [ "late" ];
+    rules = [
+      "iifname ${awg0InterfaceName} oifname uplink accept"
+      "iifname uplink oifname ${awg0InterfaceName} accept"
+    ];
+  };
 
-  networking.nftables.tables.nat.content = ''
-    chain postrouting_hook {
-      oifname uplink masquerade
-    }
-  '';
+  networking.nftables.chains.postrouting.uplink-masquerade = {
+    after = [ "early" ];
+    before = [ "late" ];
+    rules = [ "oifname uplink masquerade" ];
+  };
 }

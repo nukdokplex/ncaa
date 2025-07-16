@@ -1,4 +1,3 @@
-{ lib, config, ... }:
 {
   services.openssh = {
     enable = true;
@@ -10,10 +9,4 @@
       ];
     };
   };
-
-  networking.nftables.tables.filter.content = ''
-    chain post_input_hook {
-      tcp dport 22 counter accept comment "OpenSSH open port"
-    }
-  '';
 }

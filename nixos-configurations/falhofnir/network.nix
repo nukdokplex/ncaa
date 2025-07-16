@@ -1,8 +1,5 @@
 {
-  config,
-  flakeRoot,
   lib,
-  inputs,
   pkgs,
   ...
 }:
@@ -11,6 +8,8 @@ let
 in
 {
   networking.useDHCP = false;
+  networking.nftables.firewall.snippets.nnf-dhcpv6.enable = lib.mkForce false;
+  networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
   boot = {
     initrd.services.udev.rules = ''
@@ -32,7 +31,7 @@ in
     };
   };
 
-  systemd.network = lib.fix (self: {
+  systemd.network = {
     enable = true;
     networks.uplink = {
       address = [
@@ -57,7 +56,7 @@ in
       };
 
     };
-  });
+  };
 
   services.ddclient.usev6 = lib.mkForce "cmdv6, cmdv6=\"'${lib.getExe pkgs.getv6addresses}' -p -x | tr '\\n' ',' | sed 's/,*$//'\"";
 }

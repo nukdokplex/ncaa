@@ -13,14 +13,15 @@
       exclude = [ ./default.nix ];
       recursive = false;
     }
-    ++ [
-      ezModules.common-desktop
-      ezModules.email-passwords
-      ezModules.dyndns
-      ezModules.acme
-      ezModules.sing-box-client
-      ezModules.syncthing
-    ];
+    ++ (with ezModules; [
+      common-desktop
+      email-passwords
+      dyndns
+      acme
+      sing-box-client
+      syncthing
+      gaming
+    ]);
 
   nixpkgs.localSystem.system = "x86_64-linux";
   time.timeZone = "Asia/Yekaterinburg";
@@ -30,6 +31,11 @@
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDrS2sugOWzdcYzL7PfkMHbhfWwReIJOyB7wo5qNcSW root@sleipnir";
 
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
+
+  boot.initrd.services.udev.rules = ''
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e7", NAME="uplink25"
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e8", NAME="uplink1"
+  '';
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;

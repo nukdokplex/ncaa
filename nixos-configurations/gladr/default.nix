@@ -13,14 +13,15 @@
       exclude = [ ./default.nix ];
       recursive = false;
     }
-    ++ [
-      ezModules.common-desktop
-      ezModules.email-passwords
-      ezModules.dyndns
-      ezModules.acme
-      ezModules.sing-box-client
-      ezModules.syncthing
-    ];
+    ++ (with ezModules; [
+      common-desktop
+      email-passwords
+      dyndns
+      acme
+      sing-box-client
+      syncthing
+      gaming
+    ]);
 
   nixpkgs.localSystem.system = "x86_64-linux";
   nixpkgs.config.rocmSupport = true; # AMDGPU support for packages

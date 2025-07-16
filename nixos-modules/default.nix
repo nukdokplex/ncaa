@@ -21,7 +21,6 @@
       ./lutris.nix
       ./nixpkgs-overlays.nix
       ./optical-disk-essentials.nix
-      ./steam.nix
       ./usb-essentials.nix
       ./via.nix
     ]);

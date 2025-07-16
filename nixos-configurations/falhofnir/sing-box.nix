@@ -86,11 +86,7 @@ in
     };
   };
 
-  networking.nftables.tables.filter.content = ''
-    chain post_input_hook {
-      iifname uplink tcp dport ${builtins.toString vlessPort} counter accept
-    }
-  '';
+  networking.firewall.allowedTCPPorts = [ vlessPort ];
 
   age.secrets =
     {

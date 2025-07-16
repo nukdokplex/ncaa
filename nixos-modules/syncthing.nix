@@ -145,7 +145,7 @@ in
           };
         };
         hostEnabledFolders = lib.filterAttrs (
-          n: v: builtins.elem config.networking.hostName v.devices
+          _: v: builtins.elem config.networking.hostName v.devices
         ) folders;
       in
       {
@@ -155,9 +155,9 @@ in
           localAnnounceEnabled = true;
         };
 
-        devices = lib.filterAttrs (n: v: n != config.networking.hostName) devices;
+        devices = lib.filterAttrs (n: _: n != config.networking.hostName) devices;
         folders = lib.mapAttrs (
-          n: v: v // { devices = lib.remove config.networking.hostName v.devices; }
+          _: v: v // { devices = lib.remove config.networking.hostName v.devices; }
         ) hostEnabledFolders;
       };
   };
@@ -174,15 +174,6 @@ in
   };
 
   systemd.services.syncthing-init.serviceConfig.ExecStartPre = updateGuiCredentials;
-
-  networking.nftables.tables.filter.content =
-    lib.mkIf (config.services.syncthing.enable && config.services.syncthing.openDefaultPorts)
-      ''
-        chain post_input_hook {
-          tcp dport 22000 counter accept
-          udp dport { 21027, 22000 } counter accept
-        }
-      '';
 
   age.secrets.syncthing = {
     generator.script = "syncthing-keypair";

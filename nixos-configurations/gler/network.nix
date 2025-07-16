@@ -1,6 +1,4 @@
 {
-  config,
-  flakeRoot,
   lib,
   pkgs,
   inputs,
@@ -11,12 +9,13 @@ let
 in
 {
   networking.useDHCP = false;
+  networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
   boot.initrd.services.udev.rules = ''
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
   '';
 
-  systemd.network = lib.fix (self: {
+  systemd.network = {
     enable = true;
     networks.uplink = {
       address = [
@@ -40,7 +39,7 @@ in
         LinkLocalAddressing = false;
       };
     };
-  });
+  };
 
   services.ddclient.usev6 = "cmdv6, cmdv6=\"'${
     lib.getExe inputs.self.packages.${pkgs.system}.getv6addresses
