@@ -36,6 +36,21 @@
     };
 
     plugins = {
+      fr = pkgs.stdenvNoCC.mkDerivation {
+        pname = "fr-yazi-plugin";
+        version = "0-unstable-2025-07-14";
+        src = pkgs.fetchFromGitHub {
+          owner = "lpnh";
+          repo = "fr.yazi";
+          rev = "3d32e55b7367334abaa91f36798ef723098d0a6b";
+          hash = "sha256-CrKwFMaiEK+TNW6GRZzyt9MfOmjIb3vw0hBpBXyn16k=";
+        };
+        installPhase = ''
+          runHook preInstall
+          install -D "$src/main.lua" "$out/main.lua"
+          runHook postInstall
+        '';
+      };
       lazygit = pkgs.stdenvNoCC.mkDerivation {
         pname = "lazygit-yazi-plugin";
         version = "0-unstable-2025-03-31";
