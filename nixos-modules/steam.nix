@@ -4,7 +4,8 @@
   ...
 }:
 {
-  programs.steam = lib.mkDefault {
+  programs.steam = {
+    enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     dedicatedServer.openFirewall = true;
@@ -25,8 +26,8 @@
     extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
 
-  programs.gamemode.enable = lib.mkDefault true;
-  programs.gamescope.enable = lib.mkDefault true;
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
   services.ananicy = lib.mkDefault {
     enable = true;
     package = pkgs.ananicy-cpp;
