@@ -66,21 +66,6 @@
           runHook postInstall
         '';
       };
-      githead = pkgs.stdenvNoCC.mkDerivation (final: {
-        pname = "githead-yazi-plugin";
-        version = "2.0.1";
-        src = pkgs.fetchFromGitHub {
-          owner = "llanosrocas";
-          repo = "githead.yazi";
-          tag = "v${final.version}";
-          hash = "sha256-LkoRydeFGaD/+p3Vax9FCk/QazWp1NiKojm1s5F3v88=";
-        };
-        installPhase = ''
-          runHook preInstall
-          install -D "$src/main.lua" "$out/main.lua"
-          runHook postInstall
-        '';
-      });
     };
   };
 }
