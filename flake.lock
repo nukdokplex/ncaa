@@ -1763,11 +1763,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1751996901,
-        "narHash": "sha256-fMt5uw6/jpkPXGt+U2BtFY7GrvGfD+ChjDl7G3DWYrc=",
+        "lastModified": 1752685742,
+        "narHash": "sha256-uv1c6aStEdrjuNbxe2Hwm5IJGAIEupleFb1+btWtjqA=",
         "owner": "nukdokplex",
         "repo": "tssp-nix",
-        "rev": "126718e66c2da7222f5c6763adece83104d47a7b",
+        "rev": "5d6e16b7e15ad3bbdffb5cc0122bf2816b10092e",
         "type": "github"
       },
       "original": {
