@@ -14,6 +14,7 @@
       nnf-dhcpv6.enable = true;
       nnf-drop.enable = true;
       nnf-icmp = {
+        enable = true;
         ipv4Types = [
           "echo-reply"
           "echo-request"
