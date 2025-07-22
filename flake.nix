@@ -65,7 +65,7 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
     tssp.inputs.nixpkgs.follows = "nixpkgs";
-    tssp.url = "github:nukdokplex/tssp-nix?ref=dev";
+    tssp.url = "github:nukdokplex/tssp-nix";
   };
 
   # notice that this nixConfig is being imported by nixosModules.common.base
