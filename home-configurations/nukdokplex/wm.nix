@@ -7,7 +7,7 @@
 {
   config = lib.mkIf config.home.isDesktop {
     wm-settings.defaultApplications = {
-      webBrowser = config.programs.firefox.finalPackage;
+      webBrowser = config.programs.qutebrowser.package;
       fileManager = pkgs.nautilus;
       mailClient = pkgs.thunderbird;
       passwordManager = pkgs.keepassxc;
