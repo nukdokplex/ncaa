@@ -62,8 +62,6 @@
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
     spicetify.url = "github:Gerg-L/spicetify-nix";
-    stylix.inputs.flake-compat.follows = "";
-    stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
     tssp.inputs.nixpkgs.follows = "nixpkgs";
