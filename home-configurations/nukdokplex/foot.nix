@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 {
@@ -23,14 +22,14 @@
           };
       };
     };
+
+    xdg.terminal-exec = {
+      enable = lib.mkDefault true;
+      settings = {
+        default = [ "foot.desktop" ];
+        GNOME = [ "foot.desktop" ];
+      };
+    };
     home.sessionVariables.TERMINAL = "foot";
-
-    # workaround for .desktop files with Terminal=true
-    # xdg-open has a hardcoded list of terminals
-    xdg.configFile."xdg-terminals.list".text = ''
-      foot.desktop
-    '';
-
-    xdg.dataFile."xdg-terminals/foot.desktop".source = "${pkgs.foot}/share/applications/foot.desktop";
   };
 }
