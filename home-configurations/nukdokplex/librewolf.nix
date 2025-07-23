@@ -6,12 +6,10 @@
 }:
 {
   config = lib.mkIf config.home.isDesktop {
-    programs.firefox = {
+    programs.librewolf = {
       enable = lib.mkDefault config.home.isDesktop;
-      package = pkgs.firefox;
 
       nativeMessagingHosts = with pkgs; [
-        tridactyl-native
         keepassxc
       ];
 
@@ -35,9 +33,7 @@
 
         DisplayBookmarksToolbar = "newtab";
 
-        DNSOverHTTPS = {
-          Enabled = false;
-        };
+        DNSOverHTTPS.Enabled = false;
 
         DontCheckDefaultBrowser = true;
 
@@ -55,25 +51,60 @@
         };
         ExtensionSettings =
           let
-            extensionIds = [
-              "addon@darkreader.org" # Dark Reader
-              "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" # Stylus
-              "twitchinventoryclaimer@schulzjona" # Twitch Inventory Claimer
-              "uBlock0@raymondhill.net" # uBlock Origin
-              "jid1-KKzOGWgsW3Ao4Q@jetpack" # I don't care about cookies
-              "jid1-MnnxcxisBPnSXQ@jetpack" # Privacy badger
-              "sponsorBlocker@ajay.app" # SponsorBlock for YouTube
-              "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
-              "tridactyl.vim@cmcaine.co.uk" # Tridactyl
-              "keepassxc-browser@keepassxc.org" # KeePassXC-Browser
+            extensions = [
+              {
+                id = "addon@darkreader.org";
+                default_area = "navbar";
+                private_browsing = false;
+              } # Dark Reader
+              {
+                id = "uBlock0@raymondhill.net";
+                default_area = "navbar";
+                private_browsing = true;
+              } # uBlock Origin
+              {
+                id = "jid1-KKzOGWgsW3Ao4Q@jetpack";
+                default_area = "navbar";
+                private_browsing = false;
+              } # I don't care about cookies
+              {
+                id = "jid1-MnnxcxisBPnSXQ@jetpack";
+                default_area = "navbar";
+                private_browsing = true;
+              } # Privacy badger
+              {
+                id = "sponsorBlocker@ajay.app";
+                default_area = "navbar";
+                private_browsing = false;
+              } # SponsorBlock for YouTube
+              {
+                id = "{762f9885-5a13-4abd-9c77-433dcd38b8fd}";
+                default_area = "navbar";
+                private_browsing = false;
+              } # Return YouTube Dislike
+              {
+                id = "keepassxc-browser@keepassxc.org";
+                default_area = "navbar";
+                private_browsing = true;
+              } # KeePassXC-Browser
+              {
+                id = "{d7742d87-e61d-4b78-b8a1-b469842139fa}";
+                default_area = "navbar";
+                private_browsing = true;
+              } # vimium
             ];
-            makeExtensionParams = id: {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
-              installation_mode = "normal_installed";
-            };
+            makeExtensionParams =
+              { id, ... }@args:
+              {
+                install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
+                installation_mode = "normal_installed";
+              }
+              // args;
           in
           (builtins.listToAttrs (
-            builtins.map (id: (lib.nameValuePair id (makeExtensionParams id))) extensionIds
+            builtins.map (
+              { id, ... }@args: (lib.nameValuePair id (makeExtensionParams ({ inherit id; } // args)))
+            ) extensions
           ));
 
         ExtensionUpdate = true;
@@ -127,6 +158,20 @@
           "media.rdd-ffmpeg.enabled" = true;
         };
 
+        SearchEngines = {
+          Add = {
+            Google = {
+              Name = "Google";
+              URLTemplate = "https://www.google.com/search?hl=ru&q={searchTerms}";
+              SuggestURLTemplate = "https://www.google.com/complete/search?client=firefox&q={searchTerms}&hl=ru";
+              IconURL = "https://www.google.com/favicon.ico";
+              Alias = "g";
+              Description = "Google Search";
+            };
+          };
+          Default = "Google";
+        };
+
         UserMessaging = {
           ExtensionRecommendations = false;
           FeatureRecommendations = false;
@@ -135,6 +180,6 @@
         };
       };
     };
-    stylix.targets.firefox.profileNames = [ "default" ];
+    stylix.targets.librewolf.profileNames = [ "default" ];
   };
 }

@@ -7,14 +7,14 @@
 {
   config = lib.mkIf config.home.isDesktop {
     programs.qutebrowser = {
-      enable = true;
+      enable = false;
       package = pkgs.qutebrowser.override { };
 
       searchEngines = {
         w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
         aw = "https://wiki.archlinux.org/?search={}";
-        nw = "https://wiki.nixos.org/index.php?search={}";
-        nsp = "https://search.nixos.org/packges?channel=unstable&sort=relevance&query={}";
+        nw = "https://wiki.nixos.org/w/index.php?search={}";
+        nsp = "https://search.nixos.org/packages?channel=unstable&sort=relevance&query={}";
         nso = "https://search.nixos.org/options?channel=unstable&sort=relevance&query={}";
         hms = "https://home-manager-options.extranix.com/?release=master&query={}";
         g = "https://www.google.com/search?&q={}";
@@ -35,7 +35,11 @@
         }
       ];
       enableDefaultBindings = true;
-      keyMappings = { };
+      keyBindings = {
+        normal = {
+
+        };
+      };
     };
   };
 }

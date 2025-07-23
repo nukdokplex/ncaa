@@ -7,7 +7,7 @@
 {
   config = lib.mkIf config.home.isDesktop {
     wm-settings.defaultApplications = {
-      webBrowser = config.programs.qutebrowser.package;
+      webBrowser = config.programs.librewolf.finalPackage;
       fileManager = pkgs.nautilus;
       mailClient = pkgs.thunderbird;
       passwordManager = pkgs.keepassxc;
@@ -21,7 +21,7 @@
       }
       {
         workspaceNumber = 2;
-        command = "ayugram-desktop";
+        command = "'${lib.getExe pkgs.ayugram-desktop}'";
       }
       {
         workspaceNumber = 2;
