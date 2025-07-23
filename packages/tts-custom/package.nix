@@ -19,12 +19,12 @@ writeShellApplication {
 
   runtimeEnv = {
     tts_model_en = fetchurl {
-      url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/medium/en_US-ryan-medium.onnx?download=true";
-      sha256 = "0yh4nh6k3sq0j4hxknkvs8bvgjg7irzw9lm0gdjfsr15hrsc5x5b";
+      url = "https://github.com/dnhkng/GLaDOS/releases/download/0.1/glados.onnx";
+      hash = "sha256-F+oW3RjhusNDCQuFiQQrQFLx5UVtQsrYhCpPEQ3iUJU=";
     };
     tts_config_en = fetchurl {
-      url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/medium/en_US-ryan-medium.onnx.json?download=true";
-      sha256 = "13g7zw3lc2ps273h1isk2aflkr7jyg3hfhs9mnr82mmidh2lq0s4";
+      url = "https://raw.githubusercontent.com/dnhkng/GLaDOS/refs/heads/main/models/TTS/glados.json";
+      hash = "sha256-AfXmAuHsBNrsbVSWDk1kG13jBfORhuQL+bSke9dXpIk=";
     };
 
     tts_model_ru = fetchurl {
