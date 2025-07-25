@@ -32,14 +32,14 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     hy3.inputs.hyprland.follows = "hyprland";
-    hy3.url = "github:outfoxxed/hy3?ref=hl0.50.0";
+    hy3.url = "github:outfoxxed/hy3?ref=hl0.49.0";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=v0.50.0";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=v0.49.0";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.inputs.pre-commit-hooks.follows = "";
     hyprland.inputs.systems.follows = "systems";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.50.0";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.49.0";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";
