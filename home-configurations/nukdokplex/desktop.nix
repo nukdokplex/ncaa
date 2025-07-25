@@ -22,6 +22,7 @@
         gimp
         shotwell
         galculator
+        scrcpy
 
         # hw keys
         yubioath-flutter
