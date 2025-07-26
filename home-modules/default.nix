@@ -23,5 +23,6 @@
     ./nm-applet.nix
     ./wm-settings.nix
     ./xdg-terminal-exec.nix
+    ./swayidle2.nix
   ];
 }
