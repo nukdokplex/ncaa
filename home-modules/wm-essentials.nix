@@ -34,6 +34,7 @@ args@{
   programs.file-roller.enable = true;
 
   services = {
+    wpaperd.enable = true;
     cliphist.enable = true;
     swaync.enable = true;
     playerctld.enable = true;

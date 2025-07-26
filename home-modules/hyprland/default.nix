@@ -208,12 +208,14 @@
     };
   };
 
-  imports =
-    [
-      ../wm-essentials.nix
-    ]
-    ++ lib'.umport {
-      path = ./.;
-      exclude = [ ./default.nix ];
-    };
+  # use common wpaperd for all wayland wms
+  stylix.targets.hyprland.hyprpaper.enable = false;
+
+  imports = [
+    ../wm-essentials.nix
+  ]
+  ++ lib'.umport {
+    path = ./.;
+    exclude = [ ./default.nix ];
+  };
 }

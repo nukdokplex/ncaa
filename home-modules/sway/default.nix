@@ -62,13 +62,15 @@
     ];
   });
 
-  imports =
-    [
-      ../wm-essentials.nix
-    ]
-    ++ lib'.umport {
-      path = ./.;
-      recursive = false;
-      exclude = [ ./default.nix ];
-    };
+  # use commons wayland wms wallpaper program
+  stylix.targets.sway.useWallpaper = false;
+
+  imports = [
+    ../wm-essentials.nix
+  ]
+  ++ lib'.umport {
+    path = ./.;
+    recursive = false;
+    exclude = [ ./default.nix ];
+  };
 }
