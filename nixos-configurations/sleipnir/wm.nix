@@ -7,6 +7,7 @@
   };
 
   programs.hyprland.enable = true;
+  programs.niri.enable = true;
 
   home-manager.sharedModules = lib.singleton ({
     wm-settings = {

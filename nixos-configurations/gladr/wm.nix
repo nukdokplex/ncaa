@@ -10,6 +10,10 @@
     wrapperFeatures.gtk = true;
   };
 
+  programs.niri = {
+    enable = true;
+  };
+
   home-manager.sharedModules = lib.singleton ({
     wm-settings = {
       deviceUsesBattery = true;
