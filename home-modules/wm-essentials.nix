@@ -13,6 +13,7 @@ args@{
     wayvnc
     soteria
     brightnessctl
+    wm-utils
   ];
 
   programs.wayprompt = {
