@@ -4,5 +4,10 @@
   services.gvfs.enable = true;
   environment.systemPackages = with pkgs; [
     glib # provides gio
+    scrcpy
   ];
+
+  programs.usb-essentials.enable = true;
+  programs.adb.enable = true;
+  programs.via.enable = true;
 }
