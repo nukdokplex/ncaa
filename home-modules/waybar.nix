@@ -16,15 +16,14 @@ in
       hyprland-bar = final.mainBar // {
         name = "hyprland";
         id = "hyprland";
-        modules-left =
-          [
-            "hyprland/workspaces"
-            "group/indicators"
-          ]
-          ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
-          ++ [
-            "mpris"
-          ];
+        modules-left = [
+          "hyprland/workspaces"
+          "group/indicators"
+        ]
+        ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
+        ++ [
+          "mpris"
+        ];
         modules-right = [
           "clock"
           "idle_inhibitor"
@@ -37,15 +36,14 @@ in
       sway-bar = final.mainBar // {
         name = "sway";
         id = "sway";
-        modules-left =
-          [
-            "sway/workspaces"
-            "group/indicators"
-          ]
-          ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
-          ++ [
-            "mpris"
-          ];
+        modules-left = [
+          "sway/workspaces"
+          "group/indicators"
+        ]
+        ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
+        ++ [
+          "mpris"
+        ];
         modules-right = [
           "clock"
           "idle_inhibitor"
@@ -55,10 +53,31 @@ in
           "sway/language"
         ];
       };
+      niri-bar = final.mainBar // {
+        name = "niri";
+        id = "niri";
+        position = "left";
+        modules-left = [
+          "niri/workspaces"
+          "group/indicators"
+        ]
+        ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
+        ++ [
+          "mpris"
+        ];
+        modules-right = [
+          "clock"
+          "idle_inhibitor"
+          "wireplumber"
+          "custom/notifications"
+          "tray"
+          "niri/language"
+        ];
+      };
       mainBar = {
         name = "main";
         id = "main";
-        layer = "bottom";
+        layer = "top";
         position = "right";
         margin = "10 10 10 0";
         battery = {
@@ -127,6 +146,17 @@ in
           disable-click = false;
           disable-scroll = false;
           format = "{name}";
+        };
+        "niri/language" = {
+          format = "{}";
+          format-en = "ENG";
+          format-ru = "RUS";
+        };
+        "niri/workspaces" = {
+          all-outputs = false;
+          disable-click = false;
+          disable-scroll = false;
+          format = "{name:.3}";
         };
         idle_inhibitor = {
           format = "inh\n{icon}";

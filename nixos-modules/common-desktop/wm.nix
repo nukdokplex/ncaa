@@ -12,6 +12,7 @@
         [
           sway.enable
           hyprland.enable
+          niri.enable
         ]
       ))
       {
@@ -20,6 +21,7 @@
           {
             imports =
               (lib.optional config.programs.sway.enable ezModules.sway)
+              ++ (lib.optional config.programs.niri.enable ezModules.niri)
               ++ (lib.optional config.programs.hyprland.enable ezModules.hyprland);
           }
         );
@@ -41,6 +43,8 @@
         };
 
         security.pam.services.hyprlock = lib.mkIf config.programs.hyprland.enable { };
-        security.pam.services.swaylock = lib.mkIf config.programs.sway.enable { };
+        security.pam.services.swaylock = lib.mkIf (
+          config.programs.sway.enable || config.programs.niri.enable
+        ) { };
       };
 }
