@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{
+  lib,
+  inputs,
+  osConfig,
+  ...
+}:
 {
   imports = [
     inputs.spicetify.homeManagerModules.spicetify
@@ -6,8 +11,10 @@
     inputs.hyprland.homeManagerModules.default
     inputs.nix-index-database.homeModules.nix-index
     inputs.nixcord.homeModules.nixcord
-    inputs.stylix.homeModules.stylix
   ]
+  ++
+    # this is workaround to make stylix always been imported and prevent config conflicts
+    (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeManagerModules.stylix)
   ++ [
     ./file-roller.nix
     ./gaming.nix
