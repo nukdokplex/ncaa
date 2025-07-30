@@ -12,7 +12,6 @@
     extraPackages = with pkgs; [
       libgudev
       libvdpau
-      libsoup_2_4
       libusb1
       speex
       SDL2
