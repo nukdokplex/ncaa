@@ -9,8 +9,8 @@
     agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
-        identity = ./fido2-identity.pub;
-        pubkey = "age1xgn3qvls0p7gp5hwkk65zzfak8wfluy3r8z466j0tvg3d9ssyaasp05k8q";
+        identity = ./fido2-identity-1.pub;
+        pubkey = "age1shz2tstp72sk93rgtj4nwksksye9dwtmu4spt5v3a3kzg3j7r3jqawdq6d";
       }
     ];
     extraEncryptionPubkeys = [
