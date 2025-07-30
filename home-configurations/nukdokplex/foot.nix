@@ -30,6 +30,6 @@
         GNOME = [ "foot.desktop" ];
       };
     };
-    home.sessionVariables.TERMINAL = "foot";
+    home.sessionVariables.TERMCMD = "foot";
   };
 }
