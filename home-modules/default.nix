@@ -14,7 +14,7 @@
   ]
   ++
     # this is workaround to make stylix always been imported and prevent config conflicts
-    (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeManagerModules.stylix)
+    (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeModules.stylix)
   ++ [
     ./file-roller.nix
     ./gaming.nix
