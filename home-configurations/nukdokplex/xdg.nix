@@ -34,13 +34,6 @@ in
         common = {
           "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
         };
-        hyprland = {
-          default = [
-            "hyprland"
-            "gtk"
-          ];
-          "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
-        };
       };
     };
 
