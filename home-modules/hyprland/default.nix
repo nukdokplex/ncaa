@@ -27,14 +27,13 @@
     settings = {
       "$mainMod" = "SUPER";
       # autostarts
-      exec-once =
-        [
-          "'${lib.getExe' pkgs.pipewire "pw-cat"}' --media-role Notification -p '${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg' &"
-          "'${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent'"
-        ]
-        ++ builtins.map (
-          e: "[workspace ${toString e.workspaceNumber} silent] ${e.command}"
-        ) config.wm-settings.workspaceBoundStartup;
+      exec-once = [
+        "'${lib.getExe' pkgs.pipewire "pw-cat"}' --media-role Notification -p '${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg' &"
+        "'${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent'"
+      ]
+      ++ builtins.map (
+        e: "[workspace ${toString e.workspaceNumber} silent] ${e.command}"
+      ) config.wm-settings.workspaceBoundStartup;
 
       # inputs
       input = {
@@ -122,6 +121,12 @@
         # firefox picture-in-picture
         "float, class:firefox, initialTitle:Picture-in-Picture"
         "pin, class:firefox, initialTitle:Picture-in-Picture"
+
+        # udiskie
+        "float, class:udiskie"
+
+        # term file chooser
+        "float, class:foot-file-chooser"
       ];
 
       # appearance
