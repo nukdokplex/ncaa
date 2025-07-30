@@ -125,6 +125,12 @@
           in
           {
             _module.args.pkgs = import inputs.nixpkgs nixpkgsArgs;
+
+            agenix-rekey = {
+              homeConfigurations = { };
+              collectHomeManagerConfigurations = false;
+            };
+
             formatter = pkgs.nixfmt-rfc-style;
             pkgsDirectory = ./packages;
           };
