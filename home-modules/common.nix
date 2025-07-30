@@ -9,6 +9,6 @@
   };
 
   stylix.targets.gtk.extraCss = with config.lib.stylix; ''
-    @define-color view_bg_color rgba(${colors.base00-rgb-r}, ${colors.base00-rgb-g}, ${colors.base00-rgb-b}, ${toString config.stylix.opacity.applications})
+    @define-color view_bg_color rgba(${colors.base00-rgb-r}, ${colors.base00-rgb-g}, ${colors.base00-rgb-b}, ${toString config.stylix.opacity.applications});
   '';
 }
