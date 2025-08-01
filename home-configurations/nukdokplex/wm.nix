@@ -21,7 +21,7 @@
       }
       {
         workspaceNumber = 2;
-        command = "'${lib.getExe pkgs.ayugram-desktop}'";
+        command = "'${lib.getExe' pkgs.ayugram-desktop "AyuGram"}'";
       }
       {
         workspaceNumber = 2;
