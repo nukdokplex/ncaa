@@ -14,7 +14,14 @@
   };
 
   stylix.targets.gtk.extraCss = with config.lib.stylix; ''
-    @define-color view_bg_color rgba(${colors.base00-rgb-r}, ${colors.base00-rgb-g}, ${colors.base00-rgb-b}, ${toString config.stylix.opacity.applications});
+    @define-color view_bg_color alpha(${colors.withHashtag.base00}, ${toString config.stylix.opacity.applications});
+
+    tooltip {
+      background-color: alpha(${colors.withHashtag.base00}, ${builtins.toString config.stylix.opacity.popups});
+    }
+    tooltip * {
+      color: ${colors.withHashtag.base05};
+    }
   '';
 
   xdg.configFile =
