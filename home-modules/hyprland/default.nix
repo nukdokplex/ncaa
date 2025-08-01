@@ -102,6 +102,7 @@
       layerrule = [
         "noanim, selection" # disable animation for some utilities like slurp
         "blur, waybar" # enable blur for waybar layer because it's not enabled by default for some reason
+        "blur, wayprompt"
         "blur, notifications"
         "blur, launcher"
         "blur, gtk-layer-shell"
