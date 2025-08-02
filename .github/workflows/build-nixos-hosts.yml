@@ -37,7 +37,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
       - name: Build host
-        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.sleipnir.config.system.build.toplevel
+        run: nix build --accept-flake-config --print-out-paths --print-build-logs .#nixosConfigurations.sleipnir.config.system.build.toplevel
   build-gladr:
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +61,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
       - name: Build host
-        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.gladr.config.system.build.toplevel
+        run: nix build --accept-flake-config --print-out-paths --print-build-logs .#nixosConfigurations.gladr.config.system.build.toplevel
   build-gler:
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +85,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
       - name: Build host
-        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.gler.config.system.build.toplevel
+        run: nix build --accept-flake-config --print-out-paths --print-build-logs .#nixosConfigurations.gler.config.system.build.toplevel
   build-falhofnir:
     runs-on: ubuntu-latest
     steps:
@@ -109,4 +109,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
       - name: Build host
-        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.falhofnir.config.system.build.toplevel
+        run: nix build --accept-flake-config --print-out-paths --print-build-logs .#nixosConfigurations.falhofnir.config.system.build.toplevel
