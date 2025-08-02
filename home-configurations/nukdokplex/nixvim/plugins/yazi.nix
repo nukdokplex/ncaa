@@ -1,5 +1,5 @@
 {
-  plugins.yazi = {
+  programs.nixvim.plugins.yazi = {
     enable = true;
     autoLoad = true;
     settings = {

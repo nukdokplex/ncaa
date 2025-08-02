@@ -11,6 +11,7 @@
     inputs.hyprland.homeManagerModules.default
     inputs.nix-index-database.homeModules.nix-index
     inputs.nixcord.homeModules.nixcord
+    inputs.nixvim.homeModules.nixvim
   ]
   ++
     # this is workaround to make stylix always been imported and prevent config conflicts

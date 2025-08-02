@@ -1,5 +1,5 @@
 {
-  plugins.barbar = {
+  programs.nixvim.plugins.barbar = {
     enable = true;
     keymaps = {
       next.key = "<TAB>";

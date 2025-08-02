@@ -1,5 +1,0 @@
-{
-  plugins.nix = {
-    enable = true;
-  };
-}
