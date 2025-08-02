@@ -1,0 +1,28 @@
+name: nix-check
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - LICENSE
+      - .github/**
+      - .envrc
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  check-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Run flake checks
+        run: nix --print-build-logs --verbose flake check --all-systems
