@@ -1,0 +1,26 @@
+name: "flake.lock: update inputs"
+
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '0 18 * * 1,4' # Every monday and thursday on 18:00
+
+jobs:
+  update-flake-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v27
+        with:
+          git-committer-name: "github-actions[bot]"
+          git-committer-email: "github-actions[bot]@users.noreply.github.com"
+          pr-title: "flake.lock: Update"
+          pr-assignees: nukdokplex
+          pr-reviewers: nukdokplex
