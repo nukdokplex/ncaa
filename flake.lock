@@ -1794,11 +1794,11 @@
         "systems": "systems_8"
       },
       "locked": {
-        "lastModified": 1753165053,
-        "narHash": "sha256-fYeD8K+AzWlV96f+XctkHBjZaLRI4+9fnO+2Tl8whXY=",
+        "lastModified": 1754108380,
+        "narHash": "sha256-gMLBD1DeZJhr8RIlyypUhpmTGas5EcQhE0te+l/ldG0=",
         "owner": "nukdokplex",
         "repo": "tssp-nix",
-        "rev": "c1a5fed6760e61692b710445377f10bbcee7c486",
+        "rev": "6bcfddbc313285347c9af8fd130239abd3ab0d62",
         "type": "github"
       },
       "original": {
