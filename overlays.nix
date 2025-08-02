@@ -30,6 +30,23 @@
       yazi = prev.yazi.override {
         ffmpeg = null; # ffmpeg is huge
       };
+      fastfetch = prev.fastfetch.override {
+        audioSupport = false;
+        brightnessSupport = false;
+        dbusSupport = false;
+        flashfetchSupport = false;
+        gnomeSupport = false;
+        imageSupport = false;
+        openclSupport = false;
+        openglSupport = false;
+        rpmSupport = false;
+        sqliteSupport = false;
+        terminalSupport = false;
+        vulkanSupport = false;
+        waylandSupport = false;
+        x11Support = false;
+        xfceSupport = false;
+      };
     };
 
     overrides = _: prev: {
