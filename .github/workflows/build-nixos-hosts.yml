@@ -1,0 +1,96 @@
+name: build-nixos-hosts
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - LICENSE
+      - .github/**
+      - .envrc
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build-sleipnir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Install cachix post-build hook
+        uses: cachix/cachix-action@v16
+        with:
+          name: nukdokplex
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+      - name: Build host
+        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.sleipnir.config.system.build.toplevel
+  build-gladr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Install cachix post-build hook
+        uses: cachix/cachix-action@v16
+        with:
+          name: nukdokplex
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+      - name: Build host
+        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.gladr.config.system.build.toplevel
+  build-gler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Install cachix post-build hook
+        uses: cachix/cachix-action@v16
+        with:
+          name: nukdokplex
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+      - name: Build host
+        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.gler.config.system.build.toplevel
+  build-falhofnir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          lfs: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+      - name: Install cachix post-build hook
+        uses: cachix/cachix-action@v16
+        with:
+          name: nukdokplex
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+      - name: Build host
+        run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.falhofnir.config.system.build.toplevel
