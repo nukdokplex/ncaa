@@ -18,7 +18,6 @@
     ++ (with ezModules; [
       ./agenix-rekey-generators.nix
       ./k3b-custom.nix
-      ./lutris.nix
       ./nixpkgs-overlays.nix
       ./optical-disk-essentials.nix
       ./usb-essentials.nix
