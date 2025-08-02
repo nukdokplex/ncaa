@@ -6,6 +6,8 @@ A collection of crap to make my hosts boot and some other prekoldesses.
 [![nixpkgs commit shield](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fnukdokplex%2Fncaa%2Fraw%2Frefs%2Fheads%2Fmaster%2Fflake.lock&query=%24.nodes.nixpkgs.locked.rev&style=flat-square&logo=nixos&logoColor=%235277C3&label=nixpkgs%20commit&labelColor=white&color=%235277C3)](https://github.com/nukdokplex/ncaa/blob/master/flake.lock)
 [![formatting shield](https://img.shields.io/badge/formatting-nixfmt-5277c3?style=flat-square&logo=nixos&logoColor=5277c3&labelColor=white)](https://github.com/NixOS/nixfmt)
 [![commit activity shield](https://img.shields.io/github/commit-activity/m/nukdokplex/ncaa?style=flat-square&logo=git&logoColor=%23F05032&label=commit%20activity&labelColor=white&color=%23F05032)](https://github.com/nukdokplex/ncaa/commits)
+[![nix-check workflow](https://img.shields.io/github/actions/workflow/status/nukdokplex/ncaa/nix-check.yml?branch=master&style=flat-square&logo=githubactions&logoColor=%232088FF&label=nix-check&labelColor=white&color=%20%232088FF)](https://github.com/nukdokplex/ncaa/actions/workflows/nix-check.yml?query=branch%3Amaster)
+[![build-nixos-hosts](https://img.shields.io/github/actions/workflow/status/nukdokplex/ncaa/build-nixos-hosts.yml?branch=master&style=flat-square&logo=githubactions&logoColor=%232088FF&label=build-nixos-hosts&labelColor=white&color=%20%232088FF)](https://github.com/nukdokplex/ncaa/actions/workflows/build-nixos-hosts.yml?query=branch%3Amaster)
 [![license](https://img.shields.io/github/license/nukdokplex/ncaa?style=flat-square&logo=spdx&logoColor=%234398CC&label=license&labelColor=white&color=%234398CC)](https://github.com/nukdokplex/ncaa/raw/refs/heads/master/LICENSE)
 
 ## Key features
