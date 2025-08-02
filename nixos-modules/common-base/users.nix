@@ -33,5 +33,6 @@
   });
 
   age.secrets.nukdokplex-hashed-password.rekeyFile =
-    flakeRoot + /secrets/non-generated/common/nukdokplex-hashed-password.age;
+    flakeRoot
+    + /secrets/non-generated/common/nukdokplex-hashed-password.age;
 }

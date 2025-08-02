@@ -88,14 +88,13 @@ in
 
   networking.firewall.allowedTCPPorts = [ vlessPort ];
 
-  age.secrets =
-    {
-      sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
-      sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
-    }
-    // builtins.listToAttrs (
-      builtins.map (
-        hostName: lib.nameValuePair "sing-box-vless-in-${hostName}-uuid" { generator.script = "uuid"; }
-      ) vlessHostNames
-    );
+  age.secrets = {
+    sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
+    sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
+  }
+  // builtins.listToAttrs (
+    builtins.map (
+      hostName: lib.nameValuePair "sing-box-vless-in-${hostName}-uuid" { generator.script = "uuid"; }
+    ) vlessHostNames
+  );
 }

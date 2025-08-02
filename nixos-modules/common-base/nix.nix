@@ -24,7 +24,8 @@ in
       ];
       min-free = "1G";
       max-free = "5G";
-    } // (import (flakeRoot + /flake.nix)).nixConfig;
+    }
+    // (import (flakeRoot + /flake.nix)).nixConfig;
     optimise = {
       automatic = true;
       dates = [

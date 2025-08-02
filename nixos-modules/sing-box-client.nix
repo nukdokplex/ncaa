@@ -206,7 +206,9 @@ in
   };
 
   age.secrets.sing-box-vless-uuid.rekeyFile =
-    flakeRoot + /secrets/generated/falhofnir/sing-box-vless-in-${config.networking.hostName}-uuid.age;
+    flakeRoot
+    + /secrets/generated/falhofnir/sing-box-vless-in-${config.networking.hostName}-uuid.age;
   age.secrets.sing-box-vless-short-id.rekeyFile =
-    flakeRoot + /secrets/generated/falhofnir/sing-box-vless-in-reality-short-id.age;
+    flakeRoot
+    + /secrets/generated/falhofnir/sing-box-vless-in-reality-short-id.age;
 }

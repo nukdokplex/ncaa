@@ -6,15 +6,14 @@
   ...
 }:
 {
-  imports =
-    [
-      ezModules.common
-    ]
-    ++ (lib'.umport {
-      path = ./.;
-      exclude = [ ./default.nix ];
-      recursive = false;
-    });
+  imports = [
+    ezModules.common
+  ]
+  ++ (lib'.umport {
+    path = ./.;
+    exclude = [ ./default.nix ];
+    recursive = false;
+  });
 
   home = {
     username = "nukdokplex";

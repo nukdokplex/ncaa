@@ -25,91 +25,90 @@ in
     # d -> has description, will allow you to write a description for your bind.
     # p -> bypasses the app's requests to inhibit keybinds.
 
-    bindd =
-      [
-        # menus
-        "Control Alt, Delete, Open power menu, exec, '${wm-utils}' fuzzel_power_menu"
-        "$mainMod, V, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
-        "$mainMod, D, Run drun menu, exec, '${lib.getExe config.programs.fuzzel.package}' --show-actions"
+    bindd = [
+      # menus
+      "Control Alt, Delete, Open power menu, exec, '${wm-utils}' fuzzel_power_menu"
+      "$mainMod, V, Open clipboard history, exec, '${lib.getExe config.services.cliphist.package}' list | '${lib.getExe config.programs.fuzzel.package}' --dmenu -p 'Select clipboard history entry...' | '${lib.getExe config.services.cliphist.package}' decode | '${lib.getExe' pkgs.wl-clipboard "wl-copy"}'"
+      "$mainMod, D, Run drun menu, exec, '${lib.getExe config.programs.fuzzel.package}' --show-actions"
 
-        # screenshots
-        "$mainMod, P, Screenshot screen region, exec, '${wm-utils}' screenshot_region"
-        "$mainMod Shift, P, Screenshot active output, exec, '${wm-utils}' screenshot_output"
+      # screenshots
+      "$mainMod, P, Screenshot screen region, exec, '${wm-utils}' screenshot_region"
+      "$mainMod Shift, P, Screenshot active output, exec, '${wm-utils}' screenshot_output"
 
-        # OCR narrator
-        "$mainMod, T, Text-to-speech (russian), exec, '${wm-utils}' ocr_narrator ru"
-        "$mainMod Shift, T, Text-to-speech (english), exec, '${wm-utils}' ocr_narrator en"
+      # OCR narrator
+      "$mainMod, T, Text-to-speech (russian), exec, '${wm-utils}' ocr_narrator ru"
+      "$mainMod Shift, T, Text-to-speech (english), exec, '${wm-utils}' ocr_narrator en"
 
-        # OCR copy
-        "$mainMod, C, OCR screenshot copy (russian), exec, '${wm-utils}' ocr_copy ru"
-        "$mainMod Shift, C, OCR screenshot copy (english), exec, '${wm-utils}' ocr_copy en"
+      # OCR copy
+      "$mainMod, C, OCR screenshot copy (russian), exec, '${wm-utils}' ocr_copy ru"
+      "$mainMod Shift, C, OCR screenshot copy (english), exec, '${wm-utils}' ocr_copy en"
 
-        # submaps
-        "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
+      # submaps
+      "$mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough"
 
-        # applications
-        "$mainMod, O, Open file manager, exec, ${config.wm-settings.defaultApplications.fileManager}"
-        "$mainMod, U, Run browser, exec, '${lib.getExe config.wm-settings.defaultApplications.webBrowser}'"
-        "$mainMod, Return, Run terminal, exec, '${lib.getExe config.wm-settings.defaultApplications.terminal}'"
+      # applications
+      "$mainMod, O, Open file manager, exec, ${config.wm-settings.defaultApplications.fileManager}"
+      "$mainMod, U, Run browser, exec, '${lib.getExe config.wm-settings.defaultApplications.webBrowser}'"
+      "$mainMod, Return, Run terminal, exec, '${lib.getExe config.wm-settings.defaultApplications.terminal}'"
 
-        # windows manipulation
-        "$mainMod Shift, Q, Close active window, killactive"
-        "$mainMod, F, Toggle window fullscreen, fullscreen"
-        "$mainMod Shift, F, Toggle fake fullscreen, fullscreenstate, 0 3"
-        "$mainMod Shift, Space, Toggle window floating, togglefloating"
-        "$mainMod, Space, Toggle focus betweeen tikled and floating layers, hy3:togglefocuslayer"
+      # windows manipulation
+      "$mainMod Shift, Q, Close active window, killactive"
+      "$mainMod, F, Toggle window fullscreen, fullscreen"
+      "$mainMod Shift, F, Toggle fake fullscreen, fullscreenstate, 0 3"
+      "$mainMod Shift, Space, Toggle window floating, togglefloating"
+      "$mainMod, Space, Toggle focus betweeen tikled and floating layers, hy3:togglefocuslayer"
 
-        # layout stuff
-        "$mainMod, comma, Split horizontally, hy3:makegroup, h, toggle, ephemeral"
-        "$mainMod Shift, comma, Change group layout to horizontal, hy3:changegroup, h"
-        "$mainMod, period, Split vertically, hy3:makegroup, v, toggle, ephemeral"
-        "$mainMod Shift, period, Change group layout to vertical, hy3:changegroup, v"
-        "$mainMod, slash, Make tab, hy3:makegroup, tab, toggle, ephemeral"
-        "$mainMod Shift, slash, Change group layout to tabbed, hy3:changegroup, toggletab"
+      # layout stuff
+      "$mainMod, comma, Split horizontally, hy3:makegroup, h, toggle, ephemeral"
+      "$mainMod Shift, comma, Change group layout to horizontal, hy3:changegroup, h"
+      "$mainMod, period, Split vertically, hy3:makegroup, v, toggle, ephemeral"
+      "$mainMod Shift, period, Change group layout to vertical, hy3:changegroup, v"
+      "$mainMod, slash, Make tab, hy3:makegroup, tab, toggle, ephemeral"
+      "$mainMod Shift, slash, Change group layout to tabbed, hy3:changegroup, toggletab"
 
-        # misc
-        "$mainMod, Escape, Expo, hyprexpo:expo, toggle"
-        "$mainMod, Grave, Expo, hyprexpo:expo, toggle"
-      ]
-      ++ lib.flatten (
-        lib'.withDirections (
-          { xkbNoPrefix, hyprland, ... }:
-          let
-            inherit (hyprland) direction;
-          in
-          [
-            # move focus (only visible windows)
-            "$mainMod, ${xkbNoPrefix.arrow}, Move focus ${direction} (only visible windows), hy3:movefocus, ${direction}, visible, warp"
-            "$mainMod, ${xkbNoPrefix.hjkl}, Move focus ${direction} (only visible windows), hy3:movefocus, ${direction}, visible, warp"
+      # misc
+      "$mainMod, Escape, Expo, hyprexpo:expo, toggle"
+      "$mainMod, Grave, Expo, hyprexpo:expo, toggle"
+    ]
+    ++ lib.flatten (
+      lib'.withDirections (
+        { xkbNoPrefix, hyprland, ... }:
+        let
+          inherit (hyprland) direction;
+        in
+        [
+          # move focus (only visible windows)
+          "$mainMod, ${xkbNoPrefix.arrow}, Move focus ${direction} (only visible windows), hy3:movefocus, ${direction}, visible, warp"
+          "$mainMod, ${xkbNoPrefix.hjkl}, Move focus ${direction} (only visible windows), hy3:movefocus, ${direction}, visible, warp"
 
-            # move focus (all windows)
-            "$mainMod Alt, ${xkbNoPrefix.arrow}, Move focus ${direction}, hy3:movefocus, ${direction} (all windows), warp"
-            "$mainMod Alt, ${xkbNoPrefix.hjkl}, Move focus ${direction}, hy3:movefocus, ${direction} (all windows), warp"
+          # move focus (all windows)
+          "$mainMod Alt, ${xkbNoPrefix.arrow}, Move focus ${direction}, hy3:movefocus, ${direction} (all windows), warp"
+          "$mainMod Alt, ${xkbNoPrefix.hjkl}, Move focus ${direction}, hy3:movefocus, ${direction} (all windows), warp"
 
-            # move window
-            "$mainMod Shift, ${xkbNoPrefix.arrow}, Swap window ${direction}, hy3:movewindow, ${direction}"
-            "$mainMod Shift, ${xkbNoPrefix.hjkl}, Swap window ${direction}, hy3:movewindow, ${direction}"
+          # move window
+          "$mainMod Shift, ${xkbNoPrefix.arrow}, Swap window ${direction}, hy3:movewindow, ${direction}"
+          "$mainMod Shift, ${xkbNoPrefix.hjkl}, Swap window ${direction}, hy3:movewindow, ${direction}"
 
-          ]
-        )
+        ]
       )
-      ++ lib.flatten (
-        lib'.withNumbers (
-          { xkbNoPrefix, number, ... }:
-          [
-            # focus workspace
-            "$mainMod, ${xkbNoPrefix.digit}, Switch to workspace ${toString number}, workspace, ${builtins.toString number}"
-            "$mainMod Alt, ${xkbNoPrefix.digit}, Switch to workspace ${toString (10 + number)}, workspace, ${toString (10 + number)}"
+    )
+    ++ lib.flatten (
+      lib'.withNumbers (
+        { xkbNoPrefix, number, ... }:
+        [
+          # focus workspace
+          "$mainMod, ${xkbNoPrefix.digit}, Switch to workspace ${toString number}, workspace, ${builtins.toString number}"
+          "$mainMod Alt, ${xkbNoPrefix.digit}, Switch to workspace ${toString (10 + number)}, workspace, ${toString (10 + number)}"
 
-            # focus window in tabs
-            "$mainMod Control, ${xkbNoPrefix.digit}, Focus tab ${toString number}, hy3:focustab, index, ${toString number}"
+          # focus window in tabs
+          "$mainMod Control, ${xkbNoPrefix.digit}, Focus tab ${toString number}, hy3:focustab, index, ${toString number}"
 
-            # move window to workspace
-            "$mainMod Shift, ${xkbNoPrefix.digit}, Move active window to workspace ${toString number}, hy3:movetoworkspace, ${toString number}, follow, warp"
-            "$mainMod Shift Alt, ${xkbNoPrefix.digit}, Move window to workspace ${toString (10 + number)}, hy3:movetoworkspace, ${toString (10 + number)}, follow, warp"
-          ]
-        )
-      );
+          # move window to workspace
+          "$mainMod Shift, ${xkbNoPrefix.digit}, Move active window to workspace ${toString number}, hy3:movetoworkspace, ${toString number}, follow, warp"
+          "$mainMod Shift Alt, ${xkbNoPrefix.digit}, Move window to workspace ${toString (10 + number)}, hy3:movetoworkspace, ${toString (10 + number)}, follow, warp"
+        ]
+      )
+    );
 
     bindde = lib.flatten (
       lib'.withDirections (

@@ -33,11 +33,10 @@ in
 writeShellApplication {
   name = "wm-utils";
 
-  text =
-    ''
-      SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
-    ''
-    + rawCombinedScript;
+  text = ''
+    SOUNDS='${kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo'
+  ''
+  + rawCombinedScript;
 
   runtimeEnv = {
     TESSDATA_PREFIX = "${tesseract}/share/tessdata";
