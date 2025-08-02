@@ -26,6 +26,12 @@
       else
         { };
 
+    light-packages = _: prev: {
+      yazi = prev.yazi.override {
+        ffmpeg = null; # ffmpeg is huge
+      };
+    };
+
     overrides = _: prev: {
       waybar = prev.waybar.overrideAttrs {
         patches = lib.singleton (

@@ -1,5 +1,6 @@
 {
   lib',
+  lib,
   ezModules,
   inputs,
   modulesPath,
@@ -25,4 +26,6 @@
   hardware.enableAllFirmware = true;
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKe9E7Kw34WZQl7T0MluQd3tKvdhNvEcvDJa9Zr3hJWv root@falhofnir";
+
+  nixpkgs.overlays = lib.singleton inputs.self.overlays.light-packages;
 }
