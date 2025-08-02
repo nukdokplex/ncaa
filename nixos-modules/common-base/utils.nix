@@ -12,7 +12,6 @@
     cachix
     cmatrix
     fastfetch
-    ffmpeg
     htop
     inotify-tools
     jq
