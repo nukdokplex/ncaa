@@ -2,18 +2,6 @@
   description = "A collection of crap, hacks, and copy-paste to make my hosts boot";
 
   inputs = {
-    # pinned inputs
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    # systems
-    systems.url = "github:nix-systems/default-linux";
-
-    # alphabetically ordered
     agenix-rekey.inputs.flake-parts.follows = "flake-parts";
     agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
     agenix-rekey.url = "github:oddlama/agenix-rekey";
@@ -26,6 +14,8 @@
     ez-configs.inputs.flake-parts.follows = "flake-parts";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
     ez-configs.url = "github:ehllie/ez-configs";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     flake-utils.url = "github:numtide/flake-utils";
     git-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
     git-hooks-nix.url = "github:cachix/git-hooks.nix";
@@ -49,6 +39,7 @@
     nixcord.url = "github:KaylorBen/nixcord";
     nixos-nftables-firewall.inputs.nixpkgs.follows = "nixpkgs";
     nixos-nftables-firewall.url = "github:thelegy/nixos-nftables-firewall";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nuschtosSearch.follows = "";
@@ -64,6 +55,7 @@
     spicetify.url = "github:Gerg-L/spicetify-nix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
+    systems.url = "github:nix-systems/default-linux";
     tssp.inputs.nixpkgs.follows = "nixpkgs";
     tssp.url = "github:nukdokplex/tssp-nix";
   };
