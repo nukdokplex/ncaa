@@ -22,5 +22,4 @@ jobs:
           git-committer-email: "github-actions[bot]@users.noreply.github.com"
           pr-title: "flake.lock: Update"
           pr-assignees: nukdokplex
-          pr-reviewers: nukdokplex
           token: ${{ secrets.GH_TOKEN_FOR_FLAKE_LOCK_UPDATE }}
