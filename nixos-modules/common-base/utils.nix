@@ -9,7 +9,6 @@
     bind
     btop
     bat # woke cat
-    cachix
     cmatrix
     fastfetch
     htop
