@@ -1,10 +1,11 @@
-{ lib, config, ... }@args:
+{
+  lib,
+  config,
+  osConfig ? { },
+  ...
+}:
 let
-  hostNamePath = [
-    "osConfig"
-    "networking"
-    "hostName"
-  ];
+  hostName = osConfig.networking.hostName or null;
 in
 {
   programs.hyprlock = {
@@ -43,11 +44,7 @@ in
           shadow_passes = 3;
         }
         {
-          text =
-            if lib.hasAttrByPath hostNamePath args then
-              "$USER@${lib.attrByPath hostNamePath "" args}"
-            else
-              "$USER";
+          text = if hostName != null then "$USER@${hostName}" else "$USER";
           text_align = "center";
           color = "rgb(${base05})";
           font_size = 32;
