@@ -27,7 +27,8 @@ in
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber"
+          "wireplumber#sink"
+          "wireplumber#source"
           "custom/notifications"
           "tray"
           "hyprland/language"
@@ -47,7 +48,8 @@ in
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber"
+          "wireplumber#sink"
+          "wireplumber#source"
           "custom/notifications"
           "tray"
           "sway/language"
@@ -68,7 +70,8 @@ in
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber"
+          "wireplumber#sink"
+          "wireplumber#source"
           "custom/notifications"
           "tray"
           "niri/language"
@@ -194,10 +197,19 @@ in
           icon-size = 24;
           spacing = 6;
         };
-        wireplumber = {
+        "wireplumber#sink" = {
           format = "vol\n{volume:03d}";
           max-volume = 150;
           on-click = "'${lib.getExe pkgs.pavucontrol}'";
+          node-type = "Audio/Sink";
+          tooltip = true;
+          tooltip-format = "{volume}% {node_name}";
+        };
+        "wireplumber#source" = {
+          format = "mic\n{volume:03d}";
+          max-volume = 150;
+          on-click = "'${lib.getExe pkgs.pavucontrol}'";
+          node-type = "Audio/Source";
           tooltip = true;
           tooltip-format = "{volume}% {node_name}";
         };
