@@ -16,6 +16,7 @@
       gladr.userHomeModules = [ "nukdokplex" ];
       gler.userHomeModules = [ "nukdokplex" ];
       falhofnir.userHomeModules = [ "nukdokplex" ];
+      aircrack-vm.userHomeModules = [ "nukdokplex" ];
     };
   };
 }
