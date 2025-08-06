@@ -1,21 +1,16 @@
 {
   lib,
   config,
-  inputs,
   ...
 }:
 let
   vlessPort = 3000;
-  vlessExcludeHostNames = [ "gler" ];
-  vlessHostNames =
-    builtins.filter (
-      hostName:
-      (!builtins.elem hostName vlessExcludeHostNames) && (hostName != config.networking.hostName)
-    ) (builtins.attrNames inputs.self.outputs.nixosConfigurations)
-    ++ [
-      "hrafn"
-      "babushbant"
-    ];
+  vlessHostNames = [
+    "sleipnir"
+    "gladr"
+    "hrafn"
+    "babushbant"
+  ];
 in
 {
 
