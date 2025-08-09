@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   lib',
   ezModules,
@@ -33,15 +32,4 @@
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
-
-  stylix = {
-    image = pkgs.fetchurl {
-      urls = [
-        "https://w.wallhaven.cc/full/9m/wallhaven-9m59md.png"
-        "https://web.archive.org/web/https://w.wallhaven.cc/full/9m/wallhaven-9m59md.png"
-      ];
-      hash = "sha256-7lU7qRcQKBd/7I7SmpNmsoqLmEH0blda36jdywIzn40=";
-    };
-    polarity = "dark";
-  };
 }
