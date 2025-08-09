@@ -6,13 +6,6 @@
 {
   stylix = lib.mkDefault {
     enable = true;
-    image = pkgs.fetchurl {
-      urls = [
-        "https://w.wallhaven.cc/full/57/wallhaven-57loy5.jpg"
-        "https://web.archive.org/web/https://w.wallhaven.cc/full/57/wallhaven-57loy5.jpg"
-      ];
-      sha256 = "187734kcjslgijlqsc9dc58vbx25ibmnr1q58313q2s9na1z782c";
-    };
 
     fonts = {
       serif = {

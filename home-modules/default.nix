@@ -24,5 +24,6 @@
     ./nm-applet.nix
     ./wm-settings.nix
     ./swayidle2.nix
+    ./stylix-video-wallpaper.nix
   ];
 }

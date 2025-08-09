@@ -22,5 +22,6 @@
       ./optical-disk-essentials.nix
       ./usb-essentials.nix
       ./via.nix
+      ./stylix-video-wallpaper.nix
     ]);
 }

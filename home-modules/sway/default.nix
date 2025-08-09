@@ -24,9 +24,14 @@
     ] pkgs.sway args;
     wrapperFeatures.gtk.enable = true;
     config = {
-      startup = lib.mkBefore [
-        { command = "'${lib.getExe pkgs.soteria}'"; }
-      ];
+      startup = lib.mkBefore (
+        [
+          { command = "'${lib.getExe pkgs.soteria}'"; }
+        ]
+        ++ (lib.optional (config.stylix.video != null) {
+          command = "'${lib.getExe config.programs.mpvpaper.package}' -o \"no-audio --hwdec=auto --loop-file --panscan=1\" '*' '${config.stylix.video}'";
+        })
+      );
       bars = [ ]; # remove standard bar
 
       gaps.inner = 10;

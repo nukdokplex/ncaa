@@ -31,6 +31,9 @@
         "'${lib.getExe' pkgs.pipewire "pw-cat"}' --media-role Notification -p '${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg' &"
         "'${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent'"
       ]
+      ++ (lib.optional (config.stylix.video != null)
+        "'${lib.getExe config.programs.mpvpaper.package}' -o \"no-audio --hwdec=auto --loop-file --panscan=1\" '*' '${config.stylix.video}'"
+      )
       ++ builtins.map (
         e: "[workspace ${toString e.workspaceNumber} silent] ${e.command}"
       ) config.wm-settings.workspaceBoundStartup;

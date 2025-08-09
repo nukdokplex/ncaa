@@ -33,9 +33,10 @@ args@{
 
   programs.nemo.enable = true;
   programs.file-roller.enable = true;
+  programs.mpvpaper.enable = lib.mkIf (config.stylix.video != null) true;
 
   services = {
-    wpaperd.enable = true;
+    wpaperd.enable = lib.mkIf (config.stylix.video == null) true;
     cliphist.enable = true;
     swaync.enable = true;
     playerctld.enable = true;
