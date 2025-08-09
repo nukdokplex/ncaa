@@ -21,9 +21,6 @@
               # Esc to clear search results
               "<Esc>" = ":noh<CR>";
 
-              "<C-x>" = ":close<CR>";
-              "<M-x>" = ":clode<CR>";
-
               # format with lsp-format
               "<leader>f" = ":Format<CR>";
 
