@@ -137,7 +137,7 @@
       decoration = {
         shadow.enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
         blur = {
-          enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
+          enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient && config.stylix.video == null);
           size = 7;
           passes = 4;
           new_optimizations = true;
