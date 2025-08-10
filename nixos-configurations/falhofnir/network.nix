@@ -7,7 +7,6 @@ let
   uplinkMACAddress = "00:16:3c:63:bd:c6";
 in
 {
-  networking.useDHCP = false;
   networking.nftables.firewall.snippets.nnf-dhcpv6.enable = lib.mkForce false;
   networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
@@ -31,31 +30,38 @@ in
     };
   };
 
-  systemd.network = {
-    enable = true;
-    networks.uplink = {
-      address = [
-        "188.253.26.208/24"
-        "2a0c:16c2:500:663:216:3cff:fe63:bdc6/48"
-      ];
+  networking = {
+    useDHCP = false;
 
-      routes = [
-        { Gateway = "188.253.26.1"; }
-        { Gateway = "2a0c:16c2:500::1"; }
-      ];
-
-      dns = [
-        "[2606:4700:4700::1111]:53"
-        "[2606:4700:4700::1001]:53"
-      ];
-
-      matchConfig.MACAddress = uplinkMACAddress;
-      networkConfig = {
-        IPv6AcceptRA = false;
-        LinkLocalAddressing = false;
+    interfaces.uplink = {
+      ipv4 = {
+        addresses = lib.singleton {
+          address = "188.253.26.208";
+          prefixLength = 24;
+        };
       };
-
+      ipv6 = {
+        addresses = lib.singleton {
+          address = "2a0c:16c2:500:663:216:3cff:fe63:bdc6";
+          prefixLength = 48;
+        };
+      };
     };
+
+    defaultGateway = {
+      address = "188.253.26.1";
+      interface = "uplink";
+    };
+
+    defaultGateway6 = {
+      address = "2a0c:16c2:500::1";
+      interface = "uplink";
+    };
+
+    nameservers = [
+      "2001:4860:4860::8888"
+      "2001:4860:4860::8844"
+    ];
   };
 
   services.ddclient.usev6 = lib.mkForce "cmdv6, cmdv6=\"'${lib.getExe pkgs.getv6addresses}' -p -x | tr '\\n' ',' | sed 's/,*$//'\"";
