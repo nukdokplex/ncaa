@@ -8,6 +8,7 @@ let
   uplinkMACAddress = "52:54:00:60:44:56";
 in
 {
+  networking.nftables.firewall.snippets.nnf-dhcpv6.enable = lib.mkForce false;
   networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
   boot.initrd.services.udev.rules = ''
