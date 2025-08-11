@@ -12,6 +12,10 @@
         identity = ./fido2-identity-1.pub;
         pubkey = "age1shz2tstp72sk93rgtj4nwksksye9dwtmu4spt5v3a3kzg3j7r3jqawdq6d";
       }
+      {
+        identity = ./fido2-identity-2.pub;
+        pubkey = "age14eg3wdumvpwmsgdk3ctdkvtw43am8kq43wq4hzejzt9fqrpgggqsyzutrm";
+      }
     ];
     extraEncryptionPubkeys = [
       "age1uhv9l24d4rnrxtydm4mvmmh2653x22ae0ysmhgejhmrtsr8a6e6qnh29vf"
