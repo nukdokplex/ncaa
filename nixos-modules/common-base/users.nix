@@ -2,12 +2,11 @@
   flakeRoot,
   config,
   pkgs,
-  lib,
   ...
 }:
 {
   programs.zsh.enable = true;
-  users = lib.fix (users: {
+  users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = true;
 
@@ -23,14 +22,19 @@
         "podman"
       ];
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5+elt9Z1Nwj6unJsK6UJNH3Ly2+oUxjRUuPtn7u6Th nukdokplex"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5+elt9Z1Nwj6unJsK6UJNH3Ly2+oUxjRUuPtn7u6Th cardno:FFFE_0643DA9F"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6J3TsIrfH96FYltcB56y2mACg3P5JMDK0ZDDI33NBo cardno:FFFE_775BC6BC"
       ];
 
       hashedPasswordFile = config.age.secrets.nukdokplex-hashed-password.path;
     };
 
-    users.root.openssh.authorizedKeys.keys = users.users.nukdokplex.openssh.authorizedKeys.keys;
-  });
+    users.root = {
+      openssh = {
+        inherit (config.users.users.nukdokplex.openssh) authorizedKeys;
+      };
+    };
+  };
 
   age.secrets.nukdokplex-hashed-password.rekeyFile =
     flakeRoot
