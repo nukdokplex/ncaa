@@ -89,7 +89,6 @@
           ./lib
           ./overlays.nix
           ./ez-configs.nix
-          ./picokeys.nix
           ./devshells.nix
         ];
 
