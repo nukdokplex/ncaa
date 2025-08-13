@@ -8,6 +8,7 @@ let
   vlessHostNames = [
     "sleipnir"
     "gladr"
+    "holl"
     "hrafn"
     "babushbant"
   ];
