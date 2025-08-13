@@ -17,7 +17,6 @@ in
         name = "hyprland";
         id = "hyprland";
         modules-left = [
-          "hyprland/workspaces"
           "group/indicators"
         ]
         ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
@@ -38,7 +37,6 @@ in
         name = "sway";
         id = "sway";
         modules-left = [
-          "sway/workspaces"
           "group/indicators"
         ]
         ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
@@ -60,7 +58,6 @@ in
         id = "niri";
         position = "left";
         modules-left = [
-          "niri/workspaces"
           "group/indicators"
         ]
         ++ (lib.optional config.wm-settings.deviceUsesBattery "battery")
