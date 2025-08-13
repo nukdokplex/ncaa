@@ -48,24 +48,24 @@
   };
 
   systemd.mounts = [
-    {
-      name = "data-archive.mount";
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      what = "/dev/disk/by-label/ARCHIVE";
-      where = "/data/archive";
-      type = "ext4";
-      options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
-    }
-    {
-      name = "data-downloads.mount";
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      what = "/dev/disk/by-label/DOWNLOADS";
-      where = "/data/downloads";
-      type = "ext4";
-      options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
-    }
+    # {
+    #   name = "data-archive.mount";
+    #   enable = true;
+    #   wantedBy = [ "multi-user.target" ];
+    #   what = "/dev/disk/by-label/ARCHIVE";
+    #   where = "/data/archive";
+    #   type = "ext4";
+    #   options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
+    # }
+    # {
+    #   name = "data-downloads.mount";
+    #   enable = true;
+    #   wantedBy = [ "multi-user.target" ];
+    #   what = "/dev/disk/by-label/DOWNLOADS";
+    #   where = "/data/downloads";
+    #   type = "ext4";
+    #   options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
+    # }
     {
       name = "data-fastext.mount";
       enable = true;
@@ -76,28 +76,28 @@
       options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
     }
   ];
-  home-manager.users.nukdokplex.imports = [
-    (
-      { config, lib, ... }:
-      {
-        home.file = builtins.listToAttrs (
-          builtins.map
-            (
-              name:
-              lib.nameValuePair name {
-                target = name;
-                source = config.lib.file.mkOutOfStoreSymlink "/data/archive/nukdokplex/${name}";
-              }
-            )
-            [
-              "documents"
-              "music"
-              "pictures"
-              "templates"
-              "videos"
-            ]
-        );
-      }
-    )
-  ];
+  # home-manager.users.nukdokplex.imports = [
+  #   (
+  #     { config, lib, ... }:
+  #     {
+  #       home.file = builtins.listToAttrs (
+  #         builtins.map
+  #           (
+  #             name:
+  #             lib.nameValuePair name {
+  #               target = name;
+  #               source = config.lib.file.mkOutOfStoreSymlink "/data/archive/nukdokplex/${name}";
+  #             }
+  #           )
+  #           [
+  #             "documents"
+  #             "music"
+  #             "pictures"
+  #             "templates"
+  #             "videos"
+  #           ]
+  #       );
+  #     }
+  #   )
+  # ];
 }
