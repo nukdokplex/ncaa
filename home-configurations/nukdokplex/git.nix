@@ -1,15 +1,15 @@
-{ lib, ... }:
+{ config, ... }:
 {
-  programs.git = lib.fix (git: {
+  programs.git = {
     enable = true;
     userName = "nukdokplex";
     userEmail = "nukdokplex@nukdokplex.ru";
     signing = {
       format = "openpgp";
       signByDefault = true;
-      key = git.userEmail;
+      key = config.programs.git.userEmail;
     };
-  });
+  };
 
   programs.lazygit = {
     enable = true;
@@ -21,6 +21,14 @@
       git = {
         autoFetch = false;
       };
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper.enable = false;
+    settings = {
+      git_protocol = "ssh";
     };
   };
 }
