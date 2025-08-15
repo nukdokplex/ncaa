@@ -50,14 +50,6 @@
     };
 
     overrides = _: prev: {
-      waybar = prev.waybar.overrideAttrs {
-        patches = lib.singleton (
-          prev.fetchpatch {
-            url = "https://github.com/Alexays/Waybar/compare/0.13.0...0776e694df56c2c849b682369148210d81324e93.patch";
-            hash = "sha256-V5CNu4X/Nyay0DJvPbFqa0mLJyU/1B5LzZab+p/xVHA=";
-          }
-        );
-      };
       qutebrowser = prev.qutebrowser.overrideAttrs {
         version = "3.6.1-unstable-2025-07-14";
         src = prev.fetchFromGitHub {
