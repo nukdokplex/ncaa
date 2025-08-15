@@ -50,15 +50,6 @@
     };
 
     overrides = _: prev: {
-      qutebrowser = prev.qutebrowser.overrideAttrs {
-        version = "3.6.1-unstable-2025-07-14";
-        src = prev.fetchFromGitHub {
-          owner = "coderkun";
-          repo = "qutebrowser";
-          rev = "79695292c1fc7c8953684ee4cc2105d92ad62d76";
-          hash = "sha256-azCsgRz8sKm6wELnf0XK7ui42JwQ3r4jtxZZyH67D1s=";
-        };
-      };
       wl-clipboard = prev.wl-clipboard.overrideAttrs (
         _: _: {
           version = "2.2-unstable-2024-04-24";
