@@ -32,4 +32,10 @@ in
       };
     };
   };
+
+  services.fail2ban = {
+    enable = true;
+    banaction = "nftables-multiport";
+    banaction-allports = "nftables-allports";
+  };
 }
