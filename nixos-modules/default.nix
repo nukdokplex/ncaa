@@ -23,5 +23,6 @@
       ./usb-essentials.nix
       ./via.nix
       ./stylix-video-wallpaper.nix
+      ./netbird-server.nix
     ]);
 }
