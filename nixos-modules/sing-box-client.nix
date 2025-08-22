@@ -156,6 +156,18 @@ in
       route = {
         rules = [
           {
+            # this rule is needed to make acme dns propagation check correct
+            ip_cidr = [
+              # ns1.desec.io
+              "45.54.76.1/32"
+              "2607:f740:e633:deec::2/64"
+              # ns2.desec.org
+              "157.53.224.1/32"
+              "2607:f740:e00a:deec::2/64"
+            ];
+            outbound = "direct-out";
+          }
+          {
             port = 53;
             action = "hijack-dns";
           }
