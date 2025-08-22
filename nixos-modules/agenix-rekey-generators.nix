@@ -1,3 +1,4 @@
+{ lib, ... }:
 let
   sing-box-rand-base64 =
     keyLength:
@@ -70,6 +71,32 @@ in
         }
         cat "$tmp/key.pem"
       '';
-  };
 
+    netbird-datastore-encryption-key =
+      { pkgs, lib, ... }: "'${lib.getExe pkgs.openssl}' rand -base64 32";
+  }
+  // (lib.pipe
+    [
+      "google" # Generate Google-style app passwords e.g, ofgl ruwd ngzs iphh
+      "iphone" # Generate passwords that are easy to enter on the default iPhone keyboard
+      "android" # Generate passwords that are easy to enter on the default Android keyboard
+      "pin4" # Generate a random 4-digit pin
+      "pin6" # Generate a random 6-digit pin
+      "mac" # Generate a random mac address
+      "banking" # Generate a random password suitable for protecting bank accounts.
+      "strong" # Generate a strong password
+      "ridiculous" # Generate a ridiculous password
+      "ludicrous" # Generate a ludicrously strong password
+      "painful" # Really? Wow.
+    ]
+    [
+      (map (
+        type:
+        lib.nameValuePair "${type}-password" (
+          { pkgs, lib, ... }: "'${lib.getExe pkgs.pwgen-secure}' strong"
+        )
+      ))
+      lib.listToAttrs
+    ]
+  );
 }
