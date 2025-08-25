@@ -6,7 +6,7 @@
 }:
 {
   config = lib.mkIf config.home.isDesktop {
-    programs.librewolf = {
+    programs.firefox = {
       enable = lib.mkDefault config.home.isDesktop;
 
       nativeMessagingHosts = with pkgs; [
@@ -180,6 +180,6 @@
         };
       };
     };
-    stylix.targets.librewolf.profileNames = [ "default" ];
+    stylix.targets.firefox.profileNames = [ "default" ];
   };
 }
