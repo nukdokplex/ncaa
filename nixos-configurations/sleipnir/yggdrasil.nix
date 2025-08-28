@@ -2,7 +2,7 @@
   services.yggdrasil = {
     settings.MulticastInterfaces = [
       {
-        Regex = "enp42s0";
+        Regex = "uplink.*";
         Beacon = true;
         Listen = true;
       }
