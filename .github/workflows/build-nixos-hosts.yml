@@ -3,6 +3,9 @@ name: build-nixos-hosts
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
+      - main
     paths-ignore:
       - '**/*.md'
       - LICENSE
