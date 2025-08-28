@@ -33,7 +33,7 @@
 
   networking.interfaces.enp42s0.wakeOnLan.enable = true;
 
-  boot.initrd.services.udev.rules = ''
+  services.udev.extraRules = ''
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e7", NAME="uplink25"
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e8", NAME="uplink1"
   '';
