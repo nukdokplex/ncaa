@@ -3,7 +3,10 @@ let
   uplink2MACAddress = "c8:ff:bf:05:82:fd";
 in
 {
-  networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
+  networking.nftables.firewall.rules.nixos-firewall.from = [
+    "uplink"
+    "nb-nukdokplex"
+  ];
 
   boot.initrd.services.udev.rules = ''
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
