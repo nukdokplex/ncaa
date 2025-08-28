@@ -5,6 +5,22 @@
 {
   imports = [ inputs.nixos-nftables-firewall.nixosModules.default ];
 
+  services.resolved = {
+    enable = true;
+
+    fallbackDns = [
+      "8.8.8.8"
+      "8.8.4.4"
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
+
+    extraConfig = ''
+      Cache=no
+      CacheFromLocalhost=no
+    '';
+  };
+
   networking.nftables.firewall = {
     enable = true;
     snippets = {
