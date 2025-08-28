@@ -20,6 +20,7 @@
         "adbusers"
         "cdrom"
         "podman"
+        "netbird-nukdokplex"
       ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5+elt9Z1Nwj6unJsK6UJNH3Ly2+oUxjRUuPtn7u6Th cardno:FFFE_0643DA9F"
