@@ -21,6 +21,7 @@
       sing-box-client
       syncthing
       gaming
+      netbird-client
     ]);
 
   nixpkgs.localSystem.system = "x86_64-linux";

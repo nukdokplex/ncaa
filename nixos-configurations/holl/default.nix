@@ -16,10 +16,10 @@
       common-base
       acme
       sing-box-client
+      netbird-client
     ]);
 
   nixpkgs.localSystem.system = "x86_64-linux";
-  nixpkgs.config.rocmSupport = true; # AMDGPU support for packages
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.11";
   hardware.enableAllFirmware = true;
