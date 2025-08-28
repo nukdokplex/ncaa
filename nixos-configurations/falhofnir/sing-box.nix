@@ -4,8 +4,7 @@
   ...
 }:
 let
-  vlessPort = 3000;
-  vlessHostNames = [
+  clients = [
     "sleipnir"
     "gladr"
     "holl"
@@ -31,58 +30,103 @@ in
         final = "local";
         strategy = "prefer_ipv6";
       };
+
+      route = {
+        final = "direct-out";
+        auto_detect_interface = true;
+      };
+
+      outbounds = [
+        {
+          tag = "direct-out";
+          type = "direct";
+        }
+      ];
+
       inbounds = [
-        (lib.fix (vless-in: {
-          type = "vless";
-          tag = "vless-in";
+        {
+          tag = "trojan-in";
+          type = "trojan";
 
-          listen = "::"; # v4 will also work
-          listen_port = vlessPort;
+          listen = "::";
+          listen_port = 443;
 
-          users = builtins.map (hostName: {
-            name = hostName;
-            uuid = {
-              _secret = config.age.secrets."sing-box-vless-in-${hostName}-uuid".path;
-            };
-            flow = "xtls-rprx-vision";
-          }) vlessHostNames;
-
-          transport = {
-            type = "ws";
-            path = "/account/0/services/cloud/getContents";
-
-            headers = {
-              Host = vless-in.tls.server_name;
-            };
-          };
+          users = map (name: {
+            inherit name;
+            password._secret = config.age.secrets."${name}-trojan-password".path;
+          }) clients;
 
           tls = {
             enabled = true;
-            server_name = "creativecloud.adobe.com";
-            reality = {
-              enabled = true;
-              handshake = {
-                server = vless-in.tls.server_name;
-                server_port = 443;
-              };
-              private_key = {
-                _secret = config.age.secrets.sing-box-vless-in-reality-private-key.path;
-              };
-              short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
-            };
+            server_name = "falhofnir.nukdokplex.ru";
+            certificate_path = "${config.security.acme.certs.${config.networking.hostName}.directory}/cert.pem";
+            key_path = "${config.security.acme.certs.${config.networking.hostName}.directory}/key.pem";
           };
 
           multiplex = {
             enabled = true;
-            padding = false;
-            brutal.enabled = false;
+            padding = true;
           };
-        }))
+
+          transport = {
+            type = "http";
+            path = "/configuration/shared/update_client";
+            method = "POST";
+          };
+
+        }
+        # {
+        #   type = "vless";
+        #   tag = "vless-in";
+
+        #   listen = "::"; # v4 will also work
+        #   listen_port = vlessPort;
+
+        #   users = builtins.map (hostName: {
+        #     name = hostName;
+        #     uuid = {
+        #       _secret = config.age.secrets."sing-box-vless-in-${hostName}-uuid".path;
+        #     };
+        #     flow = "xtls-rprx-vision";
+        #   }) vlessHostNames;
+
+        #   transport = {
+        #     type = "ws";
+        #     path = "/home/devices/eafbbf25-cd56-450d-9b3d-1d25ffd716a7/transfer";
+        #     early_data_header_name = "Sec-WebSocket-Protocol";
+        #   };
+
+        #   tls = {
+        #     enabled = true;
+        #     server_name = "www.pcloud.com";
+        #     reality = {
+        #       enabled = true;
+        #       handshake = {
+        #         server = "www.pcloud.com";
+        #         server_port = 443;
+        #         detour = "direct-out";
+        #       };
+        #       private_key._secret = config.age.secrets.sing-box-vless-in-reality-private-key.path;
+        #       short_id = [ { _secret = config.age.secrets.sing-box-vless-in-reality-short-id.path; } ];
+        #     };
+        #   };
+
+        #   multiplex = {
+        #     enabled = false;
+        #     padding = false;
+        #     brutal.enabled = false;
+        #   };
+        # }
       ];
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ vlessPort ];
+  users.users.sing-box.extraGroups = [ "acme" ];
+
+  networking.firewall = {
+    allowedTCPPorts = [ 443 ];
+    allowedUDPPorts = [ 443 ];
+  };
 
   age.secrets = {
     sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
@@ -90,7 +134,13 @@ in
   }
   // builtins.listToAttrs (
     builtins.map (
-      hostName: lib.nameValuePair "sing-box-vless-in-${hostName}-uuid" { generator.script = "uuid"; }
-    ) vlessHostNames
+      hostName:
+      lib.nameValuePair "${hostName}-trojan-password" {
+        generator.script = "strong-password";
+        owner = "sing-box";
+        group = "sing-box";
+        mode = "440";
+      }
+    ) clients
   );
 }
