@@ -1,11 +1,10 @@
-{ lib, config, ... }:
 {
   services.netbird = {
     enable = true;
 
     clients.nukdokplex = {
       # ui.enable is enabled only on hosts with graphics session installed by default
-      hardened = true;
+      hardened = false;
       openFirewall = true;
       port = 51820;
 
@@ -15,8 +14,4 @@
       };
     };
   };
-
-  users.users.netbird-nukdokplex.extraGroups = lib.mkIf config.services.resolved.enable (
-    lib.singleton "systemd-resolve"
-  );
 }
