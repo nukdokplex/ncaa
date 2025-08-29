@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   flakeRoot,
   ...
 }:
@@ -35,11 +34,24 @@
         level = "debug";
         timestamp = false;
       };
+      dns = {
+        servers = [
+          {
+            tag = "local";
+            type = "udp";
+            server = "127.0.0.69";
+            server_port = 53;
+          }
+        ];
+
+        final = "local";
+        disable_cache = true;
+      };
       inbounds = [
         {
           type = "tun";
-          tag = "tun-in";
-          interface_name = "sing-box";
+          tag = "common-tun-in";
+          interface_name = "sing-box-common";
 
           address = [
             "172.18.0.1/30"
@@ -49,7 +61,7 @@
           mtu = 65535;
           auto_route = true;
           auto_redirect = true;
-          strict_route = false;
+          strict_route = true;
 
           stack = "mixed";
 
@@ -61,10 +73,10 @@
           ];
 
           route_exclude_address = [
-            "192.168.0.0/16"
             "10.0.0.0/8"
             "172.16.0.0/12"
             "100.64.0.0/10"
+            "127.0.0.1/8"
             "200::/7"
             "fd00::/8"
           ];
@@ -84,7 +96,7 @@
           server_port = 443;
 
           domain_resolver = {
-            server = "dnscrypt";
+            server = "local";
             domain_strategy = "prefer_ipv4";
           };
 
@@ -102,83 +114,8 @@
         }
       ];
 
-      dns = {
-        servers = [
-          {
-            tag = "dnscrypt";
-            type = "udp";
-            server = "127.0.0.69";
-            server_port = 53;
-          }
-          {
-            tag = "resolved";
-            type = "resolved";
-            service = "resolved";
-            accept_default_resolvers = false;
-          }
-        ];
-
-        rules = [
-          {
-            domain_suffix = [ ".local" ];
-            action = "route";
-            server = "resolved";
-          }
-        ];
-
-        final = "dnscrypt";
-        disable_cache = true;
-        strategy = "prefer_ipv6";
-      };
-
-      services = [
-        {
-          tag = "resolved";
-          type = "resolved";
-
-          listen = "127.0.0.53";
-          listen_port = 53;
-        }
-      ];
-
       route = {
         rules = [
-          {
-            # rule to passthrough some dns requests
-            ip_cidr = [
-              # ns1.desec.io
-              "45.54.76.1/32"
-              "2607:f740:e633:deec::/64"
-
-              # ns2.desec.org
-              "157.53.224.1/32"
-              "2607:f740:e00a:deec::/64"
-
-              # opendns
-              "208.67.222.222/32"
-              "208.67.220.220/32"
-              "2620:0:ccc::2/128"
-              "2620:0:ccd::2/128"
-
-              # yandex dns
-              "77.88.8.8/32"
-              "77.88.8.1/32"
-              "2a02:6b8::feed:0ff/128"
-              "2a02:6b8:0:1::feed:0ff/128"
-            ];
-            port = 53;
-            action = "route";
-            outbound = "direct-out";
-          }
-          {
-            port = 53;
-            action = "hijack-dns";
-          }
-          {
-            ip_is_private = true;
-            action = "route";
-            outbound = "direct-out";
-          }
           { action = "sniff"; }
           {
             # my own list
@@ -218,14 +155,10 @@
           }
         ];
         final = "direct-out";
+        default_domain_resolver = "local";
         auto_detect_interface = true;
       };
     };
-  };
-
-  systemd.services = {
-    sing-box.conflicts = [ "systemd-resolved.service" ];
-    systemd-resolved.wantedBy = lib.mkForce [ ];
   };
 
   age.secrets.sing-box-trojan-password = {
