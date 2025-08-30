@@ -25,6 +25,18 @@
     sslCertificateKey = "${config.security.acme.certs.netbird.directory}/key.pem";
   };
 
+  # make netbird-management start in the right moment of time at startup
+  systemd.services.netbird-management.after = [
+    "keycloak.service"
+    "dnscrypt-proxy2.service"
+    "nginx.service"
+  ];
+
+  # also for netbird client
+  systemd.services.netbird-nukdokplex.after = [
+    "netbird-management.service"
+  ];
+
   age.secrets = {
     netbird-coturn-password = {
       generator.script = "strong-password";
