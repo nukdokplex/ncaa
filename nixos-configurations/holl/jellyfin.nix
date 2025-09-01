@@ -23,7 +23,10 @@ in
     forceSSL = true;
     sslCertificate = "${config.security.acme.certs.jellyfin.directory}/cert.pem";
     sslCertificateKey = "${config.security.acme.certs.jellyfin.directory}/key.pem";
-    locations."/".proxyPass = "http://[::1]:8096";
+    locations."/" = {
+      proxyPass = "http://[::1]:8096";
+      proxyWebsockets = true;
+    };
   };
 
   services.fail2ban.jails = {
