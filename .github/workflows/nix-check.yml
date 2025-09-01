@@ -11,6 +11,10 @@ on:
       - LICENSE
       - .github/**
       - .envrc
+  pull_request:
+    branches:
+      - master
+      - main
 
 concurrency:
   cancel-in-progress: true
