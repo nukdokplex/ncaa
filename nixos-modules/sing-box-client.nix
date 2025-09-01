@@ -175,6 +175,11 @@
             action = "hijack-dns";
           }
           {
+            protocol = "bittorrent";
+            action = "route";
+            outbound = "direct-out";
+          }
+          {
             # my own list
             domain_suffix = [
               "myip.com" # that one is just to test if proxy is working
