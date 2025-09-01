@@ -37,6 +37,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:KaylorBen/nixcord";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-nftables-firewall.inputs.nixpkgs.follows = "nixpkgs";
     nixos-nftables-firewall.url = "github:thelegy/nixos-nftables-firewall";
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
