@@ -36,17 +36,50 @@
       };
       dns = {
         servers = [
+          # {
+          #   tag = "local";
+          #   type = "local";
+          #   # type = "udp";
+          #   # server = "127.0.0.69";
+          #   # server_port = 53;
+          # }
+          # {
+          #   tag = "resolved";
+          #   type = "resolved";
+          #   accept_default_resolvers = true;
+          #   service = "resolved";
+          # }
           {
-            tag = "local";
+            tag = "dnscrypt";
             type = "udp";
             server = "127.0.0.69";
             server_port = 53;
+            #detour = "direct-out";
+          }
+          {
+            tag = "local";
+            type = "udp";
+            server = "127.0.0.53";
+            server_port = 53;
+          }
+        ];
+        rules = [
+          {
+            domain_suffix = [ "local" ];
+            action = "route";
+            server = "local";
           }
         ];
 
-        final = "local";
+        final = "dnscrypt";
         disable_cache = true;
       };
+      # services = lib.singleton {
+      #   tag = "resolved";
+      #   type = "resolved";
+      #   listen = "127.0.0.53";
+      #   listen_port = 53;
+      # };
       inbounds = [
         {
           type = "tun";
@@ -63,22 +96,42 @@
           auto_redirect = true;
           strict_route = true;
 
-          stack = "mixed";
+          stack = "system";
 
           route_address = [
-            "0.0.0.0/1"
-            "128.0.0.0/1"
-            "::/1"
-            "8000::/1"
+            "0.0.0.0/0"
+            "::/0"
           ];
 
           route_exclude_address = [
             "10.0.0.0/8"
             "172.16.0.0/12"
             "100.64.0.0/10"
-            "127.0.0.1/8"
             "200::/7"
             "fd00::/8"
+            "127.0.0.69/32"
+
+            # ns1.desec.io
+            "45.54.76.1/32"
+            "2607:f740:e633:deec::2/128"
+
+            # ns2.desec.org
+            "157.53.224.1/32"
+            "2607:f740:e00a:deec::2/128"
+
+            # opendns and yandex dns are used as dnscrypt's bootstrap resolvers
+
+            # opendns
+            "208.67.222.222/32"
+            "208.67.220.220/32"
+            "2620:0:ccc::2/128"
+            "2620:0:ccd::2/128"
+
+            # yandex dns
+            "77.88.8.8/32"
+            "77.88.8.1/32"
+            "2a02:6b8::feed:0ff/128"
+            "2a02:6b8:0:1::feed:0ff/128"
           ];
         }
       ];
@@ -96,7 +149,7 @@
           server_port = 443;
 
           domain_resolver = {
-            server = "local";
+            server = "dnscrypt";
             domain_strategy = "prefer_ipv4";
           };
 
@@ -117,6 +170,10 @@
       route = {
         rules = [
           { action = "sniff"; }
+          {
+            protocol = "dns";
+            action = "hijack-dns";
+          }
           {
             # my own list
             domain_suffix = [
@@ -155,11 +212,17 @@
           }
         ];
         final = "direct-out";
-        default_domain_resolver = "local";
+        default_domain_resolver = "dnscrypt";
         auto_detect_interface = true;
       };
     };
   };
+
+  # environment.etc."resolv.conf".text = ''
+  #   nameserver=8.8.8.8
+  # '';
+
+  # services.resolved.enable = lib.mkForce false;
 
   age.secrets.sing-box-trojan-password = {
     rekeyFile =
