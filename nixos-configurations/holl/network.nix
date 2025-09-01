@@ -18,8 +18,6 @@ in
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplink2MACAddress}", NAME="uplink2"
   '';
 
-  networking.wireless.enable = true;
-
   systemd.network = {
     enable = true;
     networks.home = {
