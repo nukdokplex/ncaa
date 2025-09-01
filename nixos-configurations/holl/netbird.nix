@@ -30,6 +30,8 @@
     "keycloak.service"
     "dnscrypt-proxy2.service"
     "nginx.service"
+    "sing-box.service"
+    "network-online.target"
   ];
 
   # also for netbird client
