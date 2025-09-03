@@ -1,7 +1,25 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  inputs,
+  lib,
+  config,
+  ...
+}:
+{
+  nixpkgs.localSystem.system = "x86_64-linux";
+
+  imports = [
+    (inputs.nixos-hardware + /common/cpu/intel/alder-lake)
+    (inputs.nixos-hardware + /common/gpu/intel/alder-lake)
+    (inputs.nixos-hardware + /common/pc)
+    (inputs.nixos-hardware + /common/pc/ssd)
+  ];
+
+  hardware.enableRedistributableFirmware = true;
+
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       libva-vdpau-driver
       intel-ocl
@@ -25,4 +43,7 @@
       };
     })
   ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
 }
