@@ -20,6 +20,7 @@
       };
       git = {
         autoFetch = false;
+        overrideGpg = true; # allow operations which require passphrase
       };
     };
   };
