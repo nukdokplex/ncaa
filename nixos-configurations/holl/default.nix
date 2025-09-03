@@ -3,6 +3,7 @@
   lib',
   ezModules,
   config,
+  inputs,
   ...
 }:
 {
@@ -13,6 +14,10 @@
       recursive = false;
     }
     ++ (with ezModules; [
+      (inputs.nixos-hardware + /common/cpu/intel/alder-lake)
+      (inputs.nixos-hardware + /common/gpu/intel/alder-lake)
+      (inputs.nixos-hardware + /common/pc)
+      (inputs.nixos-hardware + /common/pc/ssd)
       common-base
       acme
       sing-box-client
