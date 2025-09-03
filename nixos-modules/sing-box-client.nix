@@ -143,6 +143,18 @@
         }
         {
           tag = "proxy-out";
+          type = "selector";
+
+          outbounds = [
+            "trojan-out"
+            "hy2-out"
+          ];
+
+          default = "hy2-out";
+          interrupt_exist_connections = true;
+        }
+        {
+          tag = "trojan-out";
           type = "trojan";
 
           server = "falhofnir.nukdokplex.ru";
@@ -155,7 +167,13 @@
 
           password._secret = config.age.secrets.sing-box-trojan-password.path;
 
-          tls.enabled = true;
+          tls = {
+            enabled = true;
+            utls = {
+              enabled = true;
+              fingerprint = "firefox";
+            };
+          };
 
           multiplex.enabled = false;
 
@@ -163,6 +181,33 @@
             type = "http";
             path = "/configuration/shared/update_client";
             method = "POST";
+          };
+        }
+        {
+          tag = "hy2-out";
+          type = "hysteria2";
+
+          server = "falhofnir.nukdokplex.ru";
+          server_port = 8443;
+
+          domain_resolver = {
+            server = "dnscrypt";
+            domain_strategy = "prefer_ipv4";
+          };
+
+          obfs = {
+            type = "salamander";
+            password._secret = config.age.secrets.sing-box-hysteria2-obfs-salamander-password.path;
+          };
+
+          password._secret = config.age.secrets.sing-box-hysteria2-password.path;
+
+          tls = {
+            enabled = true;
+            # utls = {
+            #   enabled = true;
+            #   fingerprint = "firefox";
+            # };
           };
         }
       ];
@@ -185,6 +230,7 @@
               "myip.com" # that one is just to test if proxy is working
               "sing-box.sagernet.org" # sing-box docs, expected to be blocked some time
               "paheal.net" # not present in lists for some reason
+              "t-ru.org"
             ];
             action = "route";
             outbound = "proxy-out";
@@ -233,6 +279,22 @@
     rekeyFile =
       flakeRoot
       + /secrets/generated/falhofnir/${config.networking.hostName}-trojan-password.age;
+    owner = "sing-box";
+    group = "sing-box";
+    mode = "440";
+  };
+
+  age.secrets.sing-box-hysteria2-obfs-salamander-password = {
+    rekeyFile = flakeRoot + /secrets/generated/falhofnir/hysteria2-obfs-salamander-password.age;
+    owner = "sing-box";
+    group = "sing-box";
+    mode = "440";
+  };
+
+  age.secrets.sing-box-hysteria2-password = {
+    rekeyFile =
+      flakeRoot
+      + /secrets/generated/falhofnir/${config.networking.hostName}-hysteria2-password.age;
     owner = "sing-box";
     group = "sing-box";
     mode = "440";

@@ -75,6 +75,32 @@ in
           };
 
         }
+        {
+          tag = "hy2-in";
+          type = "hysteria2";
+
+          listen = "::";
+          listen_port = 8443;
+
+          obfs = {
+            type = "salamander";
+            password._secret = config.age.secrets.hysteria2-obfs-salamander-password.path;
+          };
+
+          users = builtins.map (name: {
+            inherit name;
+            password._secret = config.age.secrets."${name}-hysteria2-password".path;
+          }) clients;
+
+          ignore_client_bandwidth = true;
+          tls = {
+            enabled = true;
+            server_name = "falhofnir.nukdokplex.ru";
+            certificate_path = "${config.security.acme.certs.${config.networking.hostName}.directory}/cert.pem";
+            key_path = "${config.security.acme.certs.${config.networking.hostName}.directory}/key.pem";
+          };
+          brutal_debug = true;
+        }
         # {
         #   type = "vless";
         #   tag = "vless-in";
@@ -124,18 +150,37 @@ in
   users.users.sing-box.extraGroups = [ "acme" ];
 
   networking.firewall = {
-    allowedTCPPorts = [ 443 ];
-    allowedUDPPorts = [ 443 ];
+    allowedTCPPorts = [
+      443
+      8443
+    ];
+    allowedUDPPorts = [
+      443
+      8443
+    ];
   };
 
   age.secrets = {
     sing-box-vless-in-reality-private-key.generator.script = "reality-keypair";
     sing-box-vless-in-reality-short-id.generator.script = "reality-short-id";
+    hysteria2-obfs-salamander-password.generator.script = "strong-password";
+
   }
   // builtins.listToAttrs (
     builtins.map (
       hostName:
       lib.nameValuePair "${hostName}-trojan-password" {
+        generator.script = "strong-password";
+        owner = "sing-box";
+        group = "sing-box";
+        mode = "440";
+      }
+    ) clients
+  )
+  // builtins.listToAttrs (
+    builtins.map (
+      hostName:
+      lib.nameValuePair "${hostName}-hysteria2-password" {
         generator.script = "strong-password";
         owner = "sing-box";
         group = "sing-box";
