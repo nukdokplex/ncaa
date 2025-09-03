@@ -9,7 +9,7 @@
     backendID = "netbird-backend";
 
     keycloakDomain = "keycloak.nukdokplex.ru";
-    keycloakRealmName = "netbird";
+    keycloakRealmName = "homelab";
 
     coturnPasswordPath = config.age.secrets.netbird-coturn-password.path;
     coturnSalt = config.age.secrets.netbird-coturn-salt.path;
