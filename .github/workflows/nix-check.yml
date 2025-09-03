@@ -2,15 +2,10 @@ name: nix-check
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches:
       - master
       - main
-    paths-ignore:
-      - '**/*.md'
-      - LICENSE
-      - .github/**
-      - .envrc
 
 concurrency:
   cancel-in-progress: true
