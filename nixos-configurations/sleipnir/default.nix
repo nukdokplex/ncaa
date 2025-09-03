@@ -3,7 +3,6 @@
   ezModules,
   lib',
   lib,
-  config,
   ...
 }:
 {
@@ -24,34 +23,18 @@
       netbird-client
     ]);
 
-  nixpkgs.localSystem.system = "x86_64-linux";
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.05";
-  hardware.enableAllFirmware = true;
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDrS2sugOWzdcYzL7PfkMHbhfWwReIJOyB7wo5qNcSW root@sleipnir";
 
-  networking.interfaces.enp42s0.wakeOnLan.enable = true;
+  home-manager.sharedModules = lib.singleton {
+    programs.gaming-essentials.enable = true;
+  };
 
-  services.udev.extraRules = ''
-    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e7", NAME="uplink25"
-    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="d8:43:ae:95:44:e8", NAME="uplink1"
-  '';
-
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = lib.mkIf config.hardware.bluetooth.enable true;
-
-  home-manager.sharedModules = [
-    {
-      programs.gaming-essentials.enable = true;
-    }
-  ];
-
-  home-manager.users.nukdokplex = {
-    services.ollama = {
-      enable = true;
-      acceleration = "rocm";
-    };
+  home-manager.users.nukdokplex.services.ollama = {
+    enable = true;
+    acceleration = "rocm";
   };
 
   programs.virt-manager.enable = true;
@@ -72,6 +55,4 @@
       };
     };
   };
-
-  environment.systemPackages = with pkgs; [ hashcat ];
 }
