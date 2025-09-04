@@ -12,13 +12,13 @@ in
   networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
   boot.initrd.services.udev.rules = ''
-    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink0"
   '';
 
   networking = {
     useDHCP = false;
 
-    interfaces.uplink = {
+    interfaces.uplink0 = {
       ipv4 = {
         addresses = lib.singleton {
           address = "185.204.3.231";
@@ -35,12 +35,12 @@ in
 
     defaultGateway = {
       address = "185.204.3.1";
-      interface = "uplink";
+      interface = "uplink0";
     };
 
     defaultGateway6 = {
       address = "2a04:5200:fff5::1";
-      interface = "uplink";
+      interface = "uplink0";
     };
 
     nameservers = [
