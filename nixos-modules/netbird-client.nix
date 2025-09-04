@@ -14,4 +14,8 @@
       };
     };
   };
+
+  networking.nftables.firewall.zones.trusted.interfaces = [
+    "nb-nukdokplex"
+  ];
 }
