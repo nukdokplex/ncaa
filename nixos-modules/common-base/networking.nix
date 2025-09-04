@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   ...
 }:
 {
@@ -56,7 +57,7 @@
         ];
       };
       trusted = {
-
+        interfaces = lib.mkDefault [ "trustnoone" ];
       };
     };
     rules.nixos-firewall.from = [ "trusted" ];
