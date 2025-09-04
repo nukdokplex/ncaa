@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 let
@@ -8,7 +9,7 @@ let
 in
 {
   networking.wireguard = {
-    enable = true;
+    enable = false;
 
     interfaces.${awg0InterfaceName} = {
       type = "amneziawg";
@@ -58,20 +59,20 @@ in
 
   age.secrets.awg0-private.generator.script = "wireguard-priv";
 
-  networking.firewall.allowedUDPPorts = [ awg0Port ];
+  networking.firewall.allowedUDPPorts = lib.mkIf config.networking.wireguard.enable [ awg0Port ];
 
-  networking.nftables.chains.forward.forward-wireguard = {
-    after = [ "early" ];
-    before = [ "late" ];
-    rules = [
-      "iifname ${awg0InterfaceName} oifname uplink accept"
-      "iifname uplink oifname ${awg0InterfaceName} accept"
-    ];
-  };
+  # networking.nftables.chains.forward.forward-wireguard = {
+  #   after = [ "early" ];
+  #   before = [ "late" ];
+  #   rules = [
+  #     "iifname ${awg0InterfaceName} oifname uplink accept"
+  #     "iifname uplink oifname ${awg0InterfaceName} accept"
+  #   ];
+  # };
 
-  networking.nftables.chains.postrouting.uplink-masquerade = {
-    after = [ "early" ];
-    before = [ "late" ];
-    rules = [ "oifname uplink masquerade" ];
-  };
+  # networking.nftables.chains.postrouting.uplink-masquerade = {
+  #   after = [ "early" ];
+  #   before = [ "late" ];
+  #   rules = [ "oifname uplink masquerade" ];
+  # };
 }
