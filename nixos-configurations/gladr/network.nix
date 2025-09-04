@@ -1,5 +1,8 @@
 { config, ... }:
 {
+  # we can't trust wifi interface so it's empty for now
+  networking.nftables.firewall.zones.trusted = { };
+
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [
       config.age.secrets.networkmanager_env.path
