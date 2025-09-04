@@ -12,7 +12,7 @@ in
 
   boot = {
     initrd.services.udev.rules = ''
-      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink"
+      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink0"
     '';
     kernelModules = [ "nf_nat_ftp" ];
     kernel.sysctl = {
@@ -33,7 +33,7 @@ in
   networking = {
     useDHCP = false;
 
-    interfaces.uplink = {
+    interfaces.uplink0 = {
       ipv4 = {
         addresses = lib.singleton {
           address = "188.253.26.208";
@@ -50,12 +50,12 @@ in
 
     defaultGateway = {
       address = "188.253.26.1";
-      interface = "uplink";
+      interface = "uplink0";
     };
 
     defaultGateway6 = {
       address = "2a0c:16c2:500::1";
-      interface = "uplink";
+      interface = "uplink0";
     };
 
     nameservers = [
