@@ -21,6 +21,7 @@
       syncthing
       gaming
       netbird-client
+      optical-disks
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
