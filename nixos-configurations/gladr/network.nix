@@ -27,7 +27,7 @@
           ssid = "yggdrasils_4";
         };
         wifi-security = {
-          key-mgmt = "sae";
+          key-mgmt = "wpa-psk";
           psk = "$yggdrasils_wifi_psk";
         };
       };
@@ -53,7 +53,7 @@
           ssid = "yggdrasils_5";
         };
         wifi-security = {
-          key-mgmt = "sae";
+          key-mgmt = "wpa-psk";
           psk = "$yggdrasils_wifi_psk";
         };
       };
