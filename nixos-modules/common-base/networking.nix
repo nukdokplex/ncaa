@@ -55,6 +55,10 @@
           "uplink*"
         ];
       };
+      trusted = {
+
+      };
     };
+    rules.nixos-firewall.from = [ "trusted" ];
   };
 }
