@@ -19,7 +19,6 @@
       ./agenix-rekey-generators.nix
       ./k3b-custom.nix
       ./nixpkgs-overlays.nix
-      ./optical-disk-essentials.nix
       ./usb-essentials.nix
       ./via.nix
       ./stylix-video-wallpaper.nix
