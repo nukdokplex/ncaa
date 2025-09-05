@@ -8,9 +8,9 @@
       config.age.secrets.networkmanager_env.path
     ];
     profiles = {
-      yggdrasils_4 = {
+      asgard_4 = {
         connection = {
-          id = "yggdrasils_4";
+          id = "asgard_4";
           type = "wifi";
         };
         ipv4 = {
@@ -27,16 +27,16 @@
           band = "bg";
           mac-address = "$wifi_dev_mac";
           mode = "infrastructure";
-          ssid = "yggdrasils_4";
+          ssid = "asgard_4";
         };
         wifi-security = {
           key-mgmt = "wpa-psk";
-          psk = "$yggdrasils_wifi_psk";
+          psk = "$asgard_wifi_psk";
         };
       };
-      yggdrasils_5 = {
+      asgard_5 = {
         connection = {
-          id = "yggdrasils_5";
+          id = "asgard_5";
           type = "wifi";
         };
         ipv4 = {
@@ -53,11 +53,11 @@
           band = "a";
           mac-address = "$wifi_dev_mac";
           mode = "infrastructure";
-          ssid = "yggdrasils_5";
+          ssid = "asgard_5";
         };
         wifi-security = {
           key-mgmt = "wpa-psk";
-          psk = "$yggdrasils_wifi_psk";
+          psk = "$asgard_wifi_psk";
         };
       };
     };
