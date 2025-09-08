@@ -67,5 +67,6 @@
       to = [ config.networking.nftables.firewall.localZoneName ];
       ignoreEmptyRule = true;
     };
+    rules.nixos-firewall.from = [ "trusted" ];
   };
 }
