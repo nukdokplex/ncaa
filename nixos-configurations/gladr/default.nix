@@ -12,6 +12,7 @@
     }
     ++ (with ezModules; [
       common-desktop
+      nixos-autoupgrade
       email-passwords
       dyndns
       acme

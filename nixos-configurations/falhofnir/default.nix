@@ -14,6 +14,7 @@
     }
     ++ [
       ezModules.common-base
+      ezModules.nixos-autoupgrade
       ezModules.acme
       inputs.simple-nixos-mailserver.nixosModule
     ];
