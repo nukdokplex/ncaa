@@ -79,7 +79,6 @@ in
           pictures = {
             path = "/home/nukdokplex/pictures";
             devices = [
-              "sleipnir"
               "gladr"
               "hrafn"
             ];
@@ -108,7 +107,6 @@ in
           documents = {
             path = "/home/nukdokplex/documents";
             devices = [
-              "sleipnir"
               "gladr"
               "hrafn"
             ];
@@ -124,7 +122,6 @@ in
           music = {
             path = "/home/nukdokplex/music";
             devices = [
-              "sleipnir"
               "gladr"
               "hrafn"
             ];
@@ -137,7 +134,6 @@ in
           publicShare = {
             path = "/home/nukdokplex/publicShare";
             devices = [
-              "sleipnir"
               "gladr"
               "hrafn"
             ];
