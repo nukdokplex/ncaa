@@ -26,18 +26,16 @@
   };
 
   # make netbird-management start in the right moment of time at startup
-  systemd.services.netbird-management.after = [
-    "keycloak.service"
-    "dnscrypt-proxy2.service"
-    "nginx.service"
-    "sing-box.service"
-    "network-online.target"
-  ];
-
-  # also for netbird client
-  systemd.services.netbird-nukdokplex.after = [
-    "netbird-management.service"
-  ];
+  systemd.services.netbird-management = {
+    after = [
+      "keycloak.service"
+      "dnscrypt-proxy2.service"
+      "nginx.service"
+      "sing-box.service"
+      "network-online.target"
+    ];
+    requires = [ "network-online.target" ];
+  };
 
   age.secrets = {
     netbird-coturn-password = {
