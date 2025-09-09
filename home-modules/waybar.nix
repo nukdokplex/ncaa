@@ -4,9 +4,6 @@
   config,
   ...
 }:
-let
-  inherit (config.stylix) opacity;
-in
 {
   stylix.targets.waybar.enable = false;
 
