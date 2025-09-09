@@ -12,6 +12,7 @@
     }
     ++ (with ezModules; [
       common-base
+      nixos-autoupgrade
       acme
       sing-box-client
       netbird-client

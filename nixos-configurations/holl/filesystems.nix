@@ -1,12 +1,7 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   boot.loader.efi.efiSysMountPoint =
     config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
-
-  services.fstrim = {
-    enable = true;
-    interval = "daily";
-  };
 
   disko.devices = {
     disk.nixos = {
@@ -91,4 +86,16 @@
       }
     )
   ];
+
+  services.nfs.server = {
+    enable = true;
+    nproc = 8;
+    exports = ''
+      /data/archive/nukdokplex 100.100.1.0/8(rw,subtree_check)
+      /data/downloads/torrents 100.100.1.0/8(rw,subtree_check)
+    '';
+  };
+
+  networking.nftables.firewall.rules.open-ports-trusted.allowedTCPPorts =
+    lib.optional config.services.nfs.server.enable 2049;
 }

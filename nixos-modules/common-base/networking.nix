@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   lib,
   ...
 }:
@@ -61,5 +62,10 @@
       };
     };
     rules.nixos-firewall.from = [ "trusted" ];
+    rules.open-ports-trusted = {
+      from = [ "trusted" ];
+      to = [ config.networking.nftables.firewall.localZoneName ];
+      ignoreEmptyRule = true;
+    };
   };
 }
