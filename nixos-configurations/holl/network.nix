@@ -19,6 +19,9 @@ in
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplink1MACAddress}", NAME="uplink1"
   '';
 
+  networking.useDHCP = true;
+  networking.useNetworkd = true;
+
   systemd.network = {
     enable = true;
     networks.home = {
