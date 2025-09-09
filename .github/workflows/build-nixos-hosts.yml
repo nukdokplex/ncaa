@@ -20,7 +20,7 @@ jobs:
           echo 'set man-db/auto-update false' | sudo debconf-communicate >/dev/null
           sudo dpkg-reconfigure man-db
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: Jayllyz/free-disk-space@3bda29d61d3f1fa7bf46c5a9a11f22dd20af07c9
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
@@ -44,7 +44,7 @@ jobs:
           echo 'set man-db/auto-update false' | sudo debconf-communicate >/dev/null
           sudo dpkg-reconfigure man-db
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: Jayllyz/free-disk-space@3bda29d61d3f1fa7bf46c5a9a11f22dd20af07c9
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
@@ -68,7 +68,7 @@ jobs:
           echo 'set man-db/auto-update false' | sudo debconf-communicate >/dev/null
           sudo dpkg-reconfigure man-db
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: Jayllyz/free-disk-space@3bda29d61d3f1fa7bf46c5a9a11f22dd20af07c9
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
@@ -92,7 +92,7 @@ jobs:
           echo 'set man-db/auto-update false' | sudo debconf-communicate >/dev/null
           sudo dpkg-reconfigure man-db
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: Jayllyz/free-disk-space@3bda29d61d3f1fa7bf46c5a9a11f22dd20af07c9
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
@@ -116,7 +116,7 @@ jobs:
           echo 'set man-db/auto-update false' | sudo debconf-communicate >/dev/null
           sudo dpkg-reconfigure man-db
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: Jayllyz/free-disk-space@3bda29d61d3f1fa7bf46c5a9a11f22dd20af07c9
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
