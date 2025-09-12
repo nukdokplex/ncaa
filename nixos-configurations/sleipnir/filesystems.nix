@@ -116,6 +116,22 @@
       type = "nfs";
       options = "rw,noatime";
     }
+    {
+      name = "home-nukdokplex-torrents.mount";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "network-online.target"
+        "netbird-nukdokplex.service"
+      ];
+      requires = [
+        "network-online.target"
+        "netbird-nukdokplex.service"
+      ];
+      what = "100.100.1.1:/data/downloads/torrents";
+      where = "/home/nukdokplex/torrents";
+      type = "nfs";
+      options = "rw,noatime";
+    }
   ];
 
   boot.supportedFilesystems = [ "nfs" ];
