@@ -44,4 +44,9 @@ in
       '';
     };
   };
+
+  programs.nh = {
+    enable = true;
+    flake = "path:/home/nukdokplex/ncaa";
+  };
 }
