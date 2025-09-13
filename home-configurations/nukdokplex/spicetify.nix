@@ -13,7 +13,7 @@
     {
       enable = lib.mkDefault config.home.isDesktop;
       spotifyPackage = pkgs.spotify;
-      windowManagerPatch = true;
+      windowManagerPatch = false;
 
       enabledExtensions = with spicePkgs.extensions; [
         betterGenres
