@@ -23,6 +23,8 @@
         shotwell
         galculator
         scrcpy
+        wine64Packages.stagingFull
+        winetricks
 
         # hw keys
         yubioath-flutter
