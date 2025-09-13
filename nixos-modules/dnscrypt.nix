@@ -1,5 +1,5 @@
 {
-  services.dnscrypt-proxy2 = {
+  services.dnscrypt-proxy = {
     enable = true;
     upstreamDefaults = true;
     settings = {
