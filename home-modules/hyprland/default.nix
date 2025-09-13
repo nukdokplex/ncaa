@@ -167,6 +167,10 @@
       bindd = $mainMod, Insert, Exit passthrough mode, submap, reset
 
       submap = reset
+
+      # https://github.com/nwg-piotr/nwg-displays stuff
+      source = ${config.xdg.configHome}/hypr/monitors.conf
+      source = ${config.xdg.configHome}/hypr/workspaces.conf
     '';
 
     systemd = {
@@ -180,7 +184,16 @@
   };
 
   # use common wpaperd for all wayland wms
+  # check out wm-essentials
   stylix.targets.hyprland.hyprpaper.enable = false;
+
+  home.packages = lib.mkIf config.wayland.windowManager.hyprland.enable (with pkgs; [ nwg-displays ]);
+
+  # create nwg-displays config files, hyprland alerts an error when can't find this files
+  systemd.user.tmpfiles.rules = lib.mkIf config.wayland.windowManager.hyprland.enable [
+    "f ${config.xdg.configHome}/hypr/monitors.conf - - - - -"
+    "f ${config.xdg.configHome}/hypr/workspaces.conf - - - - -"
+  ];
 
   imports = [
     ../wm-essentials.nix

@@ -19,21 +19,22 @@
       };
     };
 
-    wayland.windowManager.hyprland = {
-      settings = {
-        monitor = [
-          "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
-        ];
-      };
-    };
+    # output settings are managed with nwg-displays now
+    # wayland.windowManager.hyprland = {
+    #   settings = {
+    #     monitor = [
+    #       "desc:LG Electronics LG ULTRAWIDE 0x00000459, 2560x1080@60.00000, 0x0, 1.00"
+    #     ];
+    #   };
+    # };
 
-    wayland.windowManager.sway = {
-      config = {
-        output."LG Electronics LG ULTRAWIDE 0x00000459" = {
-          mode = "2560x1080@60Hz";
-          scale = "1.0";
-        };
-      };
-    };
+    # wayland.windowManager.sway = {
+    #   config = {
+    #     output."LG Electronics LG ULTRAWIDE 0x00000459" = {
+    #       mode = "2560x1080@60Hz";
+    #       scale = "1.0";
+    #     };
+    #   };
+    # };
   });
 }
