@@ -1,5 +1,4 @@
 {
-  pkgs,
   ezModules,
   lib',
   lib,
@@ -38,22 +37,8 @@
     acceleration = "rocm";
   };
 
-  programs.virt-manager.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      runAsRoot = true;
-      swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
-    };
-  };
+  users.users.nukdokplex.extraGroups = [
+    "video"
+    "render"
+  ];
 }
