@@ -1,5 +1,5 @@
 {
-  programs.nixvim.plugins.qmk = {
+  plugins.qmk = {
     enable = true;
     settings = {
       variant = "qmk";

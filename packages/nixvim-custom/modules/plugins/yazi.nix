@@ -1,10 +1,12 @@
 {
-  programs.nixvim.plugins.yazi = {
+  plugins.yazi = {
     enable = true;
     autoLoad = true;
     settings = {
       enable_mouse_support = true;
       floating_window_scaling_factor = 0.9;
+
+      # these keymappings are in yazi interface, not in vim
       keymaps = {
         copy_relative_path_to_selected_files = "<c-y>";
         cycle_open_buffers = "<tab>";
