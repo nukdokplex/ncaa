@@ -6,11 +6,13 @@
   environment.systemPackages = with pkgs; [
     # please sort list of packages alphabetically!
     atop
+    bash
+    bat # woke cat
     bind
     btop
-    bat # woke cat
     cmatrix
     fastfetch
+    fzf
     htop
     inotify-tools
     jq
@@ -20,13 +22,11 @@
     nixpkgs-fmt
     nurl
     psmisc
+    rage
     sl
+    usbutils
     vim
     w3m
     wget
-    fzf
-    usbutils
-    rage
-    bash
   ];
 }
