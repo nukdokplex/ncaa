@@ -231,6 +231,7 @@
               "sing-box.sagernet.org" # sing-box docs, expected to be blocked some time
               "paheal.net" # not present in lists for some reason
               "t-ru.org"
+              "opentrackr.org"
             ];
             action = "route";
             outbound = "proxy-out";
