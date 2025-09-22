@@ -42,6 +42,9 @@ writeShellApplication {
     description = "Simple TTS (Text-to-speech) script using Piper.";
     license = lib.licenses.gpl3Only;
     maintainers = [ lib.maintainers.nukdokplex ];
-    platforms = lib.platforms.all;
+    platforms = [
+      "x86_64-linux"
+      "x86_64-darwin"
+    ];
   };
 }
