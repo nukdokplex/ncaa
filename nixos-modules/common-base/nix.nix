@@ -47,6 +47,6 @@ in
 
   programs.nh = {
     enable = true;
-    flake = "path:/home/nukdokplex/ncaa";
+    flake = "github:nukdokplex/ncaa/master";
   };
 }
