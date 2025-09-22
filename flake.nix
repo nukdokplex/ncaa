@@ -25,7 +25,7 @@
     hy3.url = "github:outfoxxed/hy3?ref=hl0.51.0";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=v0.51.0";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=1cfcc6fe6ac3e3892b4dfd5a9e6d747ab629356f";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.inputs.pre-commit-hooks.follows = "";
     hyprland.inputs.systems.follows = "systems";
