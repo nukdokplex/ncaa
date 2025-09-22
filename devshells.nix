@@ -16,7 +16,9 @@
       devShells.default = pkgs.mkShellNoCC {
         name = "default";
 
-        shellHook = config.pre-commit.installationScript;
+        shellHook = config.pre-commit.installationScript + ''
+          export NH_FLAKE="path:$(pwd)"
+        '';
 
         packages =
           with pkgs;
