@@ -49,7 +49,6 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
     picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
-    pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
@@ -91,8 +90,8 @@
         imports = with inputs; [
           ez-configs.flakeModule
           agenix-rekey.flakeModule
-          pkgs-by-name-for-flake-parts.flakeModule
           ./lib
+          ./packages.nix
           ./overlays.nix
           ./ez-configs.nix
           ./devshells.nix
@@ -129,7 +128,6 @@
             };
 
             formatter = pkgs.nixfmt-rfc-style;
-            pkgsDirectory = ./packages;
           };
       }
     );
