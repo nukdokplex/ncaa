@@ -18,10 +18,6 @@ in
       show-trace = true;
       sandbox = true;
       trusted-users = [ "@wheel" ];
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
       min-free = "1G";
       max-free = "5G";
     }

@@ -63,6 +63,11 @@
 
   # notice that this nixConfig is being imported by nixosModules.common.base
   nixConfig = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+      "pipe-operators"
+    ];
     extra-substituters = [
       "https://nukdokplex.cachix.org"
       "https://nix-community.cachix.org"
