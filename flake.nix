@@ -110,6 +110,7 @@
               inherit system;
               config = {
                 allowUnfree = true;
+                allowBroken = true;
               };
               overlays = with config.flake.overlays; [
                 lib-custom
