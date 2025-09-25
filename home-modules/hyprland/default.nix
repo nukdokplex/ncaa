@@ -52,7 +52,7 @@
 
         numlock_by_default = true;
       };
-      gestures.workspace_swipe = true;
+      gestures.workspace = true;
 
       # layouts
       dwindle = {
