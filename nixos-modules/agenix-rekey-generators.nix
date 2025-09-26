@@ -72,6 +72,8 @@ in
         cat "$tmp/key.pem"
       '';
 
+    zitadel-master-key = { pkgs, lib, ... }: "${lib.getExe pkgs.openssl} rand 32";
+
     netbird-datastore-encryption-key =
       { pkgs, lib, ... }: "'${lib.getExe pkgs.openssl}' rand -base64 32";
   }
