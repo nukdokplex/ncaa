@@ -25,11 +25,11 @@
     hy3.url = "github:outfoxxed/hy3?ref=hl0.51.0";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=1cfcc6fe6ac3e3892b4dfd5a9e6d747ab629356f";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=d0d8e8dd5b6c8e7f82b262584b26d07cb0223df9";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.inputs.pre-commit-hooks.follows = "";
     hyprland.inputs.systems.follows = "systems";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.51.0";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.51.1";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";

@@ -1,12 +1,9 @@
-{
-  ezModules,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 {
   # import all modules in this module so this ("default") module become super-module that inherits all nixos modules in this flake
-  imports =
-    (with inputs; [
+  imports = (
+    with inputs;
+    [
       agenix-rekey.nixosModules.default
       agenix.nixosModules.default
       disko.nixosModules.disko
@@ -14,14 +11,13 @@
       nur.modules.nixos.default
       stylix.nixosModules.stylix
       tssp.nixosModules.default
-    ])
-    ++ (with ezModules; [
+
       ./agenix-rekey-generators.nix
       ./k3b-custom.nix
       ./nixpkgs-overlays.nix
       ./usb-essentials.nix
       ./via.nix
       ./stylix-video-wallpaper.nix
-      ./netbird-server.nix
-    ]);
+    ]
+  );
 }

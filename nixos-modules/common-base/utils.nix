@@ -21,6 +21,7 @@
     nix-search-cli
     nixpkgs-fmt
     nurl
+    openssl
     psmisc
     rage
     sl
