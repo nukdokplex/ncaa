@@ -12,6 +12,7 @@
         NB_ADMIN_URL = "https://netbird.nukdokplex.ru";
         NB_MANAGEMENT_URL = "https://netbird.nukdokplex.ru";
         NB_ENABLE_ROSENPASS = "true";
+        NB_ROSENPASS_PERMISSIVE = "true";
       };
     };
   };
