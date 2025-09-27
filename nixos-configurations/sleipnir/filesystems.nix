@@ -63,7 +63,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.1:/data/archive/nukdokplex/documents";
+      what = "100.100.1.6:/data/archive/nukdokplex/documents";
       where = "/home/nukdokplex/documents";
       type = "nfs";
       options = "rw,noatime";
@@ -79,7 +79,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.1:/data/archive/nukdokplex/pictures";
+      what = "100.100.1.6:/data/archive/nukdokplex/pictures";
       where = "/home/nukdokplex/pictures";
       type = "nfs";
       options = "rw,noatime";
@@ -95,7 +95,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.1:/data/archive/nukdokplex/music";
+      what = "100.100.1.6:/data/archive/nukdokplex/music";
       where = "/home/nukdokplex/music";
       type = "nfs";
       options = "rw,noatime";
@@ -111,7 +111,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.1:/data/archive/nukdokplex/videos";
+      what = "100.100.1.6:/data/archive/nukdokplex/videos";
       where = "/home/nukdokplex/videos";
       type = "nfs";
       options = "rw,noatime";
@@ -127,7 +127,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.1:/data/downloads/torrents";
+      what = "100.100.1.6:/data/downloads/torrents";
       where = "/home/nukdokplex/torrents";
       type = "nfs";
       options = "rw,noatime";

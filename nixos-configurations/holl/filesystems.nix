@@ -91,8 +91,8 @@
     enable = true;
     nproc = 8;
     exports = ''
-      /data/archive/nukdokplex 100.100.1.0/8(rw,subtree_check)
-      /data/downloads/torrents 100.100.1.0/8(rw,subtree_check)
+      /data/archive/nukdokplex 100.100.1.2/32(rw,subtree_check)
+      /data/downloads/torrents 100.100.1.2/32(rw,subtree_check)
     '';
   };
 
