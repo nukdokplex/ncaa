@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   services.netbird = {
     enable = true;
@@ -20,4 +21,12 @@
   networking.nftables.firewall.zones.trusted.interfaces = [
     "nb-nukdokplex"
   ];
+
+  networking.nftables.chains.forward.netbird = {
+    after = [ "conntrack" ];
+    before = [ "drop" ];
+    rules = lib.singleton {
+      text = ''iifname "nb-nukdokplex" counter accept'';
+    };
+  };
 }
