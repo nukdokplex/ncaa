@@ -8,10 +8,10 @@
       openFirewall = true;
       port = 51820;
 
-      config = {
-        ManagementURL = "https://netbird.nukdokplex.ru";
-        AdminURL = "https://netbird.nukdokplex.ru";
-        RosenpassEnabled = true;
+      environment = {
+        NB_ADMIN_URL = "https://netbird.nukdokplex.ru";
+        NB_MANAGEMENT_URL = "https://netbird.nukdokplex.ru";
+        NB_ENABLE_ROSENPASS = "true";
       };
     };
   };
