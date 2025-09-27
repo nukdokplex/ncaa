@@ -30,7 +30,7 @@
           ssid = "asgard_4";
         };
         wifi-security = {
-          key-mgmt = "wpa-psk";
+          key-mgmt = "sae";
           psk = "$asgard_wifi_psk";
         };
       };
@@ -56,7 +56,7 @@
           ssid = "asgard_5";
         };
         wifi-security = {
-          key-mgmt = "wpa-psk";
+          key-mgmt = "sae";
           psk = "$asgard_wifi_psk";
         };
       };
