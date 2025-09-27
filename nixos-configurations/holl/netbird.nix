@@ -133,7 +133,7 @@ in
     };
   };
 
-  security.acme.certs.netbird.domain = config.services.netbird.server.custom.domain;
+  security.acme.certs.netbird.domain = config.services.netbird.server.domain;
 
   services.nginx.virtualHosts.${config.services.netbird.server.domain} = {
     addSSL = true;
