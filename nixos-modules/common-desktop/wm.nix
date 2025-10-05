@@ -4,47 +4,49 @@
   pkgs,
   ...
 }:
+let
+  isAnyWMEnabled = (
+    lib.foldl (acc: elem: acc || elem) false (
+      with config;
+      [
+        programs.hyprland.enable
+        programs.sway.enable
+        programs.niri.enable
+      ]
+    )
+  );
+in
 {
-  config =
-    lib.mkIf
-      (builtins.elem true (
-        with config.programs;
-        [
-          sway.enable
-          hyprland.enable
-          niri.enable
-        ]
-      ))
-      {
-        home-manager.sharedModules = lib.singleton (
-          { ezModules, lib, ... }:
-          {
-            imports =
-              (lib.optional config.programs.sway.enable ezModules.sway)
-              ++ (lib.optional config.programs.niri.enable ezModules.niri)
-              ++ (lib.optional config.programs.hyprland.enable ezModules.hyprland);
-          }
-        );
-
-        environment.systemPackages = with pkgs; [
+  config = lib.mkMerge [
+    (lib.mkIf isAnyWMEnabled {
+      # common wm configuration goes here
+      environment.systemPackages = with pkgs; [
+        nautilus
+        file-roller
+      ];
+      services = {
+        dbus.packages = with pkgs; [
           nautilus
           file-roller
         ];
-
-        services.dbus.packages = with pkgs; [
-          nautilus
-          file-roller
-        ];
-
-        services.gnome.sushi.enable = true;
-        programs.nautilus-open-any-terminal = {
-          enable = true;
-          terminal = "foot";
-        };
-
-        security.pam.services.hyprlock = lib.mkIf config.programs.hyprland.enable { };
-        security.pam.services.swaylock = lib.mkIf (
-          config.programs.sway.enable || config.programs.niri.enable
-        ) { };
+        gnome.sushi.enable = true;
       };
+      programs.nautilus-open-any-terminal = {
+        enable = true;
+        terminal = "foot";
+      };
+    })
+
+    (lib.mkIf config.programs.hyprland.enable {
+      # hyprland-specific configuration goes here
+      home-manager.sharedModules = lib.singleton (
+        { ezModules, ... }:
+        {
+          imports = [ ezModules.hyprland ];
+        }
+      );
+
+      security.pam.services.hyprlock = { };
+    })
+  ];
 }
