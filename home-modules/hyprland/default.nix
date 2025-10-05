@@ -5,17 +5,10 @@
   config,
   inputs,
   ...
-}@args:
+}:
 {
   wayland.windowManager.hyprland = {
-    enable = lib.mkDefault (
-      lib.attrByPath [
-        "osConfig"
-        "programs"
-        "hyprland"
-        "enable"
-      ] false args
-    );
+    enable = true;
     plugins =
       with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
       with inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system};
@@ -28,15 +21,12 @@
       "$mainMod" = "SUPER";
       # autostarts
       exec-once = [
-        "'${lib.getExe' pkgs.pipewire "pw-cat"}' --media-role Notification -p '${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg' &"
-        "'${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent'"
+        ''${lib.getExe' pkgs.pipewire "pw-cat"} --media-role Notification -p "${pkgs.kdePackages.oxygen-sounds}/share/sounds/oxygen/stereo/desktop-login-long.ogg" &''
+        "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
       ]
       ++ (lib.optional (config.stylix.video != null)
-        "'${lib.getExe config.programs.mpvpaper.package}' -o \"no-audio --hwdec=auto --loop-file --panscan=1\" '*' '${config.stylix.video}'"
-      )
-      ++ builtins.map (
-        e: "[workspace ${toString e.workspaceNumber} silent] ${e.command}"
-      ) config.wm-settings.workspaceBoundStartup;
+        ''${lib.getExe config.programs.mpvpaper.package} -o "no-audio --hwdec=auto --loop-file --panscan=1" '*' "${config.stylix.video}"''
+      );
 
       # inputs
       input = {
@@ -99,38 +89,15 @@
 
         border_size = 3;
         layout = "hy3";
-        allow_tearing = false;
+        allow_tearing = true;
       };
 
       layerrule = [
         "noanim, selection" # disable animation for some utilities like slurp
-        "blur, waybar" # enable blur for waybar layer because it's not enabled by default for some reason
         "blur, wayprompt"
         "blur, notifications"
         "blur, launcher"
         "blur, gtk-layer-shell"
-      ];
-
-      # window rules
-      windowrulev2 = [
-        # network manager applet
-        "float, class:nm-connection-editor"
-
-        # qbittorrent
-        "float, class:org.qbittorrent.qBittorrent, title:negative:(qBittorrent)(.*)"
-
-        # steam
-        "float, class:steam, initialTitle:negative:^(Steam)$"
-
-        # firefox picture-in-picture
-        "float, class:firefox, initialTitle:Picture-in-Picture"
-        "pin, class:firefox, initialTitle:Picture-in-Picture"
-
-        # udiskie
-        "float, class:udiskie"
-
-        # term file chooser
-        "float, class:foot-file-chooser"
       ];
 
       # appearance
@@ -167,10 +134,6 @@
       bindd = $mainMod, Insert, Exit passthrough mode, submap, reset
 
       submap = reset
-
-      # https://github.com/nwg-piotr/nwg-displays stuff
-      source = ${config.xdg.configHome}/hypr/monitors.conf
-      source = ${config.xdg.configHome}/hypr/workspaces.conf
     '';
 
     systemd = {
@@ -186,14 +149,6 @@
   # use common wpaperd for all wayland wms
   # check out wm-essentials
   stylix.targets.hyprland.hyprpaper.enable = false;
-
-  home.packages = lib.mkIf config.wayland.windowManager.hyprland.enable (with pkgs; [ nwg-displays ]);
-
-  # create nwg-displays config files, hyprland alerts an error when can't find this files
-  systemd.user.tmpfiles.rules = lib.mkIf config.wayland.windowManager.hyprland.enable [
-    "f ${config.xdg.configHome}/hypr/monitors.conf - - - - -"
-    "f ${config.xdg.configHome}/hypr/workspaces.conf - - - - -"
-  ];
 
   imports = [
     ../wm-essentials.nix

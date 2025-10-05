@@ -5,25 +5,24 @@
   ...
 }:
 {
-  imports = [
-    inputs.spicetify.homeManagerModules.spicetify
-    inputs.agenix.homeManagerModules.age
-    inputs.hyprland.homeManagerModules.default
-    inputs.nix-index-database.homeModules.nix-index
-    inputs.nixcord.homeModules.nixcord
-    inputs.nixvim.homeModules.nixvim
-  ]
-  ++
-    # this is workaround to make stylix always been imported and prevent config conflicts
-    (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeModules.stylix)
-  ++ [
-    ./file-roller.nix
-    ./gaming.nix
-    ./is-desktop.nix
-    ./nemo.nix
-    ./nm-applet.nix
-    ./wm-settings.nix
-    ./swayidle2.nix
-    ./stylix-video-wallpaper.nix
-  ];
+  imports =
+    (with inputs; [
+      spicetify.homeManagerModules.spicetify
+      agenix.homeManagerModules.age
+      hyprland.homeManagerModules.default
+      nix-index-database.homeModules.nix-index
+      nixcord.homeModules.nixcord
+      nixvim.homeModules.nixvim
+    ])
+    ++
+      # this is workaround to make stylix always been imported and prevent config conflicts
+      (lib.optional (!osConfig.stylix.enable) inputs.stylix.homeModules.stylix)
+    ++ [
+      ./file-roller.nix
+      ./gaming.nix
+      ./is-desktop.nix
+      ./nemo.nix
+      ./wm-settings.nix
+      ./stylix-video-wallpaper.nix
+    ];
 }

@@ -5,6 +5,10 @@ args@{
   ...
 }:
 {
+  imports = [
+    ./wm-quirks
+  ];
+
   home.packages = with pkgs; [
     wl-clipboard
     grim
@@ -35,23 +39,19 @@ args@{
   programs.file-roller.enable = true;
   programs.mpvpaper.enable = lib.mkIf (config.stylix.video != null) true;
 
-  services = {
-    wpaperd.enable = lib.mkIf (config.stylix.video == null) true;
-    cliphist.enable = true;
-    swaync.enable = true;
-    playerctld.enable = true;
-    blueman-applet.enable = lib.mkDefault (
-      lib.attrByPath [ "osConfig" "services" "blueman" "enable" ] false args
-    );
-    nm-applet.enable = lib.mkDefault (
-      lib.attrByPath [ "osConfig" "networking" "networkmanager" "enable" ] true args
-    );
-    gpg-agent.pinentry.package = config.programs.wayprompt.package;
-    udiskie = {
-      enable = true;
-      notify = true;
-      tray = "always";
-      automount = lib.mkDefault false;
-    };
+  services.wpaperd.enable = lib.mkIf (config.stylix.video == null) true;
+  services.cliphist.enable = true;
+  services.swaync.enable = true;
+  services.playerctld.enable = true;
+  services.blueman-applet.enable = lib.mkDefault (args.osConfig.services.blueman.enable or false);
+  services.network-manager-applet.enable = lib.mkDefault (
+    args.osConfig.networking.networkmanager.enable or false
+  );
+  services.gpg-agent.pinentry.package = config.programs.wayprompt.package;
+  services.udiskie = {
+    enable = true;
+    notify = true;
+    tray = "always";
+    automount = lib.mkDefault false;
   };
 }
