@@ -48,23 +48,5 @@
           sessionLock.default = 310;
           systemSuspend.default = 1800;
         };
-
-    workspaceBoundStartup = lib.mkOption {
-      description = "Workspace-bound startups";
-      type = lib.types.listOf (
-        lib.types.submodule {
-          options = {
-            workspaceNumber = lib.mkOption {
-              type = lib.types.ints.unsigned;
-              description = "workspace number in which window should be spawned";
-            };
-            command = lib.mkOption {
-              type = lib.types.str;
-              description = "command to execute";
-            };
-          };
-        }
-      );
-    };
   };
 }
