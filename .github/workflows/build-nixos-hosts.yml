@@ -6,7 +6,6 @@ on:
     branches:
       - master
       - main
-      - dev
 
 concurrency:
   cancel-in-progress: true
