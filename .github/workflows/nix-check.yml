@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 1
           lfs: true
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v19
+        uses: DeterminateSystems/nix-installer-action@v20
       - name: Run flake checks
-        run: nix --print-build-logs flake check --all-systems
+        run: nix --print-build-logs flake check --all-systems --accept-flake-config
