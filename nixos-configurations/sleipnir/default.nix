@@ -32,6 +32,11 @@
     programs.gaming-essentials.enable = true;
   };
 
+  home-manager.users.nukdokplex.services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+  };
+
   users.users.nukdokplex.extraGroups = [
     "video"
     "render"
