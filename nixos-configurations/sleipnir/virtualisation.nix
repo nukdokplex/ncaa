@@ -15,10 +15,8 @@
         swtpm.enable = true;
       };
     };
+
     spiceUSBRedirection.enable = true;
-    useEFIBoot = true;
-    useSecureBoot = true;
-    tpm.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
