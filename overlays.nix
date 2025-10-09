@@ -61,6 +61,29 @@
           };
         }
       );
+      libvdpau-va-gl = prev.libvdpau-va-gl.overrideAttrs (
+        _: _: {
+          patches = [
+            # cmake-4 compatibility
+            # track if https://github.com/NixOS/nixpkgs/pull/449482
+            (prev.fetchpatch {
+              name = "cmake-4-1.patch";
+              url = "https://github.com/i-rinat/libvdpau-va-gl/commit/30c8ac91f3aa2843f7dc1c1d167e09fad447fd91.patch?full_index=1";
+              hash = "sha256-PFEqBg3NE0fVFBAW4zdDbh8eBfKyPX3BZ8P2M15Qq5A=";
+            })
+            (prev.fetchpatch {
+              name = "cmake-4-2.patch";
+              url = "https://github.com/i-rinat/libvdpau-va-gl/commit/38c7d8fddb092824cbcdf2b11af519775930cc8b.patch?full_index=1";
+              hash = "sha256-XsX/GLIS2Ce7obQJ4uVhLDtTI1TrDAGi3ECxEH6oOFI=";
+            })
+            (prev.fetchpatch {
+              name = "cmake-4-3.patch";
+              url = "https://github.com/i-rinat/libvdpau-va-gl/commit/a845e8720d900e4bcc89e7ee16106ce63b44af0.patch?full_index=1";
+              hash = "sha256-lhiZFDR2ytDmo9hQUT35IJS4KL4+nYWAOnxZlj7u3tM=";
+            })
+          ];
+        }
+      );
     };
 
     lib-custom = _: _: {
