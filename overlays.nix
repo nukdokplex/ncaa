@@ -61,6 +61,17 @@
           };
         }
       );
+      intel-graphics-compiler = prev.intel-graphics-compiler.overrideAttrs (
+        _: _: {
+          patches = [
+            (prev.fetchpatch {
+              name = "bump-cmake.patch";
+              url = "https://github.com/SuperSandro2000/nixpkgs/raw/ac194b0e0dd1ad78620bb77c31c6ca54b6ef8caf/pkgs/by-name/in/intel-graphics-compiler/bump-cmake.patch";
+              hash = "sha256-w74ET7SVQrIuTuZ0c/eBoEP0EdG7Y0FEAJUxv7KVLvI=";
+            })
+          ];
+        }
+      );
       libvdpau-va-gl = prev.libvdpau-va-gl.overrideAttrs (
         _: _: {
           patches = [
