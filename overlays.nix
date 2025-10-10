@@ -61,6 +61,18 @@
           };
         }
       );
+      clblast = prev.clblast.overrideAttrs (
+        _: _: {
+          patches = [
+            (prev.fetchpatch {
+              name = "clblast-fix-cmake4.patch";
+              url = "https://github.com/CNugteren/CLBlast/commit/dd714f1b72aa8c341e5a27aa9e968b4ecdaf1abb.patch";
+              includes = [ "CMakeLists.txt" ];
+              hash = "sha256-AVFzEdj1CaVSJxOcn5PoqFb+b8k5YgSMD3VhvHeBd7o=";
+            })
+          ];
+        }
+      );
       intel-graphics-compiler = prev.intel-graphics-compiler.overrideAttrs (
         _: _: {
           patches = [
