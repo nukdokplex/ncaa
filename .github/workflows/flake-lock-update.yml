@@ -26,6 +26,7 @@ jobs:
           branch: flake-update
           pr-title: "flake.lock: Update"
           pr-assignees: nukdokplex
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           sign-commits: true
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-fingerprint: ${{ secrets.GPG_FINGERPRINT }}
