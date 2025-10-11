@@ -29,6 +29,7 @@
             git
             age
             zsh
+            pre-commit
           ]
           ++ config.pre-commit.settings.enabledPackages;
       };
