@@ -19,8 +19,6 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v27
         with:
-          git-author-name: "nukdokplex"
-          git-author-email: "nukdokplex@nukdokplex.ru"
           git-committer-name: "nukdokplex"
           git-committer-email: "nukdokplex@nukdokplex.ru"
           branch: flake-update
