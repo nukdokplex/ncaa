@@ -6,7 +6,7 @@
 }:
 {
   environment.systemPackages = lib.singleton (
-    pkgs.nixvim-custom.extend config.lib.stylix.nixvim.config
+    pkgs.nixvim-custom.extend config.stylix.targets.nixvim.exportedModule
   );
 
   stylix.targets.nixvim = {
