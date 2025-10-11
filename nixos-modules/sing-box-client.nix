@@ -278,8 +278,7 @@
 
   age.secrets.sing-box-trojan-password = {
     rekeyFile =
-      flakeRoot
-      + /secrets/generated/falhofnir/${config.networking.hostName}-trojan-password.age;
+      flakeRoot + /secrets/generated/falhofnir/${config.networking.hostName}-trojan-password.age;
     owner = "sing-box";
     group = "sing-box";
     mode = "440";
@@ -294,8 +293,7 @@
 
   age.secrets.sing-box-hysteria2-password = {
     rekeyFile =
-      flakeRoot
-      + /secrets/generated/falhofnir/${config.networking.hostName}-hysteria2-password.age;
+      flakeRoot + /secrets/generated/falhofnir/${config.networking.hostName}-hysteria2-password.age;
     owner = "sing-box";
     group = "sing-box";
     mode = "440";
