@@ -33,7 +33,7 @@
   };
 
   home-manager.users.nukdokplex.services.ollama = {
-    enable = true;
+    enable = false;
     acceleration = "rocm";
   };
 
