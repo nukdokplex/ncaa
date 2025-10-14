@@ -25,4 +25,11 @@
     secretsDir = flakeRoot + /secrets/non-generated/${config.networking.hostName};
     generatedSecretsDir = flakeRoot + /secrets/generated/${config.networking.hostName};
   };
+
+  environment.systemPackages = with pkgs; [
+    rage
+    age-plugin-fido2-hmac
+    age-plugin-openpgp-card
+    age-plugin-yubikey
+  ];
 }
