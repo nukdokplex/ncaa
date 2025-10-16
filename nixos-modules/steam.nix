@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 {
@@ -38,4 +39,33 @@
       }
     ];
   };
+
+  networking.nftables.firewall.rules.open-ports-trusted =
+    let
+      cfg = config.programs.steam;
+    in
+    lib.mkMerge [
+      (lib.mkIf (cfg.remotePlay.openFirewall || cfg.localNetworkGameTransfers.openFirewall) {
+        allowedUDPPorts = [ 27036 ]; # Peer discovery
+      })
+
+      (lib.mkIf cfg.remotePlay.openFirewall {
+        allowedTCPPorts = [ 27036 ];
+        allowedUDPPortRanges = [
+          {
+            from = 27031;
+            to = 27035;
+          }
+        ];
+      })
+
+      (lib.mkIf cfg.dedicatedServer.openFirewall {
+        allowedTCPPorts = [ 27015 ]; # SRCDS Rcon port
+        allowedUDPPorts = [ 27015 ]; # Gameplay traffic
+      })
+
+      (lib.mkIf cfg.localNetworkGameTransfers.openFirewall {
+        allowedTCPPorts = [ 27040 ]; # Data transfers
+      })
+    ];
 }

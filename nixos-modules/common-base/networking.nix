@@ -47,7 +47,6 @@
         ];
       };
       nnf-loopback.enable = true;
-      nnf-nixos-firewall.enable = true;
       nnf-ssh.enable = true;
     };
     zones = {
@@ -61,10 +60,20 @@
         interfaces = lib.mkDefault [ "trustnoone" ];
       };
     };
-    rules.nixos-firewall.from = [ "trusted" ];
+    rules.open-ports-uplink = {
+      from = [ "uplink" ];
+      to = [ config.networking.nftables.firewall.localZoneName ];
+      ignoreEmptyRule = true;
+    };
     rules.open-ports-trusted = {
       from = [ "trusted" ];
       to = [ config.networking.nftables.firewall.localZoneName ];
+      inherit (config.networking.nftables.firewall.rules.open-ports-uplink)
+        allowedTCPPorts
+        allowedUDPPorts
+        allowedTCPPortRanges
+        allowedUDPPortRanges
+        ;
       ignoreEmptyRule = true;
     };
   };

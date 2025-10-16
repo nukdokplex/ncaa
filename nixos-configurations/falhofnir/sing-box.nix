@@ -149,7 +149,7 @@ in
 
   users.users.sing-box.extraGroups = [ "acme" ];
 
-  networking.firewall = {
+  networking.nftables.firewall.rules.open-ports-uplink = lib.mkIf config.services.sing-box.enable {
     allowedTCPPorts = [
       443
       8443

@@ -1,4 +1,7 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  cfg = config.services.qbittorrent;
+in
 {
   services.qbittorrent = {
     enable = true;
@@ -8,8 +11,13 @@
 
     profileDir = "/data/downloads/torrents/.qbittorrent";
 
-    openFirewall = true;
+    openFirewall = false;
     webuiPort = 46055;
-    torrentingPort = config.services.qbittorrent.webuiPort + 1;
+    torrentingPort = cfg.webuiPort + 1;
+  };
+
+  networking.nftables.firewall.rules = lib.mkIf (cfg.enable && cfg.openFirewall) {
+    open-ports-uplink.allowedTCPPorts = [ cfg.torrentingPort ];
+    open-ports-trusted.allowedTCPPorts = [ cfg.webuiPort ];
   };
 }

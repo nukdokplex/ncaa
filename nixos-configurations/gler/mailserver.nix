@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ config, lib, ... }:
 {
   mailserver = {
     enable = true;
@@ -40,6 +37,22 @@
     "postfix.service"
     "dovecot2.service"
   ];
+
+  networking.nftables.firewall.rules.open-ports-uplink.allowedTCPPorts =
+    let
+      cfg = config.mailserver;
+    in
+    lib.mkIf (cfg.enable && cfg.openFirewall) (
+      [ 25 ]
+      ++ lib.optional cfg.enableSubmission 587
+      ++ lib.optional cfg.enableSubmissionSsl 465
+      ++ lib.optional cfg.enableImap 143
+      ++ lib.optional cfg.enableImapSsl 993
+      ++ lib.optional cfg.enablePop3 110
+      ++ lib.optional cfg.enablePop3Ssl 995
+      ++ lib.optional cfg.enableManageSieve 4190
+      ++ lib.optional (cfg.certificateScheme == "acme-nginx") 80
+    );
 
   age.secrets.nukdokplex-mail-hashed-password = { };
 }

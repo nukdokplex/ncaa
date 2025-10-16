@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   services.nginx = {
     enable = true;
@@ -11,10 +11,12 @@
     recommendedUwsgiSettings = true;
   };
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  networking.nftables.firewall.rules = lib.mkIf config.services.nginx.enable {
+    open-ports-uplink.allowedTCPPorts = [
+      80
+      443
+    ];
+  };
 
   users.users.nginx.extraGroups = lib.singleton "acme";
 }

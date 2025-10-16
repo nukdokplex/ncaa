@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   ssoDomain = "sso.nukdokplex.ru";
   clientId = "339513160329418758";
@@ -131,6 +131,15 @@ in
         };
       };
     };
+  };
+
+  networking.nftables.firewall.rules.open-ports-uplink = {
+    allowedTCPPorts = lib.optionals (
+      config.services.netbird.server.enable && config.services.netbird.server.coturn.enable
+    ) config.services.netbird.server.coturn.openPorts;
+    allowedUDPPorts = lib.optionals (
+      config.services.netbird.server.enable && config.services.netbird.server.coturn.enable
+    ) config.services.netbird.server.coturn.openPorts;
   };
 
   security.acme.certs.netbird.domain = config.services.netbird.server.domain;
