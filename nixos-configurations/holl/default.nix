@@ -16,6 +16,7 @@
       acme
       sing-box-client
       netbird-client
+      syncthing
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";

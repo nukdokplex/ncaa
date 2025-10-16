@@ -1,14 +1,16 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   domain = "gist.nukdokplex.ru";
+  webPort = 6157;
+  sshPort = 2222;
 in
 {
   virtualisation.oci-containers.containers = {
     opengist = {
       image = "ghcr.io/thomiceli/opengist:1.10";
       ports = [
-        "6157:6157"
-        "2222:2222"
+        "${toString webPort}:6157"
+        "${toString sshPort}:2222"
       ];
       volumes = [ "/var/lib/opengist/data:/opengist" ];
       environment = {
@@ -36,7 +38,7 @@ in
     forceSSL = true;
     sslCertificate = "${config.security.acme.certs.gist.directory}/cert.pem";
     sslCertificateKey = "${config.security.acme.certs.gist.directory}/key.pem";
-    locations."/".proxyPass = "http://127.0.0.1:6157";
+    locations."/".proxyPass = "http://127.0.0.1:${toString webPort}";
   };
 
   systemd.tmpfiles.rules = [
@@ -44,5 +46,9 @@ in
     "f /var/lib/opengist/config.yml 0750 root root - -"
   ];
 
-  networking.firewall.allowedTCPPorts = [ 2222 ];
+  networking.nftables.firewall.rules =
+    lib.mkIf (config.virtualisation.oci-containers.containers ? "opengist")
+      {
+        open-ports-trusted.allowedTCPPorts = [ sshPort ];
+      };
 }

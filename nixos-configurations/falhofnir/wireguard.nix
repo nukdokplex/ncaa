@@ -59,7 +59,8 @@ in
 
   age.secrets.awg0-private.generator.script = "wireguard-priv";
 
-  networking.firewall.allowedUDPPorts = lib.mkIf config.networking.wireguard.enable [ awg0Port ];
+  networking.nftables.firewall.rules.open-ports-uplink.allowedUDPPorts =
+    lib.optional config.networking.wireguard.enable awg0Port;
 
   # networking.nftables.chains.forward.forward-wireguard = {
   #   after = [ "early" ];

@@ -9,7 +9,6 @@ let
 in
 {
   networking.nftables.firewall.snippets.nnf-dhcpv6.enable = lib.mkForce false;
-  networking.nftables.firewall.rules.nixos-firewall.from = [ "uplink" ];
 
   boot.initrd.services.udev.rules = ''
     SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="${uplinkMACAddress}", NAME="uplink0"

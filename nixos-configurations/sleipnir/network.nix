@@ -1,9 +1,4 @@
 {
-  networking.nftables.firewall.zones.trusted.interfaces = [
-    "uplink0"
-    "uplink1"
-  ];
-
   networking.interfaces.uplink0.wakeOnLan.enable = true;
   networking.interfaces.uplink1.wakeOnLan.enable = true;
 

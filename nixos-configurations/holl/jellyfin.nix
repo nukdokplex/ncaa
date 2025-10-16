@@ -3,7 +3,6 @@ let
   domain = "jellyfin.nukdokplex.ru";
 in
 {
-
   services.jellyfin = {
     enable = true;
     openFirewall = false;
