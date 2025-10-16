@@ -37,6 +37,14 @@
         };
       };
     };
+    nodev = {
+      "/tmp" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "size=200M"
+        ];
+      };
+    };
     lvm_vg.systempool = {
       type = "lvm_vg";
       lvs.root = {
