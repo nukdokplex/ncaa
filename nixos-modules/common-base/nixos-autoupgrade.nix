@@ -5,7 +5,7 @@
 
     flake = "github:nukdokplex/ncaa/master";
 
-    operation = "boot";
+    operation = "switch";
 
     dates = "02:00";
     randomizedDelaySec = "60min";
