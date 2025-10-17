@@ -23,6 +23,8 @@
       optical-disks
     ]);
 
+  system.autoUpgrade.enable = false;
+
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.05";
 
