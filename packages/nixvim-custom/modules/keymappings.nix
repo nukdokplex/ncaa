@@ -16,7 +16,6 @@
           {
             # make sure leaders are not busy
             "<Space>" = "<NOP>";
-            "<Tab>" = "<NOP>";
 
             # clear search results
             "<Esc>" = "<cmd>nohlsearch<CR>";
@@ -35,19 +34,10 @@
             "<M-k>" = "<C-w>k";
             "<M-l>" = "<C-w>l";
 
-            # harpoon file stuff
-            "<C-a>".__raw = ''function() require("harpoon"):list():add() end'';
-
-            "<C-J>".__raw = ''function() require("harpoon"):list():prev() end'';
-            "<C-K>".__raw = ''function() require("harpoon"):list():next() end'';
-            "<leader>j".__raw = ''function() require("harpoon"):list():prev() end'';
-            "<leader>k".__raw = ''function() require("harpoon"):list():next() end'';
-
-            "<C-h>".__raw = ''function() require("harpoon"):list():prev() end'';
-
-            "<C-Esc>".__raw = ''function() require'harpoon'.ui:toggle_quick_menu(require'harpoon':list()) end'';
-
             "<leader>h" = ''<cmd>Telescope harpoon marks<CR>'';
+
+            "<Tab>" = ">>";
+            "<S-Tab>" = "<<";
 
             # comfortable home and end
             "L" = "$";
@@ -68,7 +58,59 @@
         inherit key action;
       }) { };
     in
-    lib.nixvim.keymaps.mkKeymaps { options.silent = true; } (normal ++ visual ++ insert);
+    (lib.nixvim.keymaps.mkKeymaps { options.silent = true; } (normal ++ visual ++ insert))
+    ++ [
+      {
+        mode = "v";
+        key = "<Tab>";
+        action = ">gv";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = "v";
+        key = "<S-Tab>";
+        action = "<gv";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = "v";
+        key = ">";
+        action = ">gv";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      {
+        mode = "v";
+        key = "<";
+        action = "<gv";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+    ];
+
+  plugins.barbar.keymaps = lib.mapAttrs (_: value: { key = value; }) {
+    previous = "<C-j>";
+    next = "<C-k>";
+
+    movePrevious = "<C-h>";
+    moveNext = "<C-l>";
+
+    pin = "<C-n>";
+    restore = "<S-n>";
+
+    close = "<A-x>";
+    closeAllButCurrentOrPinned = "<A-X>";
+  };
 
   plugins.lsp.keymaps = {
     silent = true;
