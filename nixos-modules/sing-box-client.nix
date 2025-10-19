@@ -232,6 +232,14 @@
               "paheal.net" # not present in lists for some reason
               "t-ru.org"
               "opentrackr.org"
+              # rutracker stuff
+              "rutracker.cc"
+              "rutracker.net"
+              "rutracker.org"
+              "rutracker.ru"
+              "rutracker.wiki"
+              "rutrk.org"
+              "t-ru.org"
             ];
             action = "route";
             outbound = "proxy-out";
