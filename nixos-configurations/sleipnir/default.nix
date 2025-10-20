@@ -21,6 +21,7 @@
       gaming
       netbird-client
       optical-disks
+      nukdokplex
     ]);
 
   system.autoUpgrade.enable = false;
@@ -38,6 +39,10 @@
     enable = false;
     acceleration = "rocm";
   };
+
+  user.users.root.openssh.authorizedKeys.keyFiles = [
+    /etc/ssh/authorized_keys.d/nukdokplex
+  ];
 
   users.users.nukdokplex.extraGroups = [
     "video"
