@@ -1,6 +1,7 @@
 {
   lib',
   ezModules,
+  config,
   ...
 }:
 {
@@ -28,7 +29,6 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDo2pi5x42hS1jbB9gHvMfr3iiDWr4Mpe5CPNhpddIGH root@gladr";
 
-  user.users.root.openssh.authorizedKeys.keyFiles = [
-    /etc/ssh/authorized_keys.d/nukdokplex
-  ];
+  users.users.root.openssh.authorizedKeys.keys =
+    config.users.users.nukdokplex.openssh.authorizedKeys.keys;
 }

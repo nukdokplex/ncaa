@@ -3,6 +3,7 @@
   lib,
   ezModules,
   inputs,
+  config,
   ...
 }:
 {
@@ -26,7 +27,6 @@
 
   nixpkgs.overlays = lib.singleton inputs.self.overlays.light-packages;
 
-  user.users.root.openssh.authorizedKeys.keyFiles = [
-    /etc/ssh/authorized_keys.d/nukdokplex
-  ];
+  users.users.root.openssh.authorizedKeys.keys =
+    config.users.users.nukdokplex.openssh.authorizedKeys.keys;
 }
