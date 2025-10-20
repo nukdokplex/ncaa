@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, ezModules, ... }:
 {
   # import all modules in this module so this ("default") module become super-module that inherits all nixos modules in this flake
   imports = (
@@ -12,12 +12,12 @@
       stylix.nixosModules.stylix
       tssp.nixosModules.default
 
-      ./agenix-rekey-generators.nix
-      ./k3b-custom.nix
-      ./nixpkgs-overlays.nix
-      ./usb-essentials.nix
-      ./via.nix
-      ./stylix-video-wallpaper.nix
+      ezModules.agenix-rekey-generators
+      ezModules.k3b-custom
+      ezModules.nixpkgs-overlays
+      ezModules.usb-essentials
+      ezModules.via
+      ezModules.stylix-video-wallpaper
     ]
   );
 }
