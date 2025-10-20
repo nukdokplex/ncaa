@@ -7,12 +7,10 @@
 {
   programs.zsh.enable = true;
   users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = true;
-
     users.nukdokplex = {
       name = "nukdokplex";
       isNormalUser = true;
+      shell = pkgs.zsh;
       extraGroups = [
         "wheel"
         "input"
@@ -28,12 +26,6 @@
       ];
 
       hashedPasswordFile = config.age.secrets.nukdokplex-hashed-password.path;
-    };
-
-    users.root = {
-      openssh = {
-        inherit (config.users.users.nukdokplex.openssh) authorizedKeys;
-      };
     };
   };
 
