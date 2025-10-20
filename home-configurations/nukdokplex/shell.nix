@@ -12,7 +12,7 @@ in
     direnv.enable = true;
     nix-index.enable = true;
     oh-my-posh = {
-      enable = true;
+      enable = false;
       useTheme = "kushal";
     };
 
@@ -43,6 +43,7 @@ in
       oh-my-zsh = {
         enable = true;
         plugins = [ "tmux" ];
+        theme = "agnoster";
       };
     };
   };
