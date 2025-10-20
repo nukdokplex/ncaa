@@ -1,6 +1,7 @@
 {
   lib',
   ezModules,
+  config,
   ...
 }:
 {
@@ -26,7 +27,6 @@
 
   users.users.nukdokplex.extraGroups = [ "acme" ];
 
-  user.users.root.openssh.authorizedKeys.keyFiles = [
-    /etc/ssh/authorized_keys.d/nukdokplex
-  ];
+  users.users.root.openssh.authorizedKeys.keys =
+    config.users.users.nukdokplex.openssh.authorizedKeys.keys;
 }

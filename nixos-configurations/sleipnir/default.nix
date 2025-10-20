@@ -2,6 +2,7 @@
   ezModules,
   lib',
   lib,
+  config,
   ...
 }:
 {
@@ -40,9 +41,8 @@
     acceleration = "rocm";
   };
 
-  user.users.root.openssh.authorizedKeys.keyFiles = [
-    /etc/ssh/authorized_keys.d/nukdokplex
-  ];
+  users.users.root.openssh.authorizedKeys.keys =
+    config.users.users.nukdokplex.openssh.authorizedKeys.keys;
 
   users.users.nukdokplex.extraGroups = [
     "video"
