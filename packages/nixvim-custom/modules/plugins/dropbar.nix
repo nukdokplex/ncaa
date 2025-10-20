@@ -1,0 +1,5 @@
+{
+  plugins.dropbar = {
+    enable = true;
+  };
+}
