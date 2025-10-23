@@ -24,4 +24,29 @@
     podman-compose # start group of containers for dev
   ];
 
+  networking.nftables.chains.input.allow-podman-dns = {
+    after = [ "conntrack" ];
+    before = [ "late" ];
+    rules = [
+      { text = ''iifname "podman*" udp dport 53 accept''; }
+      { text = ''iifname "podman*" tcp dport 53 accept''; }
+    ];
+  };
+
+  networking.nftables.chains.forward.allow-podman-traffic = {
+    after = [ "conntrack" ];
+    before = [ "late" ];
+
+    rules = [
+      { text = ''iifname "podman*" oifname "uplink*" accept''; }
+    ];
+  };
+
+  networking.nftables.chains.postrouting.podman-traffic-masquerade = {
+    after = [ "early" ];
+    before = [ "late" ];
+    rules = [
+      { text = ''iifname "podman*" oifname "uplink*" masquerade''; }
+    ];
+  };
 }
