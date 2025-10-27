@@ -142,12 +142,9 @@ in
     ) config.services.netbird.server.coturn.openPorts;
   };
 
-  security.acme.certs.netbird.domain = config.services.netbird.server.domain;
-
   services.nginx.virtualHosts.${config.services.netbird.server.domain} = {
-    addSSL = true;
-    sslCertificate = "${config.security.acme.certs.netbird.directory}/cert.pem";
-    sslCertificateKey = "${config.security.acme.certs.netbird.directory}/key.pem";
+    forceSSL = true;
+    enableACME = true;
   };
 
   # make netbird-management start in the right moment of time at startup
