@@ -19,7 +19,10 @@ in
       Description = "Highly customizable Wayland bar for Sway and Wlroots based compositors.";
       Documentation = "https://github.com/Alexays/Waybar/wiki";
       PartOf = [ "hyprland-session.target" ];
-      After = [ "hyprland-session.target" ];
+      After = [
+        "hyprland-session.target"
+        "wireplumber.service"
+      ];
       ConditionEnvironment = "WAYLAND_DISPLAY";
       X-Restart-Triggers = [
         "${config.xdg.configFile."waybar/hyprland".source}"

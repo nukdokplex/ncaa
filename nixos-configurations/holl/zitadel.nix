@@ -70,29 +70,19 @@ in
     ensureDatabases = lib.singleton "zitadel";
   };
 
-  services.nginx.virtualHosts.${domain} =
-    let
-      certDir = config.security.acme.certs.sso.directory;
-    in
-    {
-      forceSSL = true;
-      sslCertificate = "${certDir}/cert.pem";
-      sslCertificateKey = "${certDir}/key.pem";
-      locations."/".extraConfig = ''
-        grpc_pass grpc://[::1]:${toString internalPort};
-        grpc_set_header Host $host;
-        grpc_set_header X-Forwarded-Proto https;
-      '';
-      locations."/ui/v2/login".extraConfig = ''
-        proxy_pass http://[::1]:${toString internalPort};
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto https;
-      '';
-    };
-
-  security.acme.certs.sso = {
-    inherit domain;
-    inheritDefaults = true;
+  services.nginx.virtualHosts.${domain} = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/".extraConfig = ''
+      grpc_pass grpc://[::1]:${toString internalPort};
+      grpc_set_header Host $host;
+      grpc_set_header X-Forwarded-Proto https;
+    '';
+    locations."/ui/v2/login".extraConfig = ''
+      proxy_pass http://[::1]:${toString internalPort};
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Proto https;
+    '';
   };
 
   age.secrets.zitadel-master-key = {

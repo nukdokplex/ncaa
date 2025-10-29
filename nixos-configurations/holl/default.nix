@@ -13,7 +13,6 @@
     }
     ++ (with ezModules; [
       common-base
-      acme
       sing-box-client
       netbird-client
       syncthing

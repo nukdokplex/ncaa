@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 let
   domain = "jellyfin.nukdokplex.ru";
 in
@@ -16,12 +16,9 @@ in
     jellyfin-ffmpeg
   ];
 
-  security.acme.certs.jellyfin = { inherit domain; };
-
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
-    sslCertificate = "${config.security.acme.certs.jellyfin.directory}/cert.pem";
-    sslCertificateKey = "${config.security.acme.certs.jellyfin.directory}/key.pem";
+    enableACME = true;
     locations."/" = {
       proxyPass = "http://[::1]:8096";
       proxyWebsockets = true;

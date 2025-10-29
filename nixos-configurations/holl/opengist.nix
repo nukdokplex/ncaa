@@ -32,12 +32,9 @@ in
     };
   };
 
-  security.acme.certs.gist = { inherit domain; };
-
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
-    sslCertificate = "${config.security.acme.certs.gist.directory}/cert.pem";
-    sslCertificateKey = "${config.security.acme.certs.gist.directory}/key.pem";
+    enableACME = true;
     locations."/".proxyPass = "http://127.0.0.1:${toString webPort}";
   };
 

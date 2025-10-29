@@ -240,6 +240,7 @@
               "rutracker.wiki"
               "rutrk.org"
               "t-ru.org"
+              "saleor.io"
             ];
             action = "route";
             outbound = "proxy-out";
