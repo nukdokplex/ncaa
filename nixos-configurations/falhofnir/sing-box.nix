@@ -10,6 +10,7 @@ let
     "holl"
     "hrafn"
     "babushbant"
+    "asgard-router"
   ];
 in
 {
