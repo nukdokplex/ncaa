@@ -10,5 +10,6 @@
     noto-fonts-extra
     nerd-fonts.symbols-only
     nerd-fonts.dejavu-sans-mono
+    nerd-fonts.iosevka-term
   ];
 }
