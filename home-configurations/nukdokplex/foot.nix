@@ -8,7 +8,9 @@
     programs.foot = {
       enable = true;
       settings = {
-        main.font = "IosevkaTerm Nerd Font:size=${toString (config.stylix.fonts.sizes.terminal or 12)}";
+        main.font = lib.mkForce "IosevkaTerm Nerd Font:size=${
+          toString (config.stylix.fonts.sizes.terminal or 12)
+        }";
         mouse = {
           hide-when-typing = "yes";
         };
