@@ -91,7 +91,7 @@
       bind -N 'Pass M-Q to application'    M-Q send-keys M-Q
       bind -N 'Pass M-q to application'    M-q send-keys M-q
 
-      bind -N 'Explore tmux tree'            -n M-Escape choose-tree -NwZ
+      bind -N 'Explore tmux tree'            -n M-Escape choose-tree -wZ -Otime
       bind -N 'Pass M-Escape to application'    M-Escape send-keys M-Escape
     ''
     + "\n"
