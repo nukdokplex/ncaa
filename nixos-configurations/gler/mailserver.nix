@@ -1,5 +1,11 @@
-{ config, lib, ... }:
 {
+  config,
+  lib,
+  inputs,
+  ...
+}:
+{
+  imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
   mailserver = {
     enable = true;
     stateVersion = 3;

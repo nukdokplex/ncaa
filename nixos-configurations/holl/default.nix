@@ -12,7 +12,7 @@
       recursive = false;
     }
     ++ (with ezModules; [
-      common-base
+      base-system
       sing-box-client
       netbird-client
       syncthing

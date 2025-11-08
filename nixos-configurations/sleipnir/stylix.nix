@@ -1,33 +1,17 @@
-{ pkgs, lib, ... }:
-let
-  video = pkgs.fetchurl {
-    urls = [
-      "https://videos.pexels.com/video-files/7385122/7385122-uhd_3840_2160_30fps.mp4"
-      "https://web.archive.org/web/https://videos.pexels.com/video-files/7385122/7385122-uhd_3840_2160_30fps.mp4"
-    ];
-    sha256 = "17g3l6450f21ns3xq6xg20rvfa3g2gcccw5cd8g380rffnjm2fdm";
-  };
-in
+{ pkgs, ... }:
 {
   stylix = {
-    video = pkgs.runCommandNoCC "stylix-video-wallpaper" { } ''
-      '${lib.getExe pkgs.ffmpeg}' \
-        -i '${video}' \
-        -vf "scale=2560:-2" \
-        -c:v libx264 \
-        -preset veryfast \
-        -tune film \
-        -an \
-        -f mp4 \
-        $out
-    '';
-
-    opacity = {
-      applications = 0.90;
-      desktop = 0.90;
-      popups = 0.90;
-      terminal = 0.90;
+    image = pkgs.fetchurl {
+      url = "https://w.wallhaven.cc/full/v9/wallhaven-v9pxpm.jpg";
+      sha256 = "0x4s8pfr7rcpd6zhl2pfn7q4743z18a3il29cc9jilfh0rndxzjz";
     };
+
+    # opacity = {
+    #   applications = 0.90;
+    #   desktop = 0.90;
+    #   popups = 0.90;
+    #   terminal = 0.90;
+    # };
 
     polarity = "dark";
 

@@ -13,12 +13,12 @@
       exclude = [ ./default.nix ];
       recursive = false;
     }
-    ++ [
-      ezModules.common-base
-      ezModules.acme
-      ezModules.nukdokplex
-      inputs.simple-nixos-mailserver.nixosModule
-    ];
+    ++ (with ezModules; [
+      base-system
+      acme
+      nukdokplex
+      russian-locale
+    ]);
 
   time.timeZone = "Europe/Amsterdam";
   system.stateVersion = "25.05";

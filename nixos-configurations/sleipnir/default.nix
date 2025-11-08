@@ -13,7 +13,10 @@
       recursive = false;
     }
     ++ (with ezModules; [
-      common-desktop
+      nukdokplex
+
+      desktop
+      wm
       email-passwords
       dyndns
       acme
@@ -22,10 +25,11 @@
       gaming
       netbird-client
       optical-disks
-      nukdokplex
-    ]);
+      russian-locale
 
-  system.autoUpgrade.enable = false;
+      nixvim
+      dev-utils
+    ]);
 
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.05";
