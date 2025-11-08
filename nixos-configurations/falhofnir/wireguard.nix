@@ -1,17 +1,33 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   awg0Port = 18181;
   awg0InterfaceName = "awg0";
+  enabled = false;
+  kernel = config.boot.kernelPackages;
 in
 {
-  networking.wireguard = {
-    enable = false;
 
-    interfaces.${awg0InterfaceName} = {
+  boot.extraModulePackages =
+    (lib.optional (lib.versionOlder kernel.kernel.version "5.6") kernel.wireguard)
+    ++ [ kernel.amneziawg ];
+  boot.kernelModules = [
+    "wireguard"
+    "amneziawg"
+  ];
+  environment.systemPackages = with pkgs; [
+    wireguard-tools
+    amneziawg-tools
+  ];
+
+  networking.wireguard = {
+    enable = true;
+
+    interfaces.${awg0InterfaceName} = lib.mkIf enabled {
       type = "amneziawg";
       ips = [
         "10.100.1.1/24"
@@ -23,21 +39,21 @@ in
 
       peers = [
         {
-          # yggdrasils
-          publicKey = "we1V/v3wsZzZknibdQVPyxgMoCgVPvt/5bD2UEoHgVc=";
+          # asgard
+          publicKey = "A1OhUnq294z9cL7AptS2xtMOhPNyRSZO+1DOp9TJ5mU=";
           allowedIPs = [
             "10.100.1.2/32"
             "feee:10:100:1::2/128"
           ];
         }
-        {
-          # hrafn
-          publicKey = "x8wbb3bFWd0loNBA/I8025rSEwXdYVhR1dkFFZ4X/Wc=";
-          allowedIPs = [
-            "10.100.1.5/32"
-            "feee:10:100:1::5/128"
-          ];
-        }
+        #{
+        #  # hrafn
+        #  publicKey = "x8wbb3bFWd0loNBA/I8025rSEwXdYVhR1dkFFZ4X/Wc=";
+        #  allowedIPs = [
+        #    "10.100.1.5/32"
+        #    "feee:10:100:1::5/128"
+        #  ];
+        #}
       ];
 
       # we do not believe in lies
@@ -57,23 +73,28 @@ in
     };
   };
 
+  networking.nftables = lib.mkIf (config.networking.wireguard.interfaces ? awg0InterfaceName) {
+    firewall.rules.open-ports-uplink = {
+      allowedUDPPorts = [
+        awg0Port
+      ];
+    };
+
+    chains.forward.forward-wireguard = {
+      after = [ "early" ];
+      before = [ "late" ];
+      rules = [
+        "iifname ${awg0InterfaceName} oifname uplink accept"
+        "iifname uplink oifname ${awg0InterfaceName} accept"
+      ];
+    };
+
+    chains.postrouting.uplink-masquerade = {
+      after = [ "early" ];
+      before = [ "late" ];
+      rules = [ "oifname uplink masquerade" ];
+    };
+  };
+
   age.secrets.awg0-private.generator.script = "wireguard-priv";
-
-  networking.nftables.firewall.rules.open-ports-uplink.allowedUDPPorts =
-    lib.optional config.networking.wireguard.enable awg0Port;
-
-  # networking.nftables.chains.forward.forward-wireguard = {
-  #   after = [ "early" ];
-  #   before = [ "late" ];
-  #   rules = [
-  #     "iifname ${awg0InterfaceName} oifname uplink accept"
-  #     "iifname uplink oifname ${awg0InterfaceName} accept"
-  #   ];
-  # };
-
-  # networking.nftables.chains.postrouting.uplink-masquerade = {
-  #   after = [ "early" ];
-  #   before = [ "late" ];
-  #   rules = [ "oifname uplink masquerade" ];
-  # };
 }
