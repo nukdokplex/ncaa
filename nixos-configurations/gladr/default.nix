@@ -12,7 +12,8 @@
       recursive = false;
     }
     ++ (with ezModules; [
-      common-desktop
+      desktop
+      wm
       email-passwords
       dyndns
       acme
@@ -21,6 +22,7 @@
       gaming
       netbird-client
       nukdokplex
+      russian-locale
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";

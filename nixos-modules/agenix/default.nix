@@ -2,18 +2,26 @@
   flakeRoot,
   config,
   pkgs,
+  inputs,
   ...
 }:
 {
+  imports = [
+    inputs.agenix.nixosModules.default
+    inputs.agenix-rekey.nixosModules.default
+    ./generators.nix
+  ];
   age.rekey = {
     agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
-        identity = ./fido2-identity-1.pub;
+        # 0643DA9F
+        identity = ./fido2-0643DA9F.pub;
         pubkey = "age1shz2tstp72sk93rgtj4nwksksye9dwtmu4spt5v3a3kzg3j7r3jqawdq6d";
       }
       {
-        identity = ./fido2-identity-2.pub;
+        # 775BC6BC
+        identity = ./fido2-775BC6BC.pub;
         pubkey = "age14eg3wdumvpwmsgdk3ctdkvtw43am8kq43wq4hzejzt9fqrpgggqsyzutrm";
       }
     ];

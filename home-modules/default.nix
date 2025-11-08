@@ -23,6 +23,5 @@
       ./is-desktop.nix
       ./nemo.nix
       ./wm-settings.nix
-      ./stylix-video-wallpaper.nix
     ];
 }

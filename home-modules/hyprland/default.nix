@@ -22,10 +22,7 @@
       # autostarts
       exec-once = [
         "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
-      ]
-      ++ (lib.optional (config.stylix.video != null)
-        ''${lib.getExe config.programs.mpvpaper.package} -o "no-audio --hwdec=auto --loop-file --panscan=1" '*' "${config.stylix.video}"''
-      );
+      ];
 
       # inputs
       input = {
@@ -103,7 +100,7 @@
       decoration = {
         shadow.enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
         blur = {
-          enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient && config.stylix.video == null);
+          enabled = lib.mkDefault (!config.wm-settings.beEnergyEfficient);
           size = 7;
           passes = 4;
           new_optimizations = true;

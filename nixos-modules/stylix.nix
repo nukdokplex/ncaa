@@ -1,36 +1,24 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
+  imports = [ inputs.stylix.nixosModules.stylix ];
   stylix = lib.mkDefault {
     enable = true;
-
-    fonts = {
-      serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
-      };
-      sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
-      };
-      monospace = {
-        package = pkgs.nerd-fonts.dejavu-sans-mono;
-        name = "DejaVuSansM Nerd Font Mono";
-      };
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-    };
 
     opacity = {
       applications = 0.7;
       desktop = 0.7;
       popups = 0.7;
       terminal = 0.7;
+    };
+
+    homeManagerIntegration = {
+      autoImport = true;
+      followSystem = true;
     };
 
     cursor =

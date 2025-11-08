@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
+  imports = [ inputs.tssp.nixosModules.default ];
+
   services.turing-smart-screen-python = {
     enable = true;
     stopOnSleep = true;

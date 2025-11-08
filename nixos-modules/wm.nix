@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -17,6 +18,10 @@ let
   );
 in
 {
+  imports = [
+    inputs.hyprland.nixosModules.default
+  ];
+
   config = lib.mkMerge [
     (lib.mkIf isAnyWMEnabled {
       # common wm configuration goes here
