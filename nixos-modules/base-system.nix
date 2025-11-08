@@ -2,6 +2,7 @@
 {
   imports = [
     inputs.disko.nixosModules.disko
+    inputs.stylix.nixosModules.stylix
   ]
   ++ (with ezModules; [
     agenix
