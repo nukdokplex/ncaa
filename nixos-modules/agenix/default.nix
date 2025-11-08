@@ -15,12 +15,18 @@
     agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
-        # 0643DA9F
+        identity = ./openpgp-card-0643DA9F.pub;
+        pubkey = "age1q87qln93vs9g9x4zkx2cc4v59duykng0xqdzjtjvs43qc6qqkujsq4kv3f";
+      }
+      {
+        identity = ./openpgp-card-775BC6BC.pub;
+        pubkey = "age1kahg87ws5e58zmjv9r826lsrdxcuwn99rd29pdmxsjc97gg7eu5sjxge8a";
+      }
+      {
         identity = ./fido2-0643DA9F.pub;
         pubkey = "age1shz2tstp72sk93rgtj4nwksksye9dwtmu4spt5v3a3kzg3j7r3jqawdq6d";
       }
       {
-        # 775BC6BC
         identity = ./fido2-775BC6BC.pub;
         pubkey = "age14eg3wdumvpwmsgdk3ctdkvtw43am8kq43wq4hzejzt9fqrpgggqsyzutrm";
       }
