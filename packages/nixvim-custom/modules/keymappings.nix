@@ -20,9 +20,6 @@
             # clear search results
             "<Esc>" = "<cmd>nohlsearch<CR>";
 
-            # format with lsp-format
-            "<leader>f" = "<cmd>Format<CR>";
-
             "<leader>N" = "<cmd>Yazi cwd<CR>";
             "<leader>n" = "<cmd>Yazi<CR>";
             "<leader>gi" = "<cmd>LazyGit<CR>";
@@ -60,6 +57,38 @@
     in
     (lib.nixvim.keymaps.mkKeymaps { options.silent = true; } (normal ++ visual ++ insert))
     ++ [
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        action.__raw = ''
+          function(opts)
+            return require("conform").format()
+          end
+        '';
+        key = "<A-f>";
+        options = {
+          silent = true;
+          desc = "format with conform";
+        };
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        action.__raw = ''
+          function(opts)
+            return require("conform").format()
+          end
+        '';
+        key = "<leader>f";
+        options = {
+          silent = true;
+          desc = "format with conform";
+        };
+      }
       {
         mode = "v";
         key = "<Tab>";
