@@ -17,6 +17,7 @@
       netbird-client
       syncthing
       nukdokplex
+      russian-locale
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
