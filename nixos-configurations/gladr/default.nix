@@ -23,6 +23,8 @@
       netbird-client
       nukdokplex
       russian-locale
+      nixvim
+      dev-utils
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
