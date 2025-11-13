@@ -8,6 +8,7 @@
   programs.zsh.enable = true;
   users = {
     users.nukdokplex = {
+      uid = 1000;
       name = "nukdokplex";
       isNormalUser = true;
       shell = pkgs.zsh;
