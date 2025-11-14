@@ -70,30 +70,25 @@
       options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
     }
   ];
-  home-manager.users.nukdokplex.imports = [
-    (
-      { config, lib, ... }:
-      {
-        home.file = builtins.listToAttrs (
-          builtins.map
-            (
-              name:
-              lib.nameValuePair name {
-                target = name;
-                source = config.lib.file.mkOutOfStoreSymlink "/data/archive/nukdokplex/${name}";
-              }
-            )
-            [
-              "documents"
-              "music"
-              "pictures"
-              "templates"
-              "videos"
-            ]
+  home-manager.users.nukdokplex.imports = lib.singleton (
+    { config, lib, ... }:
+    {
+      home.file =
+        {
+          documents = "/data/archive/nukdokplex/documents";
+          pictures = "/data/archive/nukdokplex/pictures";
+          templates = "/data/archive/nukdokplex/templates";
+          videos = "/data/archive/nukdokplex/videos";
+          music = "/data/downloads/music";
+        }
+        |> lib.mapAttrs (
+          name: sourcePath: {
+            source = config.lib.file.mkOutOfStoreSymlink sourcePath;
+            target = name;
+          }
         );
-      }
-    )
-  ];
+    }
+  );
 
   services.nfs.server = {
     enable = true;
@@ -101,6 +96,7 @@
     exports = ''
       /data/archive/nukdokplex 100.100.1.2/32(rw,subtree_check)
       /data/downloads/torrents 100.100.1.2/32(rw,subtree_check)
+      /data/downloads/music 100.100.1.2/32(rw,subtree_check)
     '';
   };
 
