@@ -103,7 +103,7 @@
         "network-online.target"
         "netbird-nukdokplex.service"
       ];
-      what = "100.100.1.6:/data/archive/nukdokplex/music";
+      what = "100.100.1.6:/data/downloads/music";
       where = "/home/nukdokplex/music";
       type = "nfs";
       options = "rw,noatime";
