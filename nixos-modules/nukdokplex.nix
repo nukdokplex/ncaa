@@ -7,12 +7,15 @@
 {
   programs.zsh.enable = true;
   users = {
+    groups.nukdokplex.gid = 1000;
     users.nukdokplex = {
       uid = 1000;
       name = "nukdokplex";
+      group = "nukdokplex";
       isNormalUser = true;
       shell = pkgs.zsh;
       extraGroups = [
+        "users"
         "wheel"
         "input"
         "networkmanager"
