@@ -151,6 +151,9 @@
   ]
   ++ lib'.umport {
     path = ./.;
-    exclude = [ ./default.nix ];
+    exclude = [
+      ./default.nix
+      ./startup-sound.nix
+    ];
   };
 }
