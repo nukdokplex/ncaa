@@ -1,10 +1,13 @@
 {
+
   plugins.cmp = {
     enable = true;
     autoEnableSources = true;
     settings = {
       sources = [
+        { name = "luasnip"; }
         { name = "nvim_lsp"; }
+        { name = "nvim_lsp_signature_help"; }
         { name = "path"; }
         { name = "buffer"; }
       ];
@@ -24,7 +27,7 @@
         "<C-b>" = "cmp.mapping.scroll_docs(-4)";
         "<C-f>" = "cmp.mapping.scroll_docs(4)";
 
-        "<C-Space>" = "cmp.mapping.complete()";
+        "<M-Space>" = "cmp.mapping.complete()";
 
         "<C-e>" = "cmp.mapping.abort()";
         "<CR>" = "cmp.mapping.confirm({ select = true })";
@@ -46,4 +49,5 @@
       };
     };
   };
+  plugins.cmp-nvim-lsp-signature-help.enable = true;
 }
