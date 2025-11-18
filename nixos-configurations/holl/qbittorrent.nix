@@ -9,16 +9,12 @@ in
 {
   services.qbittorrent = {
     enable = true;
-
-    user = "nukdokplex";
-    group = "users";
-
-    profileDir = "/data/downloads/torrents/.qbittorrent";
-
     openFirewall = false;
     webuiPort = 46055;
     torrentingPort = cfg.webuiPort + 1;
   };
+
+  users.users.qbittorrent.extraGroups = [ "torrent" ];
 
   services.oauth2-proxy.nginx.virtualHosts.torrent.allowed_groups = [
     "343961069196171270:admin"

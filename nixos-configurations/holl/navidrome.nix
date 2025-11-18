@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 let
   domain = "music.nukdokplex.ru";
   internalPort = 4533;
@@ -34,7 +34,7 @@ in
     };
   };
 
-  users.users.nukdokplex.extraGroups = lib.singleton config.services.navidrome.group;
+  users.users.navidrome.extraGroups = [ "music" ];
 
   services.oauth2-proxy.nginx.virtualHosts.music.allowed_groups = [
     "343961069196171270:admin"
