@@ -29,10 +29,21 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6J3TsIrfH96FYltcB56y2mACg3P5JMDK0ZDDI33NBo cardno:FFFE_775BC6BC"
       ];
 
-      hashedPasswordFile = config.age.secrets.nukdokplex-hashed-password.path;
+      hashedPasswordFile = config.age.secrets.nukdokplex-user-password-hashed.path;
     };
   };
 
-  age.secrets.nukdokplex-hashed-password.rekeyFile =
-    flakeRoot + /secrets/non-generated/common/nukdokplex-hashed-password.age;
+  age.secrets = {
+    nukdokplex-user-password = {
+      intermediary = true;
+      rekeyFile = flakeRoot + /secrets/non-generated/common/nukdokplex-user-password.age;
+    };
+    nukdokplex-user-password-hashed = {
+      rekeyFile = flakeRoot + /secrets/generated/common/nukdokplex-user-password-hashed.age;
+      generator = {
+        dependencies.password = config.age.secrets.nukdokplex-user-password;
+        script = "sha512-hashed-password";
+      };
+    };
+  };
 }
