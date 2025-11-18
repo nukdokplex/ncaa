@@ -1,7 +1,18 @@
-{ config, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   boot.loader.efi.efiSysMountPoint =
     config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
+
+  boot.supportedFilesystems.cifs = true;
+
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+  ];
 
   disko.devices = {
     disk.nixos = {
@@ -44,7 +55,7 @@
       "/tmp" = {
         fsType = "tmpfs";
         mountOptions = [
-          "size=200M"
+          "size=1G"
         ];
       };
     };
@@ -53,95 +64,109 @@
   systemd.mounts = [
     {
       name = "data-fastext.mount";
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "default.target" ];
       what = "/dev/disk/by-label/FASTEXT";
       where = "/data/fastext";
       type = "ext4";
       options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
     }
     {
-      name = "home-nukdokplex-documents.mount";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      requires = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      what = "100.100.1.6:/data/archive/nukdokplex/documents";
-      where = "/home/nukdokplex/documents";
-      type = "nfs";
-      options = "rw,noatime";
-    }
-    {
-      name = "home-nukdokplex-pictures.mount";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      requires = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      what = "100.100.1.6:/data/archive/nukdokplex/pictures";
-      where = "/home/nukdokplex/pictures";
-      type = "nfs";
-      options = "rw,noatime";
-    }
-    {
       name = "home-nukdokplex-music.mount";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      requires = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      what = "100.100.1.6:/data/downloads/music";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/music";
       where = "/home/nukdokplex/music";
-      type = "nfs";
-      options = "rw,noatime";
-    }
-    {
-      name = "home-nukdokplex-videos.mount";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      requires = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      what = "100.100.1.6:/data/archive/nukdokplex/videos";
-      where = "/home/nukdokplex/videos";
-      type = "nfs";
-      options = "rw,noatime";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.music-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
     }
     {
       name = "home-nukdokplex-torrents.mount";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      requires = [
-        "network-online.target"
-        "netbird-nukdokplex.service"
-      ];
-      what = "100.100.1.6:/data/downloads/torrents";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/torrents";
       where = "/home/nukdokplex/torrents";
-      type = "nfs";
-      options = "rw,noatime";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.torrent-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
+    }
+    {
+      name = "home-nukdokplex-archive.mount";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/nukdokplex_archive";
+      where = "/home/nukdokplex/archive";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
+    }
+    {
+      name = "home-nukdokplex-documents.mount";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/nukdokplex_archive/documents";
+      where = "/home/nukdokplex/documents";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
+    }
+    {
+      name = "home-nukdokplex-pictures.mount";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/nukdokplex_archive/pictures";
+      where = "/home/nukdokplex/pictures";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
+    }
+    {
+      name = "home-nukdokplex-videos.mount";
+      wantedBy = [ "default.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
+      what = "//10.14.88.6/nukdokplex_archive/videos";
+      where = "/home/nukdokplex/videos";
+      type = "cifs";
+      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
     }
   ];
 
-  boot.supportedFilesystems = [ "nfs" ];
-  services.rpcbind.enable = true;
+  age.secrets = {
+    music-smb-credentials.generator = {
+      dependencies.password = inputs.self.nixosConfigurations.holl.config.age.secrets.music-user-password;
+      script =
+        { deps, decrypt, ... }:
+        ''
+          cat << EOF
+          username=music
+          password=$(${decrypt} ${deps.password.file})
+          EOF
+        '';
+    };
+    torrent-smb-credentials.generator = {
+      dependencies.password =
+        inputs.self.nixosConfigurations.holl.config.age.secrets.torrent-user-password;
+      script =
+        { deps, decrypt, ... }:
+        ''
+          cat << EOF
+          username=torrent
+          password=$(${decrypt} ${deps.password.file})
+          EOF
+        '';
+    };
+    nukdokplex-smb-credentials.generator = {
+      dependencies.password =
+        inputs.self.nixosConfigurations.holl.config.age.secrets.nukdokplex-smb-user-password;
+      script =
+        { deps, decrypt, ... }:
+        ''
+          cat << EOF
+          username=nukdokplex
+          password=$(${decrypt} ${deps.password.file})
+          EOF
+        '';
+    };
+  };
 }
