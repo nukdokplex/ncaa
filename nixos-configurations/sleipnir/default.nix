@@ -52,4 +52,8 @@
     "video"
     "render"
   ];
+
+  systemd.services.sing-box.wantedBy = lib.mkForce [ ];
+
+  nix.gc.automatic = lib.mkForce false;
 }
