@@ -10,7 +10,7 @@
     lib'.umport {
       path = ./.;
       exclude = [ ./default.nix ];
-      recursive = false;
+      recursive = true;
     }
     ++ (with ezModules; [
       base-system

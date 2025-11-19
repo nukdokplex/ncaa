@@ -14,11 +14,14 @@ in
     torrentingPort = cfg.webuiPort + 1;
   };
 
-  users.users.qbittorrent.extraGroups = [ "torrent" ];
+  users.users.qbittorrent.extraGroups = [
+    "torrent"
+    "music"
+  ];
 
   services.oauth2-proxy.nginx.virtualHosts.torrent.allowed_groups = [
     "343961069196171270:admin"
-    "343961069196171270:torrent"
+    "343961069196171270:manage_torrents"
   ];
   services.nginx.virtualHosts.torrent = {
     serverName = domain.qbittorrent;
