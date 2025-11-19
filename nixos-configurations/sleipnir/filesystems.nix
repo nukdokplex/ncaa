@@ -22,6 +22,7 @@
         type = "gpt";
         partitions = {
           ESP = {
+            start = "1M";
             end = "128M";
             type = "EF00";
             content = {
@@ -33,19 +34,62 @@
             };
           };
           root = {
-            end = "-36G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-            };
-          };
-          swap = {
             size = "100%";
             content = {
-              type = "swap";
-              discardPolicy = "both";
-              resumeDevice = true;
+              type = "btrfs";
+              extraArgs = [ "-f" ];
+              subvolumes = {
+                "/rootfs" = {
+                  mountpoint = "/";
+                };
+                "/nix" = {
+                  mountOptions = [
+                    "compress=zstd:3"
+                    "noatime"
+                  ];
+                  mountpoint = "/nix";
+                };
+                "/home" = {
+                  mountOptions = [ "compress=zstd:3" ];
+                  mountpoint = "/home";
+                };
+                "/home/nukdokplex/" = { };
+                "/swap" = {
+                  mountpoint = "/.swapvolume";
+                  swap = {
+                    swapfile = {
+                      size = "36G";
+                      priority = 100;
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    disk.fastext = {
+      type = "disk";
+      device = "/dev/disk/by-id/nvme-XPG_GAMMIX_S11_Pro_2N12291H7SGC";
+      content = {
+        type = "gpt";
+        partitions = {
+          fastext = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              extraArgs = [ "-f" ];
+              subvolumes = {
+                "/games" = {
+                  mountpoint = "/data/games";
+                  mountOptions = [ "noatime" ];
+                };
+                "/vms" = {
+                  mountpoint = "/data/vms";
+                  mountOptions = [ "noatime" ];
+                };
+              };
             };
           };
         };
@@ -61,15 +105,13 @@
     };
   };
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    # limit = "250M";
+  };
+
   systemd.mounts = [
-    {
-      name = "data-fastext.mount";
-      wantedBy = [ "default.target" ];
-      what = "/dev/disk/by-label/FASTEXT";
-      where = "/data/fastext";
-      type = "ext4";
-      options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
-    }
     {
       name = "home-nukdokplex-music.mount";
       wantedBy = [ "default.target" ];
