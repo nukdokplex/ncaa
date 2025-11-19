@@ -18,6 +18,7 @@ args@{
     soteria
     brightnessctl
     wm-utils
+    pavucontrol
   ];
 
   programs.wayprompt = {

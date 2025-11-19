@@ -44,6 +44,7 @@
             "[workspace name:messaging silent] vesktop"
             "[workspace name:messaging silent] AyuGram"
             "[workspace name:music silent] supersonic"
+            "[workspace name:music silent] pavucontrol"
             "[workspace name:gaming silent] steam"
           ];
 
