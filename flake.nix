@@ -51,8 +51,6 @@
     picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
-    spicetify.inputs.nixpkgs.follows = "nixpkgs";
-    spicetify.url = "github:Gerg-L/spicetify-nix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:nix-community/stylix";
     systems.url = "github:nix-systems/default-linux";

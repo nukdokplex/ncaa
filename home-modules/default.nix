@@ -7,7 +7,6 @@
 {
   imports =
     (with inputs; [
-      spicetify.homeManagerModules.spicetify
       agenix.homeManagerModules.age
       hyprland.homeManagerModules.default
       nix-index-database.homeModules.nix-index

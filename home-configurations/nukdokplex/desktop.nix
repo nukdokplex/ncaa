@@ -25,6 +25,7 @@
         scrcpy
         wine64Packages.stagingFull
         winetricks
+        supersonic
 
         # hw keys
         yubioath-flutter

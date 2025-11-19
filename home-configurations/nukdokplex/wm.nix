@@ -43,7 +43,7 @@
             "[workspace name:video silent] vlc"
             "[workspace name:messaging silent] vesktop"
             "[workspace name:messaging silent] AyuGram"
-            "[workspace name:music silent] spotify"
+            "[workspace name:music silent] supersonic"
             "[workspace name:gaming silent] steam"
           ];
 
