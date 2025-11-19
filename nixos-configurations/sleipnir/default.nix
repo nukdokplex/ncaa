@@ -34,7 +34,7 @@
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.05";
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDrS2sugOWzdcYzL7PfkMHbhfWwReIJOyB7wo5qNcSW root@sleipnir";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ3AiuAxEAsxhsMKRXIaSKe10hi608O7UJ3vZzZdtfDB root@sleipnir";
 
   home-manager.sharedModules = lib.singleton {
     programs.gaming-essentials.enable = true;
