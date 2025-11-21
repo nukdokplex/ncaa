@@ -11,28 +11,28 @@
     home.packages =
       with pkgs;
       [
-        onlyoffice-desktopeditors
-        keepassxc
-        ayugram-desktop
-        qbittorrent
-        vlc
-        tor-browser
-        chromium
-        font-manager
-        gimp
-        shotwell
-        galculator
-        scrcpy
-        wine64Packages.stagingFull
-        winetricks
-
-        # hw keys
-        yubioath-flutter
-        openpgp-card-tools
+        ayugram-desktop # alternative telegram client
+        chromium # web browser
+        font-manager # simple gtk font manager
+        galculator # gtk calculator
+        gimp # linux photoshop
+        keepassxc # password manager
+        kid3 # id3 tag editor
+        onlyoffice-desktopeditors # office programs
+        openpgp-card-tools # work with opengpg cards (picokeys, yubikeys, etc.)
+        qbittorrent # torrent client
+        scrcpy # android remote desktop over adb
+        shotwell # image viewer
+        supersonic-wayland # subsonic music player
+        tor-browser # tor browser
+        vlc # media player
+        wine64Packages.stagingFull # wine packages
+        winetricks # Script to install DLLs needed to work around problems in Wine
+        yubioath-flutter # gui tool to manage yubikeys
       ]
       ++ lib.optional (
         pkgs.stdenv.hostPlatform.system == "x86_64-linux"
-      ) inputs.picokeys-nix.packages.x86_64-linux.pico-fido-tool;
+      ) inputs.picokeys-nix.packages.x86_64-linux.pico-fido-tool; # tool to manage pico-fido(2) keys
 
     programs.obs-studio = {
       enable = true;

@@ -14,7 +14,14 @@
     domains = [
       "nukdokplex.ru"
       "nukdotcom.ru"
+      "teanin.shop"
     ];
+
+    loginAccounts."noreply@teanin.shop" = {
+      name = "noreply@teanin.shop";
+      sendOnly = true;
+      hashedPasswordFile = config.age.secrets.noreply-teanin-mail-hashed-password.path;
+    };
 
     # email crawler resistance, maybe
     loginAccounts.${
@@ -35,7 +42,6 @@
       config.security.acme.certs.${config.networking.hostName}.directory
     }/fullchain.pem";
     keyFile = "${config.security.acme.certs.${config.networking.hostName}.directory}/key.pem";
-
   };
 
   # this services must be reloaded after cert renewal
@@ -60,5 +66,12 @@
       ++ lib.optional (cfg.certificateScheme == "acme-nginx") 80
     );
 
-  age.secrets.nukdokplex-mail-hashed-password = { };
+  age.secrets = {
+    nukdokplex-mail-hashed-password = { };
+    noreply-teanin-mail-password.generator.script = "strong-password";
+    noreply-teanin-mail-hashed-password.generator = {
+      dependencies.password = config.age.secrets.noreply-teanin-mail-password;
+      script = "mkpasswd-bcrypt";
+    };
+  };
 }

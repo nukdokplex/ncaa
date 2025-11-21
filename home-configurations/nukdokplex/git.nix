@@ -2,12 +2,16 @@
 {
   programs.git = {
     enable = true;
-    userName = "nukdokplex";
-    userEmail = "nukdokplex@nukdokplex.ru";
+    settings = {
+      user = {
+        name = "nukdokplex";
+        email = "nukdokplex@nukdokplex.ru";
+      };
+    };
     signing = {
       format = "openpgp";
       signByDefault = true;
-      key = config.programs.git.userEmail;
+      key = config.programs.git.settings.user.email;
     };
   };
 

@@ -22,11 +22,11 @@
           betterSettings.enable = true;
           betterUploadButton.enable = true;
           biggerStreamPreview.enable = true;
-          blurNSFW.enable = true;
+          blurNsfw.enable = true;
           callTimer.enable = true;
-          clearURLs.enable = true;
+          clearUrLs.enable = true;
           copyFileContents.enable = true;
-          copyUserURLs.enable = true;
+          copyUserUrLs.enable = true;
           ctrlEnterSend.enable = true;
           experiments.enable = true;
           fakeNitro.enable = true;

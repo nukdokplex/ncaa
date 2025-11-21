@@ -76,6 +76,25 @@ in
 
     netbird-datastore-encryption-key =
       { pkgs, lib, ... }: "'${lib.getExe pkgs.openssl}' rand -base64 32";
+
+    sha512-hashed-password =
+      {
+        pkgs,
+        lib,
+        decrypt,
+        deps,
+        ...
+      }:
+      ''${decrypt} ${deps.password.file} | ${lib.getExe pkgs.openssl} passwd -6 -stdin'';
+    mkpasswd-bcrypt =
+      {
+        pkgs,
+        deps,
+        decrypt,
+        lib,
+        ...
+      }:
+      ''${decrypt} ${lib.escapeShellArg deps.password.file} | ${lib.getExe pkgs.mkpasswd} -sm bcrypt'';
   }
   // (lib.pipe
     [

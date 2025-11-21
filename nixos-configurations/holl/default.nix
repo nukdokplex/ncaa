@@ -2,6 +2,7 @@
   lib',
   ezModules,
   config,
+  lib,
   ...
 }:
 {
@@ -9,7 +10,7 @@
     lib'.umport {
       path = ./.;
       exclude = [ ./default.nix ];
-      recursive = false;
+      recursive = true;
     }
     ++ (with ezModules; [
       base-system
@@ -29,4 +30,6 @@
 
   users.users.root.openssh.authorizedKeys.keys =
     config.users.users.nukdokplex.openssh.authorizedKeys.keys;
+
+  systemd.services.sing-box.wantedBy = lib.mkForce [ ];
 }

@@ -90,16 +90,68 @@
     }
   );
 
-  services.nfs.server = {
+  services.samba = {
     enable = true;
-    nproc = 8;
-    exports = ''
-      /data/archive/nukdokplex 100.100.1.2/32(rw,subtree_check)
-      /data/downloads/torrents 100.100.1.2/32(rw,subtree_check)
-      /data/downloads/music 100.100.1.2/32(rw,subtree_check)
-    '';
+    nmbd.enable = false;
+    settings = {
+      global = {
+        "browseable" = "no";
+        "create mask" = "0640";
+        "directory mask" = "750";
+        "guest account" = "nobody";
+        "guest ok" = "no";
+        "hosts allow" = "0.0.0.0/0";
+        "read only" = "no";
+        "security" = "user";
+        "server string" = "SERVER";
+        "smb encrypt" = "required";
+        "workgroup" = "WORKGROUP";
+        "writeable" = "yes";
+      };
+      music = {
+        "path" = "/data/downloads/music";
+        "guest ok" = "no";
+        "valid users" = "@music";
+        "create mask" = "0664";
+        "directory mask" = "2775";
+      };
+      torrents = {
+        "path" = "/data/downloads/torrents";
+        "guest ok" = "no";
+        "valid users" = "@torrent";
+        "create mask" = "0664";
+        "directory mask" = "2775";
+      };
+      nukdokplex_archive = {
+        "path" = "/data/archive/nukdokplex";
+        "guest ok" = "no";
+        "valid users" = "@nukdokplex";
+        "create mask" = "0640";
+        "directory mask" = "0750";
+      };
+    };
   };
 
-  networking.nftables.firewall.rules.open-ports-trusted.allowedTCPPorts =
-    lib.optional config.services.nfs.server.enable 2049;
+  systemd.tmpfiles.rules = [
+    # type path mode user group age argument
+    "d /data/downloads/torrents 2775 qbittorrent torrent - -"
+    "A /data/downloads/torrents - - - - group:torrent:rwx"
+    "A+ /data/downloads/torrents - - - - default:group:torrent:rwx"
+
+    "d /data/downloads/music 2775 navidrome music - -"
+    "A /data/downloads/music - - - - group:music:rwx"
+    "A+ /data/downloads/music - - - - default:group:music:rwx"
+  ];
+
+  networking.nftables.firewall.rules.open-ports-uplink = {
+    allowedTCPPorts = [
+      139
+      445
+    ];
+    allowedUDPPorts = [
+      137
+      138
+    ];
+  };
+
 }
