@@ -22,14 +22,14 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     hy3.inputs.hyprland.follows = "hyprland";
-    hy3.url = "github:outfoxxed/hy3?ref=hl0.51.0";
+    hy3.url = "github:outfoxxed/hy3?ref=hl0.52.0";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=d0d8e8dd5b6c8e7f82b262584b26d07cb0223df9";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=v0.52.0";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.inputs.pre-commit-hooks.follows = "";
     hyprland.inputs.systems.follows = "systems";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.51.1";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.52.1";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";
@@ -48,7 +48,7 @@
     nur.inputs.flake-parts.follows = "flake-parts";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
-    picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=dev";
+    picokeys-nix.url = "github:ViZiD/picokeys-nix?ref=36ec5635d5b2ddb88f68d6e251b56cc4b81a38b0";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
