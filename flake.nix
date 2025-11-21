@@ -31,7 +31,7 @@
     hyprland.inputs.systems.follows = "systems";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.52.1";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
+    lanzaboote.inputs.pre-commit.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.url = "github:nix-community/nix-index-database";
