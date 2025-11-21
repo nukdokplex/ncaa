@@ -7,7 +7,6 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
-    noto-fonts-extra
     nerd-fonts.symbols-only
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.iosevka-term
@@ -27,7 +26,7 @@
       name = "DejaVuSansM Nerd Font Mono";
     };
     emoji = {
-      package = pkgs.noto-fonts-emoji;
+      package = pkgs.noto-fonts-color-emoji;
       name = "Noto Color Emoji";
     };
   };
