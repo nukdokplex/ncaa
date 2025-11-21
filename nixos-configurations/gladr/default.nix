@@ -23,6 +23,7 @@
       netbird-client
       nukdokplex
       russian-locale
+      epson-l120-shared-printer
       nixvim
       dev-utils
     ]);

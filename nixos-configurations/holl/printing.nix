@@ -1,7 +1,17 @@
-{ pkgs, ... }:
 {
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ epson_201207w ];
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [ epson_201207w ];
+    openFirewall = false;
+    listenAddresses = [ "*:631" ];
+    allowFrom = [ "all" ];
+  };
 
   hardware.printers.ensurePrinters = [
     {
@@ -12,4 +22,7 @@
       # l110 printer drivers are compatible with l120 drvers just because they are using same filter program. also l110 drivers bring a bit more types of paper available than l120
     }
   ];
+
+  networking.nftables.firewall.rules.open-ports-trusted.allowedTCPPorts =
+    lib.optional config.services.printing.enable 631;
 }
