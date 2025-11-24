@@ -29,6 +29,7 @@
       #      epson-l120-shared-printer
       nixvim
       dev-utils
+      flatpak
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
