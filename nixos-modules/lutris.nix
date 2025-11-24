@@ -2,10 +2,11 @@
 {
   environment.systemPackages = [
     (pkgs.lutris.override {
-      steamSupport = false;
+      steamSupport = true;
       extraPkgs =
         pkgs: with pkgs; [
           wineWowPackages.stableFull
+          winetricks
           libgudev
           libvdpau
           libusb1
