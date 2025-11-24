@@ -33,6 +33,9 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.pre-commit.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";
+    nix-bwrapper.inputs.nuschtosSearch.follows = "";
+    nix-bwrapper.inputs.treefmt-nix.follows = "";
+    nix-bwrapper.url = "github:Naxdy/nix-bwrapper";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
@@ -112,6 +115,7 @@
                 lib-custom
                 overrides
                 imports
+                inputs.nix-bwrapper.overlays.default
                 # do not use pkgs overlay, you will encounter infinite recursion
               ];
             };

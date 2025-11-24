@@ -1,8 +1,9 @@
 { inputs, ... }:
 {
-  nixpkgs.overlays = with inputs.self.outputs.overlays; [
-    packages
-    overrides
-    imports
+  nixpkgs.overlays = [
+    inputs.self.outputs.overlays.packages
+    inputs.self.outputs.overlays.overrides
+    inputs.self.outputs.overlays.imports
+    inputs.nix-bwrapper.overlays.default
   ];
 }
