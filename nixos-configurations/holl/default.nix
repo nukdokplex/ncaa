@@ -3,6 +3,7 @@
   ezModules,
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -32,4 +33,8 @@
     config.users.users.nukdokplex.openssh.authorizedKeys.keys;
 
   systemd.services.sing-box.wantedBy = lib.mkForce [ ];
+
+  environment.systemPackages = with pkgs; [
+    unflac # used to unpack image+.cue music releases
+  ];
 }
