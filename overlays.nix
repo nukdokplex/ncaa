@@ -50,6 +50,15 @@
     };
 
     overrides = _: prev: {
+      qbittorrent-nox = prev.qbittorrent-nox.overrideAttrs (finalAttrs: {
+        version = "5.1.4";
+        src = prev.fetchFromGitHub {
+          owner = "qbittorrent";
+          repo = "qBittorrent";
+          rev = "release-${finalAttrs.version}";
+          hash = "sha256-9RfKir/e+8Kvln20F+paXqtWzC3KVef2kNGyk1YpSv4=";
+        };
+      });
       statix = prev.statix.overrideAttrs (_o: rec {
         src = prev.fetchFromGitHub {
           owner = "oppiliappan";
