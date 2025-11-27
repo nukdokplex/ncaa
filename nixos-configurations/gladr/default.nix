@@ -17,7 +17,6 @@
       email-passwords
       dyndns
       acme
-      sing-box-client
       syncthing
       gaming
       netbird-client
