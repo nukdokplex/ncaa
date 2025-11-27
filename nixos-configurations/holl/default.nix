@@ -2,7 +2,6 @@
   lib',
   ezModules,
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -15,7 +14,6 @@
     }
     ++ (with ezModules; [
       base-system
-      sing-box-client
       netbird-client
       syncthing
       nukdokplex
@@ -31,8 +29,6 @@
 
   users.users.root.openssh.authorizedKeys.keys =
     config.users.users.nukdokplex.openssh.authorizedKeys.keys;
-
-  systemd.services.sing-box.wantedBy = lib.mkForce [ ];
 
   environment.systemPackages = with pkgs; [
     unflac # used to unpack image+.cue music releases

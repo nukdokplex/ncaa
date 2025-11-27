@@ -20,7 +20,6 @@
       email-passwords
       dyndns
       acme
-      sing-box-client
       syncthing
       gaming
       netbird-client
@@ -53,8 +52,6 @@
     "video"
     "render"
   ];
-
-  systemd.services.sing-box.wantedBy = lib.mkForce [ ];
 
   nix.gc.automatic = lib.mkForce false;
 }
