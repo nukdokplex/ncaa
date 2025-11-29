@@ -29,6 +29,7 @@
       nixvim
       dev-utils
       flatpak
+      dnscrypt
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
