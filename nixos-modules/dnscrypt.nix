@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   services.dnscrypt-proxy = {
     enable = true;
@@ -41,4 +42,5 @@
   };
 
   networking.nameservers = [ "127.0.0.69" ];
+  services.resolved.fallbackDns = lib.mkBefore [ "127.0.0.69" ];
 }
