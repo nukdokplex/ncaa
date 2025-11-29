@@ -6,58 +6,80 @@ let
     sso = "sso.${root}";
   };
   port = 29375;
+  realm = "nukdokplex";
 in
 {
-  services.oauth2-proxy = {
-    enable = true;
+  services = {
+    oauth2-proxy = {
+      enable = true;
 
-    reverseProxy = true;
-    httpAddress = "http://[::1]:${toString port}";
+      reverseProxy = true;
+      httpAddress = "http://[::1]:${toString port}";
 
-    nginx = {
-      domain = domain.oauth2-proxy;
-      proxy = config.services.oauth2-proxy.httpAddress;
+      nginx = {
+        domain = domain.oauth2-proxy;
+        proxy = config.services.oauth2-proxy.httpAddress;
+      };
+
+      provider = "keycloak-oidc";
+      oidcIssuerUrl = "https://${domain.sso}/realms/${realm}";
+      redirectURL = "https://${domain.oauth2-proxy}/oauth2/callback";
+      email.domains = [ "*" ];
+      cookie = {
+        domain = ".${domain.root}";
+        secure = true;
+      };
+      keyFile = config.age.secrets.oauth2-proxy-secrets-env.path;
+      extraConfig = {
+        client-id = "oauth2-proxy";
+        skip-provider-button = true;
+        code-challenge-method = "S256";
+        provider-display-name = "Keycloak";
+        whitelist-domain = [ "*.nukdokplex.ru" ];
+        session-store-type = "redis";
+        redis-connection-url = "unix://${config.services.redis.servers.oauth2-proxy.unixSocket}";
+        # skip-jwt-bearer-tokens = true;
+      };
+      setXauthrequest = true;
+      passAccessToken = true;
     };
 
-    provider = "oidc";
-    oidcIssuerUrl = "https://${domain.sso}";
-    redirectURL = "https://${domain.oauth2-proxy}/oauth2/callback";
-    email.domains = [ "*" ];
-    cookie = {
-      domain = ".${domain.root}";
-      secure = true;
+    redis.servers.oauth2-proxy = {
+      enable = true;
+      unixSocketPerm = 660;
+      group = "oauth2-proxy";
     };
-    keyFile = config.age.secrets.oauth2-proxy-secrets-env.path;
-    extraConfig = {
-      client-id = "343961469550942214";
-      user-id-claim = "sub";
-      skip-provider-button = true;
-      code-challenge-method = "S256";
-      provider-display-name = "ZITADEL";
-      whitelist-domain = [ "*.nukdokplex.ru" ];
-      skip-jwt-bearer-tokens = true;
-      oidc-groups-claim = "oauth2-proxy:groups"; # claim added by zitadel action
+
+    nginx.virtualHosts.${config.services.oauth2-proxy.nginx.domain} = {
+      serverName = domain.oauth2-proxy;
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://[::1]:${toString port}";
+        proxyWebsockets = true;
+      };
     };
-    setXauthrequest = true;
-    passAccessToken = true;
   };
 
-  services.nginx.virtualHosts.${config.services.oauth2-proxy.nginx.domain} = {
-    serverName = domain.oauth2-proxy;
-    forceSSL = true;
-    enableACME = true;
-    locations."/" = {
-      proxyPass = "http://[::1]:${toString port}";
-      proxyWebsockets = true;
+  systemd.services.oauth2-proxy = {
+    after = [ "redis-oauth2-proxy.service" ];
+    # Don't give up trying to start oauth2-proxy, even if keycloak isn't up yet
+    # https://gist.github.com/benley/78a5e84c52131f58d18319bf26d52cda
+    startLimitIntervalSec = 0;
+    serviceConfig = {
+      RestartSec = 1;
     };
   };
 
   age.secrets = {
     oauth2-proxy-cookie-secret = {
+      intermediary = true;
       generator.script =
         { pkgs, lib, ... }: "${lib.getExe pkgs.openssl} rand -base64 32 | tr -- '+/' '-_'";
     };
-    oauth2-proxy-client-secret = { };
+    oauth2-proxy-client-secret = {
+      intermediary = true;
+    };
     oauth2-proxy-secrets-env = {
       generator = {
         dependencies = {

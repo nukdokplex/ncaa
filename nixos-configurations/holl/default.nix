@@ -9,7 +9,10 @@
   imports =
     lib'.umport {
       path = ./.;
-      exclude = [ ./default.nix ];
+      exclude = [
+        ./default.nix
+        ./netbird.nix
+      ];
       recursive = true;
     }
     ++ (with ezModules; [

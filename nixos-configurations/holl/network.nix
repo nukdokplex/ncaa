@@ -33,7 +33,7 @@ in
   };
 
   services.fail2ban = {
-    enable = true;
+    enable = false;
     banaction = "nftables-multiport";
     banaction-allports = "nftables-allports";
   };
