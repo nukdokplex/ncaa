@@ -4,5 +4,6 @@
     via
     k3b-custom
     xray
+    oauth2-proxy-nginx
   ];
 }
