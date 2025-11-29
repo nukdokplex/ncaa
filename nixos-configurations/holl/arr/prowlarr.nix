@@ -23,9 +23,8 @@
     };
 
     oauth2-proxy.nginx.virtualHosts.prowlarr = {
-      allowed_groups = [
-        "343961069196171270:admin"
-        "343961069196171270:manage_music"
+      allowed_roles = [
+        "oauth2-proxy:manage-torrents"
       ];
     };
   };

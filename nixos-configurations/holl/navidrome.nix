@@ -36,9 +36,8 @@ in
 
   users.users.navidrome.extraGroups = [ "music" ];
 
-  services.oauth2-proxy.nginx.virtualHosts.music.allowed_groups = [
-    "343961069196171270:admin"
-    "343961069196171270:music"
+  services.oauth2-proxy.nginx.virtualHosts.music.allowed_roles = [
+    "oauth2-proxy:admin"
   ];
 
   services.nginx.virtualHosts.music = {
