@@ -10,7 +10,10 @@
   imports =
     lib'.umport {
       path = ./.;
-      exclude = [ ./default.nix ];
+      exclude = [
+        ./default.nix
+        ./xray.nix
+      ];
       recursive = false;
     }
     ++ (with ezModules; [
