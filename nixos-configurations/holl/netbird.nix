@@ -1,7 +1,10 @@
 { config, lib, ... }:
 let
   ssoDomain = "sso.nukdokplex.ru";
-  clientId = "339513160329418758";
+  backendClientId = "netbird-backend";
+  authClientId = "netbird-client";
+  realm = "nukdokplex";
+  cfg = config.services.netbird.server;
 in
 {
   services.netbird.server = {
@@ -26,43 +29,90 @@ in
       enable = true;
       enableNginx = true;
       settings = {
-        # Endpoints
-        #   NETBIRD_MGMT_API_ENDPOINT="https://netbird.nukdokplex.ru:33073";
-        #   NETBIRD_MGMT_GRPC_API_ENDPOINT="https://netbird.nukdokplex.ru:33073";
-
-        # OIDC
-        AUTH_AUDIENCE = clientId;
-        AUTH_CLIENT_ID = clientId;
+        AUTH_AUDIENCE = authClientId;
+        AUTH_CLIENT_ID = authClientId;
         AUTH_CLIENT_SECRET = "";
-        AUTH_AUTHORITY = "https://${ssoDomain}";
+        AUTH_AUTHORITY = "https://${ssoDomain}/realms/${realm}";
         USE_AUTH0 = false;
         AUTH_SUPPORTED_SCOPES = "openid profile email offline_access api";
         AUTH_REDIRECT_URI = "/#callback";
         AUTH_SILENT_REDIRECT_URI = "/#silent-callback";
         NETBIRD_TOKEN_SOURCE = "accessToken";
-
-        # SSL
-        #   NGINX_SSL_PORT=443
-
-        # Letsencrypt
-        #   LETSENCRYPT_DOMAIN=
-        #   LETSENCRYPT_EMAIL=
       };
     };
 
     management = {
       enableNginx = true;
       port = 23461;
-      oidcConfigEndpoint = "https://${ssoDomain}/.well-known/openid-configuration";
+      oidcConfigEndpoint = "https://${ssoDomain}/realms/${realm}/.well-known/openid-configuration";
+      disableSingleAccountMode = true;
+      disableAnonymousMetrics = true;
+      dnsDomain = "ndp.local";
 
       settings = {
         DataStoreEncryptionKey._secret = config.age.secrets.netbird-datastore-encryption-key.path;
+        Stuns = [
+          {
+            Proto = "udp";
+            URI = "stun:${cfg.coturn.domain}:3478";
+            Username = "";
+            Password = null;
+          }
+        ];
+        TURNConfig = {
+          Turns = [
+            {
+              Proto = "udp";
+              URI = "turn:${cfg.coturn.domain}:3478";
+              Username = "netbird";
+              Password._secret = config.age.secrets.netbird-coturn-password.path;
+            }
+          ];
+          CredentialsTTL = "12h";
+          Secret._secret = config.age.secrets.netbird-coturn-salt.path;
+        };
+        # Relay = { };
+        # Signal = { }; # managed by nixos module
+        DisableDefaultPolicy = false;
+        StoreConfig = {
+          Engine = "postgres";
+        };
+        HttpConfig = {
+          # managed by nixos
+          # Address = "0.0.0.0:33073";
+          AuthAudience = authClientId;
+          AuthIssuer = "https://${ssoDomain}/realms/${realm}";
+          AuthKeysLocation = "https://${ssoDomain}/realms/${realm}/protocol/openid-connect/certs";
+          AuthUserIDClaim = "";
+          CertFile = "";
+          CertKey = "";
+          IdpSignKeyRefreshEnabled = false;
+          OIDCConfigEndpoint = cfg.management.oidcConfigEndpoint;
+        };
+        IdpManagerConfig = {
+          ManagerType = "keycloak";
+          ClientConfig = {
+            Issuer = "https://${ssoDomain}/realms/${realm}";
+            TokenEndpoint = "https://${ssoDomain}/realms/${realm}/protocol/openid-connect/token";
+            ClientID = backendClientId;
+            ClientSecret._secret = config.age.secrets.netbird-backend-client-secret.path;
+            GrantType = "client_credentials";
+          };
+          ExtraConfig = {
+            AdminEndpoint = "https://${ssoDomain}/admin/realms/${realm}";
+            ManagementEndpoint = "https://${ssoDomain}/management/v1";
+          };
+          Auth0ClientCredentials = null;
+          AzureClientCredentials = null;
+          KeycloakClientCredentials = null;
+          ZitadelClientCredentials = null;
+        };
         DeviceAuthorizationFlow = {
           Provider = "hosted";
           ProviderConfig = {
-            Audience = clientId;
+            Audience = authClientId;
             AuthorizationEndpoint = "";
-            ClientID = clientId;
+            ClientID = authClientId;
             ClientSecret = "";
             DeviceAuthEndpoint = "https://${ssoDomain}/oauth/v2/device_authorization";
             Domain = "";
@@ -72,95 +122,58 @@ in
             UseIDToken = false;
           };
         };
-        DisableDefaultPolicy = false;
-        HttpConfig = {
-          # managed by nixos
-          # Address = "0.0.0.0:33073";
-          AuthAudience = clientId;
-          AuthIssuer = "https://${ssoDomain}";
-          AuthKeysLocation = "https://${ssoDomain}/oauth/v2/keys";
-          AuthUserIDClaim = "";
-          CertFile = "";
-          CertKey = "";
-          IdpSignKeyRefreshEnabled = true;
-          OIDCConfigEndpoint = "https://${ssoDomain}/.well-known/openid-configuration";
-        };
-        IdpManagerConfig = {
-          Auth0ClientCredentials = null;
-          AzureClientCredentials = null;
-          ClientConfig = {
-            ClientID = "netbird";
-            ClientSecret._secret = config.age.secrets.netbird-backend-client-secret.path;
-            GrantType = "client_credentials";
-            Issuer = "https://${ssoDomain}";
-            TokenEndpoint = "https://${ssoDomain}/oauth/v2/token";
-          };
-          ExtraConfig = {
-            ManagementEndpoint = "https://${ssoDomain}/management/v1";
-          };
-          KeycloakClientCredentials = null;
-          ManagerType = "zitadel";
-          ZitadelClientCredentials = null;
-        };
         PKCEAuthorizationFlow = {
           ProviderConfig = {
-            Audience = clientId;
-            AuthorizationEndpoint = "https://${ssoDomain}/oauth/v2/authorize";
-            ClientID = clientId;
+            Audience = authClientId;
+            ClientID = authClientId;
             ClientSecret = "";
-            DisablePromptLogin = false;
             Domain = "";
-            LoginFlag = 0;
-            RedirectURLs = [ "http://localhost:53000" ];
-            Scope = "openid profile email offline_access api";
+            AuthorizationEndpoint = "https://${ssoDomain}/oauth/v2/authorize";
             TokenEndpoint = "https://${ssoDomain}/oauth/v2/token";
+            Scope = "openid profile email offline_access api";
+            RedirectURLs = [ "http://localhost:53000" ];
             UseIDToken = false;
+            DisablePromptLogin = false;
+            LoginFlag = 0;
           };
-        };
-        TURNConfig = {
-          Secret._secret = config.age.secrets.netbird-coturn-salt.path;
-
-          Turns = [
-            {
-              Proto = "udp";
-              URI = "turn:${config.services.netbird.server.coturn.domain}:3478";
-              Username = config.services.netbird.server.coturn.user;
-              Password._secret = config.age.secrets.netbird-coturn-password.path;
-            }
-          ];
         };
       };
     };
   };
 
+  services.postgresql = {
+    ensureUsers = lib.singleton {
+      name = "netbird";
+      ensureDBOwnership = true;
+    };
+    ensureDatabases = lib.singleton "netbird";
+  };
+
+  systemd.services.netbird-management = {
+    after = [
+      "nginx.service"
+      "network-online.target"
+      "keycloak.service"
+    ];
+    requires = [
+      "network-online.target"
+      "keycloak.service"
+      "nginx.service"
+      "postgresql.service"
+    ];
+    serviceConfig = {
+      EnvironmentFile = config.age.secrets.netbird-pgsql-dsn.path;
+    };
+  };
+
   networking.nftables.firewall.rules.open-ports-uplink = {
-    allowedTCPPorts = lib.optionals (
-      config.services.netbird.server.enable && config.services.netbird.server.coturn.enable
-    ) config.services.netbird.server.coturn.openPorts;
-    allowedUDPPorts = lib.optionals (
-      config.services.netbird.server.enable && config.services.netbird.server.coturn.enable
-    ) config.services.netbird.server.coturn.openPorts;
+    allowedTCPPorts = cfg.coturn.openPorts;
+    allowedUDPPorts = cfg.coturn.openPorts;
   };
 
   services.nginx.virtualHosts.${config.services.netbird.server.domain} = {
     forceSSL = true;
     enableACME = true;
-  };
-
-  # make netbird-management start in the right moment of time at startup
-  systemd.services.netbird-management = {
-    after = [
-      "dnscrypt-proxy2.service"
-      "nginx.service"
-      "sing-box.service"
-      "network-online.target"
-      "zitadel.service"
-    ];
-    requires = [
-      "network-online.target"
-      "zitadel.service"
-      "nginx.service"
-    ];
   };
 
   age.secrets = {
@@ -169,8 +182,34 @@ in
       owner = "turnserver";
       group = "turnserver";
     };
-    netbird-coturn-salt.generator.script = "strong-password";
-    netbird-datastore-encryption-key.generator.script = "netbird-datastore-encryption-key";
-    netbird-backend-client-secret = { };
+    netbird-coturn-salt = {
+      generator.script = "strong-password";
+    };
+    netbird-backend-client-secret = {
+    };
+    netbird-database-password = {
+      intermediary = true;
+      generator.script = "strong-password";
+    };
+    netbird-pgsql-dsn = {
+      generator = {
+        dependencies = {
+          password = config.age.secrets.netbird-database-password;
+        };
+        script =
+          {
+            lib,
+            decrypt,
+            deps,
+            ...
+          }:
+          ''
+            echo "NETBIRD_STORE_ENGINE_POSTGRES_DSN=\"host=::1 user=netbird password=$(${decrypt} ${lib.escapeShellArg deps.password.file}) dbname=netbird  port=5432\""
+          '';
+      };
+    };
+    netbird-datastore-encryption-key = {
+      generator.script = { pkgs, lib, ... }: "'${lib.getExe pkgs.openssl}' rand -base64 32";
+    };
   };
 }

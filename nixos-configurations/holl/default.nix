@@ -11,7 +11,6 @@
       path = ./.;
       exclude = [
         ./default.nix
-        ./netbird.nix
       ];
       recursive = true;
     }
