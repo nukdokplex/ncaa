@@ -105,6 +105,32 @@
     };
   };
 
+  services.snapper = {
+    cleanupInterval = "1d";
+    persistentTimer = true;
+    filters = ''
+      /home/nukdokplex/.snapshots
+    '';
+    configs = {
+      home-nukdokplex = {
+        FSTYPE = "btrfs";
+        SUBVOLUME = "/home/nukdokplex";
+        ALLOW_USERS = [ "nukdokplex" ];
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        TIMELINE_LIMIT_YEARLY = 0;
+        TIMELINE_LIMIT_QUARTERLY = 4;
+        TIMELINE_LIMIT_MONTHLY = 3;
+        TIMELINE_LIMIT_DAILY = 12;
+        TIMELINE_LIMIT_HOURLY = 0;
+      };
+    };
+  };
+
+  systemd.tmpfiles.rules = [
+    "v /home/nukdokplex/.snapshots 0770 root root"
+  ];
+
   services.btrfs.autoScrub = {
     enable = true;
     interval = "weekly";

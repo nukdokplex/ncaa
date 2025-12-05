@@ -17,6 +17,7 @@
     inotify-tools
     jq
     libwebp
+    net-tools
     nix-index
     nix-search-cli
     nixpkgs-fmt

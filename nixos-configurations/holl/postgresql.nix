@@ -15,7 +15,7 @@
 
     authentication = ''
       # TYPE  DATABASE  USER  ADDRESS  METHOD
-      local   all       all            peer
+      local   all       all            ident
       host    all       all   all      scram-sha-256
     '';
   };
