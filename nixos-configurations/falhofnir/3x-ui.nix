@@ -44,7 +44,6 @@
 
   networking.nftables.firewall.rules.open-ports-uplink = {
     allowedTCPPorts = [
-      2053 # dashboard
       46266 # xhttp
       444 # whoami
       443 # vless-reality
