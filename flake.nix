@@ -29,7 +29,7 @@
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.inputs.pre-commit-hooks.follows = "";
     hyprland.inputs.systems.follows = "systems";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.52.1";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.52.2";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.pre-commit.follows = "";
     lanzaboote.url = "github:nix-community/lanzaboote";
