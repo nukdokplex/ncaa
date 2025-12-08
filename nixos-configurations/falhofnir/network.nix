@@ -4,7 +4,7 @@
   ...
 }:
 let
-  uplinkMACAddress = "00:16:3c:63:bd:c6";
+  uplinkMACAddress = "00:16:3c:46:7a:e9";
 in
 {
   networking.nftables.firewall.snippets.nnf-dhcpv6.enable = lib.mkForce false;
@@ -35,25 +35,25 @@ in
     interfaces.uplink0 = {
       ipv4 = {
         addresses = lib.singleton {
-          address = "188.253.26.208";
+          address = "185.22.175.149";
           prefixLength = 24;
         };
       };
       ipv6 = {
         addresses = lib.singleton {
-          address = "2a0c:16c2:500:663:216:3cff:fe63:bdc6";
+          address = "2a0c:16c0:515:d0c:1a26:66ff:fe45:23bd";
           prefixLength = 48;
         };
       };
     };
 
     defaultGateway = {
-      address = "188.253.26.1";
+      address = "185.22.175.1";
       interface = "uplink0";
     };
 
     defaultGateway6 = {
-      address = "2a0c:16c2:500::1";
+      address = "2a0c:16c0:515::1";
       interface = "uplink0";
     };
 

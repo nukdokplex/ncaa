@@ -13,6 +13,8 @@
       exclude = [
         ./default.nix
         ./xray.nix
+        ./sing-box.nix
+        ./wireguard.nix
       ];
       recursive = false;
     }
