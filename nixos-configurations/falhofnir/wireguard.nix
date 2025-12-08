@@ -52,7 +52,10 @@
           from = [ "awg" ];
           to = [ config.networking.nftables.firewall.localZoneName ];
           allowedUDPPorts = [
-            21061 # xray tunnel
+            21061 # socks
+          ];
+          allowedTCPPorts = [
+            21061 # socks
           ];
         };
 

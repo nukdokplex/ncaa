@@ -4,8 +4,8 @@
     gnutar
     gzip
     p7zip
-    rar
-    unrar
+    # rar
+    # unrar
     unzip
     zip
     zstd
