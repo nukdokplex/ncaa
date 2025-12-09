@@ -19,6 +19,7 @@ in
     bandwidth = 156000;
     sslKey = "${sslcfg.directory}/key.pem";
     sslCert = "${sslcfg.directory}/cert.pem";
+    clientCertRequired = true;
   };
 
   networking.nftables.firewall.rules.open-ports-uplink = {
