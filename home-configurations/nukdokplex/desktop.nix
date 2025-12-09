@@ -29,6 +29,7 @@
         wine64Packages.stagingFull # wine packages
         winetricks # Script to install DLLs needed to work around problems in Wine
         yubioath-flutter # gui tool to manage yubikeys
+        mumble
       ]
       ++ lib.optional (
         pkgs.stdenv.hostPlatform.system == "x86_64-linux"
