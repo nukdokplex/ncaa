@@ -23,8 +23,8 @@
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber#sink"
-          "wireplumber#source"
+          "pulseaudio#sink"
+          "pulseaudio#source"
           "custom/notifications"
           "tray"
           "hyprland/language"
@@ -43,8 +43,8 @@
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber#sink"
-          "wireplumber#source"
+          "pulseaudio#sink"
+          "pulseaudio#source"
           "custom/notifications"
           "tray"
           "sway/language"
@@ -64,8 +64,8 @@
         modules-right = [
           "clock"
           "idle_inhibitor"
-          "wireplumber#sink"
-          "wireplumber#source"
+          "pulseaudio#sink"
+          "pulseaudio#source"
           "custom/notifications"
           "tray"
           "niri/language"
@@ -191,21 +191,35 @@
           icon-size = 24;
           spacing = 6;
         };
-        "wireplumber#sink" = {
+        "pulseaudio#sink" = {
           format = "vol\n{volume:03d}";
+          format-bluetooth = "bth\n{volume:03d}";
+          format-muted = "vol\nmut";
+
           max-volume = 150;
-          on-click = "'${lib.getExe pkgs.pavucontrol}'";
-          node-type = "Audio/Sink";
+
+          on-click = lib.getExe pkgs.pavucontrol;
+          on-click-middle = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          on-scroll-up = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+";
+          on-scroll-down = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-";
+
           tooltip = true;
-          tooltip-format = "{volume}% {node_name}";
+          tooltip-format = "{volume}% {desc}";
         };
-        "wireplumber#source" = {
-          format = "mic\n{volume:03d}";
+        "pulseaudio#source" = {
+          format = "{format_source}";
+          format-source = "mic\n{volume:03d}";
+          format-source-muted = "mic\nmut";
+
           max-volume = 150;
-          on-click = "'${lib.getExe pkgs.pavucontrol}'";
-          node-type = "Audio/Source";
+
+          on-click = lib.getExe pkgs.pavucontrol;
+          on-click-middle = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+          on-scroll-up = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 1%+";
+          on-scroll-down = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 1%-";
+
           tooltip = true;
-          tooltip-format = "{volume}% {node_name}";
+          tooltip-format = "{volume}% {desc}";
         };
       };
     });
