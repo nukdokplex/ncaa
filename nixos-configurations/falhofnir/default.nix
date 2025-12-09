@@ -26,9 +26,9 @@
     ]);
 
   time.timeZone = "Europe/Amsterdam";
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKe9E7Kw34WZQl7T0MluQd3tKvdhNvEcvDJa9Zr3hJWv root@falhofnir";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWHEtir/gfekSJdakG6ai2i/wImviQifNV3eVv431T4 root@falhofnir";
 
   users.users.root.openssh.authorizedKeys.keys =
     config.users.users.nukdokplex.openssh.authorizedKeys.keys;
