@@ -15,7 +15,6 @@
     }
     ++ (with ezModules; [
       base-system
-      acme
       nukdokplex
     ]);
 
