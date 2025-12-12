@@ -7,15 +7,6 @@ let
 in
 {
   age.generators = {
-    mail-hashed-password =
-      {
-        pkgs,
-        lib,
-        file,
-        ...
-      }:
-      "'${lib.getExe pkgs.pwgen}' -s 32 1 | '${lib.getExe' pkgs.coreutils "tee"}' ${lib.escapeShellArg (lib.removeSuffix ".age" file)} | '${lib.getExe pkgs.mkpasswd}' -sm bcrypt";
-
     wireguard-priv =
       {
         pkgs,
