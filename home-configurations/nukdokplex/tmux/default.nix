@@ -76,22 +76,27 @@
       bind -N 'Create new session'         n   new-session
       bind -N 'Pass M-n to application'    M-n send-keys M-n
 
-      bind -N 'Set main-horizontal layout' -n M-, "resize-pane -Z; select-layout 'main-horizontal'; select-layout -E"
-      bind -N 'Set even-vertical layout'   -n M-< "resize-pane -Z; select-layout 'even-vertical';   select-layout -E"
-      bind -N 'Set main-vertical layout'   -n M-. "resize-pane -Z; select-layout 'main-vertical';   select-layout -E"
-      bind -N 'Set even-horizontal layout' -n M-> "resize-pane -Z; select-layout 'even-horizontal'; select-layout -E"
+      bind -N 'Select previous layout'  -n "M-{" select-layout -p
+      bind -N 'Select next layout'      -n "M-}" select-layout -n
+      bind -N 'Pass to M-{ application'    "M-{" send-keys "M-{"
+      bind -N 'Pass to M-} application'    "M-}" send-keys "M-}"
 
-      bind -N 'Pass M-, to application' M-, send-keys M-,
-      bind -N 'Pass M-< to application' M-< send-keys M-<
-      bind -N 'Pass M-. to application' M-. send-keys M-.
-      bind -N 'Pass M-> to application' M-> send-keys M->
+      bind -N 'Split window vertically'   -n M-z split-window -v 
+      bind -N 'Split window horizontally' -n M-x split-window -h 
+      bind -N 'Pass to M-z application'      M-z send-keys M-z
+      bind -N 'Pass to M-x application'      M-x send-keys M-x
 
       bind -N 'Kill window'             -n M-Q kill-window
       bind -N 'Kill pane'               -n M-q kill-pane
       bind -N 'Pass M-Q to application'    M-Q send-keys M-Q
       bind -N 'Pass M-q to application'    M-q send-keys M-q
 
-      bind -N 'Explore tmux tree'            -n M-Escape choose-tree -wZ -Otime
+      bind -N 'Rename window'           -n M-r command-prompt -p "New window name: "  "rename-window '%1'"
+      bind -N 'Rename session'          -n M-R command-prompt -p "New session name: " "rename-session '%1'"
+      bind -N 'Pass M-r to application'    M-r send-keys M-r
+      bind -N 'Pass M-R to application'    M-R send-keys M-R
+
+      bind -N 'Explore tmux tree'            -n M-Escape choose-tree -swZ -Otime
       bind -N 'Pass M-Escape to application'    M-Escape send-keys M-Escape
     ''
     + "\n"
