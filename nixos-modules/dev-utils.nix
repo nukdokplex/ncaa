@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     # nix
+    nil # language server
     nixfmt # formatter
     alejandra # formatter
     statix # linter
@@ -17,6 +18,7 @@
     prettier # formatter
     eslint_d # linter
     eslint # linter
+    typescript-language-server # language server
 
     # bash
     shellcheck # shell script analysis tool
@@ -27,8 +29,10 @@
     python3Packages.isort # python imports sorting
     python3Packages.black # formatter
     python3Packages.flake8 # linter
+    python3Packages.python-lsp-server # language server
 
     # rust
+    rust-analyzer # language server
     rustfmt # formatter
     clippy # linter
 
