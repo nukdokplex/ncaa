@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     # nix
-    nixfmt-rfc-style # formatter
+    nixfmt # formatter
     alejandra # formatter
     statix # linter
     deadnix # dead code remover
