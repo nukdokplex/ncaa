@@ -73,6 +73,7 @@
           # python
           enable = true;
           pythonPackage = pkgs.python3;
+          package = null;
           settings = {
             plugins = {
               pycodestyle = {
