@@ -134,11 +134,11 @@
     movePrevious = "<C-h>";
     moveNext = "<C-l>";
 
-    pin = "<C-n>";
-    restore = "<S-n>";
+    # pin = "<C-n>";
+    restore = "<leader>r";
 
-    close = "<A-x>";
-    closeAllButCurrentOrPinned = "<A-X>";
+    close = "<leader>q";
+    closeAllButCurrentOrPinned = "<leader>Q";
   };
 
   plugins.lsp.keymaps = {
