@@ -72,8 +72,19 @@
         pylsp = {
           # python
           enable = true;
-          pythonPackage = pkgs.python312;
-          settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.python3Packages.black)) ];
+          pythonPackage = pkgs.python3;
+          settings = {
+            plugins = {
+              pycodestyle = {
+                maxLineLength = 88;
+                indentSize = 2;
+              };
+              flake8 = {
+                indentSize = 2;
+              };
+            };
+            formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.python3Packages.black)) ];
+          };
         };
         ts_ls = {
           # typescript
