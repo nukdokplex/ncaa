@@ -9,4 +9,9 @@
     recommendedUwsgiSettings = true;
     recommendedBrotliSettings = true;
   };
+
+  networking.nftables.firewall.rules.open-ports-uplink.allowedTCPPorts = [
+    80
+    443
+  ];
 }
