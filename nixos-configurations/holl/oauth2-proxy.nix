@@ -48,6 +48,7 @@ in
       enable = true;
       unixSocketPerm = 660;
       group = "oauth2-proxy";
+      user = "redis-oauth2-proxy";
     };
 
     nginx.virtualHosts.${config.services.oauth2-proxy.nginx.domain} = {
@@ -58,6 +59,14 @@ in
         proxyPass = "http://[::1]:${toString port}";
         proxyWebsockets = true;
       };
+    };
+  };
+
+  users = {
+    groups.redis-oauth2-proxy = { };
+    users.redis-oauth2-proxy = {
+      isSystemUser = true;
+      group = "redis-oauth2-proxy";
     };
   };
 
