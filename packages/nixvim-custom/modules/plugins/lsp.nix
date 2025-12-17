@@ -60,6 +60,7 @@
         rust_analyzer = {
           # rust
           enable = true;
+          package = null;
           installCargo = false;
           installRustc = false;
           installRustfmt = false;
@@ -67,18 +68,38 @@
         nil_ls = {
           # nix
           enable = true;
-          settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.nixfmt-rfc-style)) ];
+          package = null;
+          rootMarkers = [ "flake.nix" ];
+          settings = {
+            formatting.command = [ "nixfmt" ];
+            flake = {
+              autoArchive = true;
+              autoEvalInputs = true;
+              nixpkgsInputName = "nixpkgs";
+            };
+          };
         };
         pylsp = {
           # python
           enable = true;
-          pythonPackage = pkgs.python312;
-          settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.python3Packages.black)) ];
+          pythonPackage = pkgs.python3;
+          package = null;
+          settings = {
+            plugins = {
+              pycodestyle = {
+                maxLineLength = 88;
+                indentSize = 2;
+              };
+              flake8 = {
+                indentSize = 2;
+              };
+            };
+          };
         };
         ts_ls = {
           # typescript
           enable = true;
-          settings.formatting.command = [ (lib.escapeShellArg (lib.getExe pkgs.prettier)) ];
+          package = null;
         };
         # graphql = {
         #   enable = true;

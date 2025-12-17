@@ -13,7 +13,7 @@
           "shfmt"
         ];
 
-        nix = [ "nixfmt-rfc-style" ];
+        nix = [ "nixfmt" ];
 
         markdown = [ "mdformat" ];
 

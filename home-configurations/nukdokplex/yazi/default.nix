@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./termfilechooser.nix ];
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
