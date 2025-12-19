@@ -30,6 +30,7 @@
       dev-utils
       flatpak
       dnscrypt
+      freesmlauncher
     ]);
 
   time.timeZone = "Asia/Yekaterinburg";
