@@ -28,6 +28,7 @@
       #      epson-l120-shared-printer
       nixvim
       dev-utils
+      media-utils
       flatpak
       dnscrypt
       freesmlauncher
