@@ -115,28 +115,6 @@
       misc.vfr = lib.mkDefault config.wm-settings.beEnergyEfficient;
 
       xwayland.force_zero_scaling = true;
-
-      env = [
-        # electron and chromium
-        # "NIXOS_OZONE_WL,1" # already caught by $XDG_SESSION_TYPE
-
-        # qt
-        "QT_QPA_PLATFORM,wayland;xcb" # qt apps should use wayland and fallback to x
-        "QT_AUTO_SCREEN_SCALE_FACTOR,1" # enables automatic scaling, based on the monitor’s pixel density https://doc.qt.io/qt-5/highdpi.html
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1" # disables window decorations on Qt applications
-
-        # gtk
-        "GDK_BACKEND,wayland,x11,*" # GTK: Use Wayland if available; if not, try X11 and then any other GDK backend
-
-        # xdg
-        "XDG_CURRENT_DESKTOP,Hyprland"
-        "XDG_SESSION_TYPE,wayland"
-        "XDG_SESSION_DESKTOP,Hyprland"
-
-        # toolkit backend vars
-        "SDL_VIDEODRIVER,wayland"
-        "CLUTTER_BACKEND,wayland"
-      ];
     };
 
     extraConfig = ''
@@ -151,17 +129,6 @@
     systemd = {
       enable = true;
       enableXdgAutostart = true;
-      variables = [
-        "QT_QPA_PLATFORM"
-        "QT_AUTO_SCREEN_SCALE_FACTOR"
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION"
-        "GDK_BACKEND"
-        "XDG_CURRENT_DESKTOP"
-        "XDG_SESSION_TYPE"
-        "XDG_SESSION_DESKTOP"
-        "SDL_VIDEODRIVER"
-        "CLUTTER_BACKEND"
-      ];
     };
   };
 
