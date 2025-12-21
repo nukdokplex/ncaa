@@ -115,12 +115,6 @@
       misc.vfr = lib.mkDefault config.wm-settings.beEnergyEfficient;
 
       xwayland.force_zero_scaling = true;
-
-      env = [
-        "NIXOS_OZONE_WL,1"
-        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
-        "GTK_USE_PORTAL,1"
-      ];
     };
 
     extraConfig = ''
@@ -135,10 +129,6 @@
     systemd = {
       enable = true;
       enableXdgAutostart = true;
-      variables = [
-        "NIXOS_OZONE_WL"
-        "ELECTRON_OZONE_PLATFORM_HINT"
-      ];
     };
   };
 

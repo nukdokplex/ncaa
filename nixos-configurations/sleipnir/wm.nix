@@ -21,6 +21,10 @@
             "desc:LG Electronics LG FHD 405TOFJ1Z803,           1920x1080@100.00, 0x0,    1.00"
             "desc:Xiaomi Corporation P24FBA-RAGL 5438300034300, 1920x1080@100.00, 1920x0, 1.00" # <-- main
           ];
+
+          general = {
+            allow_tearing = true;
+          };
         };
       };
     }
