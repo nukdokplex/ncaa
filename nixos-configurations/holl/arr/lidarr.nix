@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   services = {
     lidarr = {
+      package = pkgs.lidarr-plugins;
       enable = true;
       user = "lidarr";
       group = "lidarr";
