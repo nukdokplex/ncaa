@@ -41,6 +41,21 @@
     };
   };
 
+  systemd.services.dnscrypt-proxy = {
+    serviceConfig = {
+      User = "dnscrypt-proxy";
+      Group = "dnscrypt-proxy";
+    };
+  };
+
+  users = {
+    users.dnscrypt-proxy = {
+      isSystemUser = true;
+      group = "dnscrypt-proxy";
+    };
+    groups.dnscrypt-proxy = { };
+  };
+
   networking.nameservers = [ "127.0.0.69" ];
   services.resolved.fallbackDns = lib.mkBefore [ "127.0.0.69" ];
 }
