@@ -2,10 +2,16 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
-  hy2-out-listen-port = 1199;
+  hysteria2-listen-port = 1199;
+  moduleEnabledHostConfigs =
+    inputs.self.outputs.nixosConfigurations
+    |> lib.filterAttrs (hostName: _: hostName != config.networking.hostName)
+    |> lib.filterAttrs (_: host: host.config ? age.secrets.falhofnir-hysteria2-user-password)
+    |> lib.mapAttrs (_: host: host.config);
 in
 {
   services.sing-box = {
@@ -14,21 +20,30 @@ in
       inbounds = [
         {
           type = "hysteria2";
-          tag = "hy2-out";
+          tag = "hysteria2";
           listen = "::";
-          listen_port = hy2-out-listen-port;
+          listen_port = hysteria2-listen-port;
           up_mbps = 500;
           down_mbps = 500;
           obfs = {
             type = "salamander";
-            password._secret = config.age.secrets.sing-box-hy2-out-obfs-password.path;
+            password._secret = config.age.secrets.hysteria2-obfs-password.path;
           };
           users = [
             {
               name = "asgard";
-              password._secret = config.age.secrets.sing-box-hy2-out-asgard-password.path;
+              password._secret = config.age.secrets.hysteria2-asgard-password.path;
             }
-          ];
+          ]
+          ++ (
+            moduleEnabledHostConfigs
+            |> lib.mapAttrsToList (
+              hostName: _: {
+                name = hostName;
+                password._secret = config.age.secrets."hysteria2-${hostName}-password".path;
+              }
+            )
+          );
           ignore_client_bandwidth = false;
           tls = {
             enabled = true;
@@ -41,9 +56,7 @@ in
     };
   };
 
-  networking.nftables.firewall.rules.open-ports-uplink.allowedUDPPorts = [
-    hy2-out-listen-port
-  ];
+  networking.nftables.firewall.rules.open-ports-uplink.allowedUDPPorts = [ hysteria2-listen-port ];
 
   services.nginx.virtualHosts."jugger.fannybaws.ru" = {
     enableACME = true;
@@ -58,12 +71,29 @@ in
   };
 
   age.secrets = {
-    sing-box-hy2-out-obfs-password = {
+    hysteria2-obfs-password = {
       generator.script = "strong-password";
+      owner = "sing-box";
+      group = "sing-box";
     };
 
-    sing-box-hy2-out-asgard-password = {
+    hysteria2-asgard-password = {
       generator.script = "strong-password";
+      owner = "sing-box";
+      group = "sing-box";
     };
-  };
+  }
+  // (
+    moduleEnabledHostConfigs
+    |> lib.mapAttrs' (
+      hostName: cfg: {
+        name = "hysteria2-${hostName}-password";
+        value = {
+          inherit (cfg.age.secrets.falhofnir-hysteria2-user-password) rekeyFile;
+          owner = "sing-box";
+          group = "sing-box";
+        };
+      }
+    )
+  );
 }
