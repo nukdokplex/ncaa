@@ -100,7 +100,7 @@ in
       (map (
         type:
         lib.nameValuePair "${type}-password" (
-          { pkgs, lib, ... }: "'${lib.getExe pkgs.pwgen-secure}' strong"
+          { pkgs, lib, ... }: "'${lib.getExe pkgs.pwgen-secure}' ${type}"
         )
       ))
       lib.listToAttrs
