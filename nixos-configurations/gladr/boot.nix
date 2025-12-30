@@ -1,18 +1,5 @@
+{ pkgs, config, ... }:
 {
-  inputs,
-  pkgs,
-  lib,
-  ...
-}:
-{
-  imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
-  ];
-
-  environment.systemPackages = with pkgs; [
-    sbctl
-  ];
-
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelParams = [ "preempt=full" ];
@@ -25,23 +12,14 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
+        efiSysMountPoint = config.disko.devices.disk.main.content.partitions.ESP.content.mountpoint;
       };
-      systemd-boot.enable = lib.mkForce false;
+      grub = {
+        enable = true;
+        efiSupport = true;
+        useOSProber = true; # searches for other operating systems
+        device = "nodev"; # we don't need it on efi systems
+      };
     };
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
-  };
-
-  age.secrets = {
-    sb_GUID.path = "/var/lib/sbctl/GUID";
-    sb_KEK_private.path = "/var/lib/sbctl/keys/KEK/KEK.key";
-    sb_KEK_public.path = "/var/lib/sbctl/keys/KEK/KEK.pem";
-    sb_PK_private.path = "/var/lib/sbctl/keys/PK/PK.key";
-    sb_PK_public.path = "/var/lib/sbctl/keys/PK/PK.pem";
-    sb_db_private.path = "/var/lib/sbctl/keys/db/db.key";
-    sb_db_public.path = "/var/lib/sbctl/keys/db/db.pem";
   };
 }

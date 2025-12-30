@@ -8,30 +8,56 @@
         type = "gpt";
         partitions = {
           ESP = {
-            priority = 0;
-            end = "1G";
+            start = "1M";
+            end = "128M";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/boot";
+              # https://nixos.wiki/wiki/Bootloader#Keeping_kernels.2Finitrd_on_the_main_partition
+              mountpoint = "/boot/efi";
               mountOptions = [ "umask=0077" ];
             };
           };
           system = {
-            priority = 1;
-            end = "-0";
+            size = "100%";
             content = {
-              name = "system";
               type = "luks";
-              extraOpenArgs = [ ];
+              name = "system";
               settings = {
                 allowDiscards = true;
               };
               content = {
-                type = "lvm_pv";
-                vg = "systempool";
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "/rootfs" = {
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    mountOptions = [
+                      "compress=zstd:3"
+                      "noatime"
+                    ];
+                    mountpoint = "/nix";
+                  };
+                  "/home" = {
+                    mountOptions = [ "compress=zstd:3" ];
+                    mountpoint = "/home";
+                  };
+                  "/home/nukdokplex/" = { };
+                  "/swap" = {
+                    mountpoint = "/.swapvolume";
+                    swap = {
+                      swapfile = {
+                        size = "24G";
+                        priority = 100;
+                      };
+                    };
+                  };
+                };
               };
+
             };
           };
         };
@@ -43,27 +69,6 @@
         mountOptions = [
           "size=200M"
         ];
-      };
-    };
-    lvm_vg.systempool = {
-      type = "lvm_vg";
-      lvs.root = {
-        size = "100%FREE";
-        content = {
-          type = "filesystem";
-          format = "ext4";
-          mountpoint = "/";
-          mountOptions = [
-            "defaults"
-          ];
-        };
-      };
-      lvs.swap = {
-        size = "12G";
-        content = {
-          type = "swap";
-          resumeDevice = true;
-        };
       };
     };
   };
