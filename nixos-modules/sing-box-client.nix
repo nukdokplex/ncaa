@@ -7,6 +7,7 @@ let
   cfg = config.services.sing-box;
 in
 {
+  imports = [ ./dnscrypt.nix ];
   options.services.sing-box.proxy-selector = {
     outbounds = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -121,36 +122,36 @@ in
               action = "route";
               outbound = "direct";
             }
-            # {
-            #   domain_suffix = [
-            #     "cache.nixos.org"
-            #     "cachix.org"
-            #   ];
-            #   action = "route";
-            #   outbound = "direct";
-            # }
-            # {
-            #   domain_suffix = [
-            #     "googleapis.com"
-            #     "gstatic.com"
-            #     "myip.com"
-            #     "nixos.org"
-            #     "sagernet.org"
-            #   ];
-            #   action = "route";
-            #   outbound = "proxy";
-            # }
-            # {
-            #   rule_set = "ru-bundle";
-            #   action = "route";
-            #   outbound = "proxy";
-            # }
-            # {
-            #   rule_set = "discord-voice-ip-list";
-            #   port_range = [ "50000:50030" ];
-            #   action = "route";
-            #   outbound = "proxy";
-            # }
+            {
+              domain_suffix = [
+                "cache.nixos.org"
+                "cachix.org"
+              ];
+              action = "route";
+              outbound = "direct";
+            }
+            {
+              domain_suffix = [
+                "googleapis.com"
+                "gstatic.com"
+                "myip.com"
+                "nixos.org"
+                "sagernet.org"
+              ];
+              action = "route";
+              outbound = "proxy";
+            }
+            {
+              rule_set = "ru-bundle";
+              action = "route";
+              outbound = "proxy";
+            }
+            {
+              rule_set = "discord-voice-ip-list";
+              port_range = [ "50000:50030" ];
+              action = "route";
+              outbound = "proxy";
+            }
             {
               ip_is_private = true;
               action = "route";
@@ -175,8 +176,8 @@ in
           ];
           default_domain_resolver = "dnscrypt";
           auto_detect_interface = true;
-          # final = "direct";
-          final = "proxy";
+          final = "direct";
+          # final = "proxy";
         };
       };
     };
