@@ -14,7 +14,6 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              # https://nixos.wiki/wiki/Bootloader#Keeping_kernels.2Finitrd_on_the_main_partition
               mountpoint = "/boot/efi";
               mountOptions = [ "umask=0077" ];
             };

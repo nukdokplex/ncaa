@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
@@ -12,14 +12,22 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = config.disko.devices.disk.main.content.partitions.ESP.content.mountpoint;
+        efiSysMountPoint = "/boot/efi";
       };
-      grub = {
+      systemd-boot = {
         enable = true;
-        efiSupport = true;
-        useOSProber = true; # searches for other operating systems
-        device = "nodev"; # we don't need it on efi systems
+        memtest86 = {
+          enable = true;
+          sortKey = "z_memtest86";
+        };
       };
+      # grub = {
+      #   enable = true;
+      #   efiSupport = true;
+      #   enableCryptodisk = true;
+      #   useOSProber = false; # searches for other operating systems
+      #   device = "nodev"; # we don't need it on efi systems
+      # };
     };
   };
 }
