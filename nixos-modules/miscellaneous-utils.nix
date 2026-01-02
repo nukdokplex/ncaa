@@ -13,6 +13,7 @@
     cmatrix
     fastfetch
     fzf
+    has-file-in-tree
     htop
     inotify-tools
     jq
