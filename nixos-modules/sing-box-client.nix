@@ -184,7 +184,7 @@ in
 
     systemd.services = {
       systemd-resolved = {
-        wantedBy = [ ];
+        wantedBy = lib.mkForce [ ];
         conflicts = [ "sing-box.service" ];
       };
 
