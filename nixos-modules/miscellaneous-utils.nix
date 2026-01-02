@@ -23,6 +23,7 @@
     nixpkgs-fmt
     nurl
     openssl
+    parallel
     psmisc
     rage
     sl
