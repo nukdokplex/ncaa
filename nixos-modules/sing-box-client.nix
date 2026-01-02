@@ -92,6 +92,18 @@ in
               dnscrypt-proxy.uid
             ];
           }
+          {
+            tag = "mixed";
+            type = "mixed";
+            listen = "::1";
+            listen_port = 9000;
+          }
+          {
+            tag = "mixed-no-proxy";
+            type = "mixed";
+            listen = "::1";
+            listen_port = 9900;
+          }
         ];
         outbounds = [
           {
@@ -108,10 +120,20 @@ in
         route = {
           rules = [
             {
+              inbound = [ "mixed-no-proxy" ];
+              action = "route";
+              outbound = "direct";
+            }
+            {
               port = 53;
               action = "hijack-dns";
             }
             { action = "sniff"; }
+            {
+              inbound = [ "mixed" ];
+              action = "route";
+              outbound = "proxy";
+            }
             {
               protocol = [
                 "bittorrent"
@@ -160,15 +182,15 @@ in
           ];
           rule_set = [
             {
-              type = "remote";
               tag = "ru-bundle";
+              type = "remote";
               format = "source";
               url = "https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-bundle.json";
               download_detour = "proxy";
             }
             {
-              type = "remote";
               tag = "discord-voice-ip-list";
+              type = "remote";
               format = "source";
               url = "https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/discord-voice-ip-list.json";
               download_detour = "proxy";
