@@ -171,6 +171,10 @@ in
             {
               rule_set = "discord-voice-ip-list";
               port_range = [ "50000:50030" ];
+              port = [
+                80
+                443
+              ];
               action = "route";
               outbound = "proxy";
             }
