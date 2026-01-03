@@ -208,12 +208,9 @@ in
       };
     };
 
-    systemd.services = {
-      systemd-resolved = {
-        wantedBy = lib.mkForce [ ];
-        conflicts = [ "sing-box.service" ];
-      };
+    services.resolved.enable = lib.mkForce false;
 
+    systemd.services = {
       sing-box = {
         conflicts = [ "systemd-resolved.service" ];
       };
