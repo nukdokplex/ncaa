@@ -148,13 +148,21 @@ in
             CONFIG="$(${lib.getExe' pkgs.yggdrasil "yggdrasil"} -genconf)"
 
             # calculate address associated with private key
-            echo "$CONFIG" | ${lib.getExe' pkgs.yggdrasil "yggdrasil"} -useconf -address > ${lib.escapeShellArg addressFile}
+            echo "$CONFIG" \
+              | ${lib.getExe' pkgs.yggdrasil "yggdrasil"} -useconf -address \
+              | tr -d '[:blank:]\n' \
+              > ${lib.escapeShellArg addressFile}
 
             # calculate public key associated with private key
-            echo "$CONFIG" | ${lib.getExe' pkgs.yggdrasil "yggdrasil"} -useconf -publickey > ${lib.escapeShellArg publicKeyFile}
+            echo "$CONFIG" \
+              | ${lib.getExe' pkgs.yggdrasil "yggdrasil"} -useconf -publickey \
+              | tr -d '[:blank:]\n' \
+              > ${lib.escapeShellArg publicKeyFile}
 
             # extract private key from config
-            echo "$CONFIG" | ${lib.getExe pkgs.hjson} -c | ${lib.getExe pkgs.jq} -r '.PrivateKey'
+            echo "$CONFIG" \
+              | ${lib.getExe pkgs.hjson} -c \
+              | ${lib.getExe pkgs.jq} -r '.PrivateKey'
           '';
       };
     };
