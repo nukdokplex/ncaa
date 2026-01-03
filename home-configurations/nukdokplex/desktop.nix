@@ -13,11 +13,13 @@
       [
         ayugram-desktop # alternative telegram client
         chromium # web browser
+        fluffychat # matrix client
         font-manager # simple gtk font manager
         galculator # gtk calculator
         gimp # linux photoshop
         keepassxc # password manager
         kid3 # id3 tag editor
+        mumble # voice chat
         onlyoffice-desktopeditors # office programs
         openpgp-card-tools # work with opengpg cards (picokeys, yubikeys, etc.)
         qbittorrent # torrent client
@@ -29,7 +31,6 @@
         wine64Packages.stagingFull # wine packages
         winetricks # Script to install DLLs needed to work around problems in Wine
         yubioath-flutter # gui tool to manage yubikeys
-        mumble
       ]
       ++ lib.optional (
         pkgs.stdenv.hostPlatform.system == "x86_64-linux"
