@@ -16,7 +16,7 @@
     }
     ++ (with ezModules; [
       base-system
-      netbird-client
+      # netbird-client
       syncthing
       nukdokplex
       russian-locale

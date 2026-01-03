@@ -19,7 +19,6 @@
       acme
       syncthing
       gaming
-      netbird-client
       nukdokplex
       russian-locale
       epson-l120-shared-printer

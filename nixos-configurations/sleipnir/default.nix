@@ -22,7 +22,6 @@
       acme
       syncthing
       gaming
-      netbird-client
       optical-disks
       russian-locale
       #      epson-l120-shared-printer
