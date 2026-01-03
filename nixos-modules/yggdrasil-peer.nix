@@ -9,19 +9,25 @@ let
   multicastPort = 9001;
   tlsPort = 36950;
   quicPort = 36951;
+
   yggdrasilPeers =
     inputs.self.outputs.nixosConfigurations
     |> lib.filterAttrs (hostName: _: (hostName != config.networking.hostName))
     |> lib.filterAttrs (_: host: host.config ? age.secrets.yggdrasil-private-key);
-  yggdrasilPeersAddresses = [
-    "200:f97:930b:75fa:5c23:b41f:5ff5:dee0"
-  ]
-  ++ (
-    yggdrasilPeers
-    |> lib.mapAttrsToList (
-      _: host: builtins.readFile (host.config.age.rekey.generatedSecretsDir + /yggdrasil-address)
+
+  yggdrasilPeersAddresses =
+    (
+      yggdrasilPeers
+      |> lib.mapAttrs (
+        _hostName: host: builtins.readFile (host.config.age.rekey.generatedSecretsDir + /yggdrasil-address)
+      )
     )
-  );
+    // {
+      "${config.networking.hostName}" = builtins.readFile (
+        config.age.rekey.generatedSecretsDir + /yggdrasil-address
+      );
+      hrafn = "200:f97:930b:75fa:5c23:b41f:5ff5:dee0";
+    };
 in
 {
   services.yggdrasil = {
@@ -48,27 +54,34 @@ in
     };
   };
 
-  networking.nftables.firewall = {
-    rules = {
-      open-ports-uplink = {
-        allowedTCPPorts = [
-          tlsPort
-        ];
-        allowedUDPPorts = [
-          multicastPort
-          quicPort
-        ];
+  networking = {
+    hosts =
+      yggdrasilPeersAddresses
+      |> lib.mapAttrsToList (hostName: address: { "${address}" = [ "${hostName}.ndp.local" ]; })
+      |> lib.mkMerge;
+
+    nftables.firewall = {
+      rules = {
+        open-ports-uplink = {
+          allowedTCPPorts = [
+            tlsPort
+          ];
+          allowedUDPPorts = [
+            multicastPort
+            quicPort
+          ];
+        };
       };
-    };
-    zones = {
-      yggdrasil = {
-        enable = true;
-        interfaces = [ "ygg0" ];
-      };
-      yggdrasil-peers = {
-        enable = true;
-        parent = "yggdrasil";
-        ipv6Addresses = yggdrasilPeersAddresses |> map (address: "${address}/128");
+      zones = {
+        yggdrasil = {
+          enable = true;
+          interfaces = [ "ygg0" ];
+        };
+        yggdrasil-peers = {
+          enable = true;
+          parent = "yggdrasil";
+          ipv6Addresses = yggdrasilPeersAddresses |> lib.mapAttrsToList (_: address: "${address}/128");
+        };
       };
     };
   };
