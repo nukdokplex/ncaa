@@ -6,9 +6,10 @@
   ...
 }:
 let
-  multicastPort = 9001;
-  tlsPort = 36950;
-  quicPort = 36951;
+  multicastPort = 9001; # udp port for peers discovery (can't be changed)
+  tlsPort = 36950; # tcp port for manual peers
+  multicastTlsPort = 36951; # tcp port for peers, discovered with multicast
+  quicPort = 36952; # udp port for manual peers
 
   yggdrasilPeers =
     inputs.self.outputs.nixosConfigurations
@@ -44,6 +45,7 @@ in
           Regex = "uplink.*";
           Beacon = true;
           Listen = true;
+          Port = multicastTlsPort;
           Password._secret = config.age.secrets.yggdrasil-multicast-password.path;
           Priority = 100;
         }
@@ -65,6 +67,7 @@ in
         open-ports-uplink = {
           allowedTCPPorts = [
             tlsPort
+            multicastTlsPort
           ];
           allowedUDPPorts = [
             multicastPort
