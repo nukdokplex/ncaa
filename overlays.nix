@@ -50,6 +50,14 @@
     };
 
     overrides = _: prev: {
+      # fix yyggdrasil missing meta.mainProgram
+      yggdrasil = prev.yggdrasil.overrideAttrs (
+        _: prevAttrs: {
+          meta = prevAttrs.meta // {
+            mainProgram = "yggdrasil";
+          };
+        }
+      );
       qbittorrent-nox = prev.qbittorrent-nox.overrideAttrs (finalAttrs: {
         version = "5.1.4";
         src = prev.fetchFromGitHub {
