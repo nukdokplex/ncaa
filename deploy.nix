@@ -25,7 +25,7 @@ let
       hostname = "${host.config.networking.hostName}.ndp.local";
       profiles.system = {
         user = "root";
-        path = deploy-rs.lib."${deploySystem}".activate.nixos host.config;
+        path = deploy-rs.lib."${deploySystem}".activate.nixos host;
       };
     };
 in
