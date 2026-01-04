@@ -9,6 +9,9 @@
     agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
+    deploy-rs.inputs.flake-compat.follows = "";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.url = "github:serokell/deploy-rs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     ez-configs.inputs.flake-parts.follows = "flake-parts";
@@ -69,14 +72,6 @@
       "flakes"
       "pipe-operators"
     ];
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
   };
 
   outputs =
@@ -95,6 +90,7 @@
           ./overlays.nix
           ./ez-configs.nix
           ./devshells.nix
+          ./deploy.nix
         ];
 
         systems = import inputs.systems;

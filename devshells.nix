@@ -3,7 +3,12 @@
   imports = [ inputs.git-hooks-nix.flakeModule ];
 
   perSystem =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      inputs',
+      ...
+    }:
     {
       pre-commit = {
         check.enable = true;
@@ -36,6 +41,7 @@
             age
             zsh
             pre-commit
+            inputs'.deploy-rs.packages.deploy-rs
           ]
           ++ config.pre-commit.settings.enabledPackages;
       };
