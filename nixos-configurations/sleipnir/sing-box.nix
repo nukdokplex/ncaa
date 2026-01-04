@@ -3,6 +3,7 @@
   imports = with ezModules; [
     sing-box-client
     sing-box-falhofnir-hysteria2-client
+    sing-box-wrap-apps
   ];
 
   services.sing-box = {
