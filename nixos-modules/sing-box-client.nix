@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -30,79 +31,27 @@ in
         dns = {
           servers = [
             {
-              type = "resolved";
               tag = "resolved";
-              service = "resolved";
-              accept_default_resolvers = false;
-            }
-            {
-              tag = "dnscrypt";
               type = "udp";
-              server = "127.0.0.69";
+              server = "127.0.0.53";
               server_port = 53;
             }
           ];
-          rules = [
-            {
-              domain_suffix = [ ".local" ];
-              action = "route";
-              server = "resolved";
-            }
-          ];
-          final = "dnscrypt";
+          final = "resolved";
           disable_cache = true;
         };
-        services = [
-          {
-            tag = "resolved";
-            type = "resolved";
-            listen = "127.0.0.53";
-            listen_port = 53;
-          }
-        ];
         inbounds = [
-          {
-            type = "tun";
-            tag = "tun";
-            interface_name = "sing-box";
-            address = [
-              "172.18.0.1/30"
-              "fdfe:dcba:9876::1/126"
-            ];
-            stack = "system";
-            mtu = 9000;
-            auto_redirect = true;
-            auto_route = true;
-            strict_route = true;
-            route_address = [
-              "0.0.0.0/0"
-              "::/0"
-            ];
-            route_exclude_address = [
-              "10.0.0.0/8" # private network
-              "100.64.0.0/10" # private network
-              "169.254.0.0/16" # link-local
-              "172.16.0.0/12" # private network
-              "192.0.0.0/24" # private network
-              "192.168.0.0/16" # private network
-              "fc00::/7" # private network
-              "200::/7" # yggdrasil
-            ];
-            exclude_uid = with config.users.users; [
-              dnscrypt-proxy.uid
-            ];
-          }
           {
             tag = "mixed";
             type = "mixed";
-            listen = "::1";
-            listen_port = 9000;
+            listen = "127.0.0.1";
+            listen_port = 9900;
           }
           {
-            tag = "mixed-no-proxy";
+            tag = "mixed-all-proxy";
             type = "mixed";
-            listen = "::1";
-            listen_port = 9900;
+            listen = "127.0.0.1";
+            listen_port = 9901;
           }
         ];
         outbounds = [
@@ -119,102 +68,78 @@ in
         ];
         route = {
           rules = [
-            {
-              inbound = [ "mixed-no-proxy" ];
-              action = "route";
-              outbound = "direct";
-            }
-            {
-              port = 53;
-              action = "hijack-dns";
-            }
             { action = "sniff"; }
             {
-              inbound = [ "mixed" ];
-              action = "route";
-              outbound = "proxy";
-            }
-            {
-              protocol = [
-                "bittorrent"
-                "ssh"
-                "rdp"
-                "ntp"
-              ];
-              action = "route";
-              outbound = "direct";
-            }
-            {
-              domain_suffix = [
-                "cache.nixos.org"
-                "cachix.org"
-              ];
-              action = "route";
-              outbound = "direct";
-            }
-            {
-              domain_suffix = [
-                "googleapis.com"
-                "gstatic.com"
-                "myip.com"
-                "nixos.org"
-                "sagernet.org"
-              ];
-              action = "route";
-              outbound = "proxy";
-            }
-            {
-              rule_set = "ru-bundle";
-              action = "route";
-              outbound = "proxy";
-            }
-            {
-              rule_set = "discord-voice-ip-list";
-              port_range = [ "50000:50030" ];
-              port = [
-                80
-                443
-              ];
-              action = "route";
-              outbound = "proxy";
-            }
-            {
               ip_is_private = true;
-              action = "route";
+              outbound = "direct";
+            }
+            {
+              inbound = [ "mixed-all-proxy" ];
+              outbound = "proxy";
+            }
+            {
+              rule_set = [ "geosite-category-ru" ];
               outbound = "direct";
             }
           ];
           rule_set = [
             {
-              tag = "ru-bundle";
               type = "remote";
-              format = "source";
-              url = "https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-bundle.json";
-              download_detour = "proxy";
-            }
-            {
-              tag = "discord-voice-ip-list";
-              type = "remote";
-              format = "source";
-              url = "https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/discord-voice-ip-list.json";
+              tag = "geosite-category-ru";
+              format = "binary";
+              url = "https://github.com/SagerNet/sing-geosite/raw/refs/heads/rule-set/geosite-category-ru.srs";
               download_detour = "proxy";
             }
           ];
-          default_domain_resolver = "dnscrypt";
+          default_domain_resolver = "resolved";
           auto_detect_interface = true;
-          final = "direct";
-          # final = "proxy";
+          final = "proxy";
         };
       };
     };
 
-    services.resolved.enable = lib.mkForce false;
+    environment = {
+      etc = {
+        "tsocks.conf".text = ''
+          # this is default tsocks config pointing to sing-box' mixed-all-proxy inbound
+          server = 127.0.0.1
+          server_port = 9901
+          server_type = 5
 
-    systemd.services = {
-      sing-box = {
-        conflicts = [ "systemd-resolved.service" ];
+          local = 10.0.0.0/255.0.0.0
+          local = 100.64.0.0/255.192.0.0
+          local = 127.0.0.0/255.0.0.0
+          local = 169.254.0.0/255.255.0.0
+          local = 172.16.0.0/255.240.0.0
+          local = 192.168.0.0/255.255.0.0
+        '';
+
+        "proxychains.conf".text = ''
+          strict_chain
+          #proxy_dns
+          #proxy_dns_old
+          #proxy_dns_daemon 127.0.0.1:1053
+
+          localnet 10.0.0.0/255.0.0.0
+          localnet 100.64.0.0/255.192.0.0
+          localnet 127.0.0.0/255.0.0.0
+          localnet 169.254.0.0/255.255.0.0
+          localnet 172.16.0.0/255.240.0.0
+          localnet 192.168.0.0/255.255.0.0
+
+          localnet ::1/128
+          localnet fc00::/7
+          localnet 200::/7
+
+          [ProxyList]
+          socks5  127.0.0.1 9901
+        '';
       };
+
+      systemPackages = with pkgs; [
+        tsocks
+        proxychains-ng
+      ];
     };
   };
-
 }
