@@ -21,7 +21,7 @@
       gaming
       nukdokplex
       russian-locale
-      epson-l120-shared-printer
+      # epson-l120-shared-printer
       nixvim
       dev-utils
       media-utils
