@@ -48,7 +48,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-nftables-firewall.inputs.nixpkgs.follows = "nixpkgs";
     nixos-nftables-firewall.url = "github:thelegy/nixos-nftables-firewall";
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=release-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-25.11";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nuschtosSearch.follows = "";
