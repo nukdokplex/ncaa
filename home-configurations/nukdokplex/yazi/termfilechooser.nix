@@ -31,9 +31,6 @@
 
     home.sessionVariables.GTK_USE_PORTAL = "1";
 
-    qt = {
-      qt5ctSettings.Appearance.standard_dialogs = "xdgdesktopportal";
-      qt6ctSettings.Appearance.standard_dialogs = "xdgdesktopportal";
-    };
+    stylix.targets.qt.standardDialogs = "xdgdesktopportal";
   };
 }
