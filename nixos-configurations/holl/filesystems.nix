@@ -1,7 +1,15 @@
 { config, lib, ... }:
 {
-  boot.loader.efi.efiSysMountPoint =
-    config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
+  boot = {
+    loader.efi.efiSysMountPoint =
+      config.disko.devices.disk.nixos.content.partitions.ESP.content.mountpoint;
+
+    supportedFilesystems = {
+      zfs = true;
+    };
+
+    zfs.extraPools = [ "data" ]; # for auto-import
+  };
 
   disko.devices = {
     disk.nixos = {
@@ -50,43 +58,42 @@
     };
   };
 
-  systemd.mounts = [
-    {
-      name = "data-archive.mount";
+  services.zfs = {
+    autoScrub = {
       enable = true;
-      wantedBy = [ "multi-user.target" ];
-      what = "/dev/disk/by-label/ARCHIVE";
-      where = "/data/archive";
-      type = "ext4";
-      options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
-    }
-    {
-      name = "data-downloads.mount";
+      interval = "monthly";
+      randomizedDelaySec = "6h";
+    };
+
+    autoSnapshot = {
       enable = true;
-      wantedBy = [ "multi-user.target" ];
-      what = "/dev/disk/by-label/DOWNLOADS";
-      where = "/data/downloads";
-      type = "ext4";
-      options = "rw,nosuid,nodev,relatime,errors=remount-ro,x-mount.mkdir=0755";
-    }
-  ];
+      flags = "-k -p --utc";
+
+      frequent = 4; # 15 minutes
+      hourly = 12;
+      daily = 3;
+      weekly = 2;
+      monthly = 0;
+    };
+  };
+
   home-manager.users.nukdokplex.imports = lib.singleton (
-    { config, lib, ... }:
+    { ... }:
     {
-      home.file =
-        {
-          documents = "/data/archive/nukdokplex/documents";
-          pictures = "/data/archive/nukdokplex/pictures";
-          templates = "/data/archive/nukdokplex/templates";
-          videos = "/data/archive/nukdokplex/videos";
-          music = "/data/downloads/music";
-        }
-        |> lib.mapAttrs (
-          name: sourcePath: {
-            source = config.lib.file.mkOutOfStoreSymlink sourcePath;
-            target = name;
-          }
-        );
+      # home.file =
+      #   {
+      #     documents = "/data/archive/nukdokplex/documents";
+      #     pictures = "/data/archive/nukdokplex/pictures";
+      #     templates = "/data/archive/nukdokplex/templates";
+      #     videos = "/data/archive/nukdokplex/videos";
+      #     music = "/data/downloads/music";
+      #   }
+      #   |> lib.mapAttrs (
+      #     name: sourcePath: {
+      #       source = config.lib.file.mkOutOfStoreSymlink sourcePath;
+      #       target = name;
+      #     }
+      #   );
     }
   );
 
@@ -109,38 +116,53 @@
         "writeable" = "yes";
       };
       music = {
-        "path" = "/data/downloads/music";
+        "path" = "/data/music";
         "guest ok" = "no";
         "valid users" = "@music";
         "create mask" = "0664";
         "directory mask" = "2775";
       };
       torrents = {
-        "path" = "/data/downloads/torrents";
+        "path" = "/data/torrents";
         "guest ok" = "no";
         "valid users" = "@torrent";
         "create mask" = "0664";
         "directory mask" = "2775";
       };
-      nukdokplex_archive = {
-        "path" = "/data/archive/nukdokplex";
+      documents = {
+        "path" = "/data/documents";
         "guest ok" = "no";
-        "valid users" = "@nukdokplex";
-        "create mask" = "0640";
-        "directory mask" = "0750";
+        "valid users" = "@documents";
+        "create mask" = "0664";
+        "directory mask" = "2775";
+      };
+      pictures = {
+        "path" = "/data/pictures";
+        "guest ok" = "no";
+        "valid users" = "@pictures";
+        "create mask" = "0664";
+        "directory mask" = "2775";
       };
     };
   };
 
   systemd.tmpfiles.rules = [
     # type path mode user group age argument
-    "d /data/downloads/torrents 2775 qbittorrent torrent - -"
-    "A /data/downloads/torrents - - - - group:torrent:rwx"
-    "A+ /data/downloads/torrents - - - - default:group:torrent:rwx"
+    "z /data/torrents 2775 root torrent - -"
+    "A /data/torrents - - - - group:torrent:rwx"
+    "A+ /data/torrents - - - - default:group:torrent:rwx"
 
-    "d /data/downloads/music 2775 navidrome music - -"
-    "A /data/downloads/music - - - - group:music:rwx"
-    "A+ /data/downloads/music - - - - default:group:music:rwx"
+    "z /data/music 2775 root music - -"
+    "A /data/music - - - - group:music:rwx"
+    "A+ /data/music - - - - default:group:music:rwx"
+
+    "z /data/documents 2770 root documents - -"
+    "A /data/documents - - - - group:documents:rwx"
+    "A+ /data/documents - - - - default:group:documents:rwx"
+
+    "z /data/pictures 2770 root pictures - -"
+    "A /data/pictures - - - - group:pictures:rwx"
+    "A+ /data/pictures - - - - default:group:pictures:rwx"
   ];
 
   networking.nftables.firewall.rules.open-ports-uplink = {

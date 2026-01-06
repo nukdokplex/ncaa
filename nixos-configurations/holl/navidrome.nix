@@ -16,7 +16,7 @@ in
       ReverseProxyWhiteList = "::1/128,127.0.0.1/32";
       ReverseProxyUserHeader = "X-Preferred-Username";
 
-      MusicFolder = "/data/downloads/music";
+      MusicFolder = "/data/music";
       "Scanner.PurgeMissing" = "always";
       "Tags.Artist.Split" = [
         " / "

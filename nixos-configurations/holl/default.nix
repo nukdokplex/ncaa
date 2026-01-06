@@ -22,6 +22,7 @@
       russian-locale
     ]);
 
+  networking.hostId = "37b5f026";
   time.timeZone = "Asia/Yekaterinburg";
   system.stateVersion = "25.11";
 
