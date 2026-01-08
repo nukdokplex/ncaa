@@ -133,15 +133,15 @@
         "path" = "/data/documents";
         "guest ok" = "no";
         "valid users" = "@documents";
-        "create mask" = "0664";
-        "directory mask" = "2775";
+        "create mask" = "0660";
+        "directory mask" = "2770";
       };
       pictures = {
         "path" = "/data/pictures";
         "guest ok" = "no";
         "valid users" = "@pictures";
-        "create mask" = "0664";
-        "directory mask" = "2775";
+        "create mask" = "0660";
+        "directory mask" = "2770";
       };
     };
   };
