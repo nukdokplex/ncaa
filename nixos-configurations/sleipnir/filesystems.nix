@@ -147,7 +147,7 @@
       what = "//10.14.88.6/music";
       where = "/home/nukdokplex/music";
       type = "cifs";
-      options = "rw,credentials=${config.age.secrets.music-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
+      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
     }
     {
       name = "home-nukdokplex-torrents.mount";
@@ -157,16 +157,6 @@
       what = "//10.14.88.6/torrents";
       where = "/home/nukdokplex/torrents";
       type = "cifs";
-      options = "rw,credentials=${config.age.secrets.torrent-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
-    }
-    {
-      name = "home-nukdokplex-archive.mount";
-      wantedBy = [ "default.target" ];
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      what = "//10.14.88.6/nukdokplex_archive";
-      where = "/home/nukdokplex/archive";
-      type = "cifs";
       options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
     }
     {
@@ -174,7 +164,7 @@
       wantedBy = [ "default.target" ];
       after = [ "network-online.target" ];
       requires = [ "network-online.target" ];
-      what = "//10.14.88.6/nukdokplex_archive/documents";
+      what = "//10.14.88.6/documents";
       where = "/home/nukdokplex/documents";
       type = "cifs";
       options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
@@ -184,47 +174,14 @@
       wantedBy = [ "default.target" ];
       after = [ "network-online.target" ];
       requires = [ "network-online.target" ];
-      what = "//10.14.88.6/nukdokplex_archive/pictures";
+      what = "//10.14.88.6/pictures";
       where = "/home/nukdokplex/pictures";
-      type = "cifs";
-      options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
-    }
-    {
-      name = "home-nukdokplex-videos.mount";
-      wantedBy = [ "default.target" ];
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      what = "//10.14.88.6/nukdokplex_archive/videos";
-      where = "/home/nukdokplex/videos";
       type = "cifs";
       options = "rw,credentials=${config.age.secrets.nukdokplex-smb-credentials.path},forceuid,forcegid,uid=${toString config.users.users.nukdokplex.uid},gid=${toString config.users.groups.nukdokplex.gid},file_mode=0660,dir_mode=0770,nobrl,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.idle-timeout=600,_netdev";
     }
   ];
 
   age.secrets = {
-    music-smb-credentials.generator = {
-      dependencies.password = inputs.self.nixosConfigurations.holl.config.age.secrets.music-user-password;
-      script =
-        { deps, decrypt, ... }:
-        ''
-          cat << EOF
-          username=music
-          password=$(${decrypt} ${deps.password.file})
-          EOF
-        '';
-    };
-    torrent-smb-credentials.generator = {
-      dependencies.password =
-        inputs.self.nixosConfigurations.holl.config.age.secrets.torrent-user-password;
-      script =
-        { deps, decrypt, ... }:
-        ''
-          cat << EOF
-          username=torrent
-          password=$(${decrypt} ${deps.password.file})
-          EOF
-        '';
-    };
     nukdokplex-smb-credentials.generator = {
       dependencies.password =
         inputs.self.nixosConfigurations.holl.config.age.secrets.nukdokplex-smb-user-password;
