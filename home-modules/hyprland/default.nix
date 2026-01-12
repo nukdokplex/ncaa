@@ -141,9 +141,9 @@
   ]
   ++ lib'.umport {
     path = ./.;
+    recursive = false;
     exclude = [
       ./default.nix
-      ./startup-sound.nix
     ];
   };
 }

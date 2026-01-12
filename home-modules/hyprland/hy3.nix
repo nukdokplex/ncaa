@@ -90,7 +90,7 @@
 
       autotile = {
         # enable autotile
-        enable = false; # default: false
+        enable = true; # default: false
 
         # make autotile-created groups ephemeral
         ephemeral_groups = true; # default: true
