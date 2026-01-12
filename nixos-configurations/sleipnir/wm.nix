@@ -14,12 +14,29 @@
         };
       };
 
+      programs.waybar.settings = {
+        # boo, waybar can't handle output descriptions
+        horizontalBar.output = [ "HDMI-A-1" ];
+        verticalBar.output = [ "DP-1" ];
+      };
+
       # output settings are managed with nwg-displays now
       wayland.windowManager = {
         hyprland.settings = {
-          monitor = [
-            "desc:LG Electronics LG FHD 405TOFJ1Z803,           1920x1080@100.00, 0x0,    1.00"
-            "desc:Xiaomi Corporation P24FBA-RAGL 5438300034300, 1920x1080@100.00, 1920x0, 1.00" # <-- main
+          monitorv2 = [
+            {
+              output = "HDMI-A-1";
+              mode = "1920x1080@100.00";
+              position = "0x0";
+              scale = "1.00";
+              transform = 1;
+            }
+            {
+              output = "DP-1";
+              mode = "1920x1080@100.00";
+              position = "1080x420";
+              scale = "1.00";
+            }
           ];
 
           general = {
