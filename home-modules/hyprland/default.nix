@@ -9,14 +9,10 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins =
-      with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
-      with inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system};
-      [
-        # hyprbars
-        hyprexpo
-        hy3
-      ];
+    plugins = with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}; [
+      # hyprbars
+      hyprexpo
+    ];
     settings = {
       "$mainMod" = "SUPER";
       # autostarts
@@ -84,7 +80,7 @@
         gaps_out = 10;
 
         border_size = 3;
-        layout = "hy3";
+        layout = "dwindle";
         allow_tearing = true;
       };
 
@@ -116,15 +112,6 @@
 
       xwayland.force_zero_scaling = true;
     };
-
-    extraConfig = ''
-      bindd = $mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough  
-
-      submap = passthrough
-      bindd = $mainMod, Insert, Exit passthrough mode, submap, reset
-
-      submap = reset
-    '';
 
     systemd = {
       enable = true;
