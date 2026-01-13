@@ -32,7 +32,7 @@
   system.stateVersion = "25.11";
   hardware.enableAllFirmware = true;
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGazP31S+Aiuwbk/SZIy4IranjSXRkSslKEUz/QRr1v8 root@gladr";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/Crl3whEloQe4Gd6M91Isl/pXAwx3qFIfi4SUesTv3 root@gladr";
 
   users.users.root.openssh.authorizedKeys.keys =
     config.users.users.nukdokplex.openssh.authorizedKeys.keys;
