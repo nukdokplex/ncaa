@@ -82,7 +82,6 @@ in
             [
               # focus workspace
               "$mainMod, ${xkbNoPrefix.digit}, Switch to workspace ${toString number}, workspace, ${builtins.toString number}"
-              "$mainMod Alt, ${xkbNoPrefix.digit}, Switch to workspace ${toString (10 + number)}, workspace, ${toString (10 + number)}"
 
               # move window to workspace
               "$mainMod Shift, ${xkbNoPrefix.digit}, Move active window to workspace ${toString number}, movetoworkspacesilent, ${toString number}"
@@ -133,7 +132,7 @@ in
       # submaps 
 
       # passthrough mode
-      bindd = $mainMod, Insert, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough  
+      bindd = $mainMod Alt, I, Enable passthrough mode (disable all binds except this one to disable), submap, passthrough  
       submap = passthrough
       bindd = $mainMod Alt, I, Exit passthrough mode, submap, reset
       submap = reset
@@ -151,6 +150,8 @@ in
             ...
           }:
           [
+            "bindd = $mainMod, ${xkbNoPrefix.hjkl}, Focus monitor ${direction}, focusmonitor, ${hyprland.direction}"
+            "bindd = $mainMod, ${xkbNoPrefix.arrow}, Focus monitor ${direction}, focusmonitor, ${hyprland.direction}"
             "bindd = $mainMod Shift, ${xkbNoPrefix.hjkl}, Move workspace to ${direction} monitor, movecurrentworkspacetomonitor, ${hyprland.direction}"
             "bindd = $mainMod Shift, ${xkbNoPrefix.arrow}, Move workspace to ${direction} monitor, movecurrentworkspacetomonitor, ${hyprland.direction}"
           ]
@@ -167,7 +168,7 @@ in
           }:
           [
             "bindd = $mainMod, ${xkbNoPrefix.digit}, Move to workspace ${toString number}, workspace, ${toString number}"
-            "bindd = $mainMod Shift, ${xkbNoPrefix.digit}, Move workspace ${toString number} to current monitor, moveworkspacetomonitor, ${toString number}, current"
+            "bindd = $mainMod Shift, ${xkbNoPrefix.digit}, Move workspace ${toString number} to current monitor, moveworkspacetomonitor, ${toString number} current"
           ]
         )
         |> lib.flatten
