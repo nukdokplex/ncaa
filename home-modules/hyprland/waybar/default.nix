@@ -33,6 +33,8 @@ in
     systemd = {
       enable = true;
       target = "hyprland-session.target";
+      # uncomment line below to enable inspect
+      # enableInspect = true;
     };
 
     settings = {
@@ -161,6 +163,11 @@ in
 
       #workspaces .active {
         background-color: @base02;
+      }
+
+      /* workaround for language is shown as ellipsis */
+      #language {
+        min-width: 26px;
       }
     '';
   };

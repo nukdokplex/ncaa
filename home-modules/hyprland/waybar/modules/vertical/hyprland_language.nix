@@ -1,8 +1,7 @@
-{ ... }:
-{
+_: {
   "hyprland/language" = {
     format = "{}";
-    format-en = "EN";
-    format-ru = "RU";
+    format-en = "en";
+    format-ru = "ru";
   };
 }
