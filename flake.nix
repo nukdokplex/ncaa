@@ -45,6 +45,13 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixcord.inputs.nixpkgs.follows = "nixpkgs";
     nixcord.url = "github:KaylorBen/nixcord";
+    nixos-anywhere.inputs.disko.follows = "";
+    nixos-anywhere.inputs.nix-vm-test.follows = "";
+    nixos-anywhere.inputs.nixos-images.follows = "";
+    nixos-anywhere.inputs.nixos-stable.follows = "";
+    nixos-anywhere.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-anywhere.inputs.treefmt-nix.follows = "";
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere?ref=1.13.0";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-nftables-firewall.inputs.nixpkgs.follows = "nixpkgs";
     nixos-nftables-firewall.url = "github:thelegy/nixos-nftables-firewall";

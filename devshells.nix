@@ -42,6 +42,7 @@
             zsh
             pre-commit
             inputs'.deploy-rs.packages.deploy-rs
+            inputs'.nixos-anywhere.packages.nixos-anywhere
           ]
           ++ config.pre-commit.settings.enabledPackages;
       };
