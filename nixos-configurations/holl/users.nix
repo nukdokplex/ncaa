@@ -11,6 +11,8 @@
       music.gid = 902;
       documents.gid = 903;
       pictures.gid = 904;
+      movies.gid = 905;
+      shows.gid = 906;
     };
 
     users.nukdokplex.extraGroups = [
@@ -18,6 +20,8 @@
       "music"
       "documents"
       "pictures"
+      "movies"
+      "shows"
     ];
   };
 

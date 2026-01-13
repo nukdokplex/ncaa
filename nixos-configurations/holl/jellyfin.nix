@@ -6,9 +6,14 @@ in
   services.jellyfin = {
     enable = true;
     openFirewall = false;
-    user = "nukdokplex";
     logDir = "/var/log/jellyfin";
   };
+
+  users.users.jellyfin.extraGroups = [
+    "shows"
+    "movies"
+    "music"
+  ];
 
   environment.systemPackages = with pkgs; [
     jellyfin

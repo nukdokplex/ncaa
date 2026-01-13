@@ -163,6 +163,14 @@
     "z /data/pictures 2770 root pictures - -"
     "A /data/pictures - - - - group:pictures:rwx"
     "A+ /data/pictures - - - - default:group:pictures:rwx"
+
+    "z /data/movies 2770 root movies - -"
+    "A /data/movies - - - - group:movies:rwx"
+    "A+ /data/movies - - - - default:group:movies:rwx"
+
+    "z /data/shows 2770 root shows - -"
+    "A /data/shows - - - - group:shows:rwx"
+    "A+ /data/shows - - - - default:group:shows:rwx"
   ];
 
   networking.nftables.firewall.rules.open-ports-uplink = {
