@@ -37,7 +37,7 @@
     AllowSuspend=yes
     AllowHibernation=yes
     AllowHybridSleep=no
-    AllowSuspendThenHibernate=yes
+    AllowSuspendThenHibernate=no
 
     # SuspendState=
     # HibernateMode=
@@ -45,8 +45,8 @@
 
     HibernateOnACPower=no
 
-    HibernateDelaySec=30min
-    SuspendEstimationSec=10min
+    #HibernateDelaySec=30min
+    #SuspendEstimationSec=10min
   '';
 
   powerManagement.powertop.enable = true;
