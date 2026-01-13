@@ -16,8 +16,15 @@
 
       programs.waybar.settings = {
         # boo, waybar can't handle output descriptions
-        horizontalBar.output = [ "HDMI-A-1" ];
-        verticalBar.output = [ "DP-1" ];
+        horizontalBar = {
+          output = [ "HDMI-A-1" ];
+        };
+
+        verticalBar = {
+          output = [ "DP-1" ];
+          position = lib.mkForce "left";
+          margin = lib.mkForce "10 0 10 10";
+        };
       };
 
       # output settings are managed with nwg-displays now
