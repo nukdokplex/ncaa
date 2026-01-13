@@ -38,7 +38,7 @@ in
         whitelist-domain = [ "*.nukdokplex.ru" ];
         session-store-type = "redis";
         redis-connection-url = "unix://${config.services.redis.servers.oauth2-proxy.unixSocket}";
-        # skip-jwt-bearer-tokens = true;
+        skip-jwt-bearer-tokens = true;
       };
       setXauthrequest = true;
       passAccessToken = true;
