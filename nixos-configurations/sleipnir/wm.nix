@@ -55,24 +55,19 @@
   );
 
   home-manager.users.nukdokplex.wayland.windowManager = {
-    hyprland.settings =
-      let
-        primary = "desc:Xiaomi Corporation P24FBA-RAGL 5438300034300";
-        secondary = "desc:LG Electronics LG FHD 405TOFJ1Z803";
-      in
-      {
-        workspace = lib.mkForce [
-          "1,  persistent:true, monitor:${primary},   defaultName:coding, default:true"
-          "2,  persistent:true, monitor:${primary},   defaultName:files"
-          "3,  persistent:true, monitor:${primary},   defaultName:email"
-          "4,  persistent:true, monitor:${primary},   defaultName:gaming"
-          "5,  persistent:true, monitor:${primary},   defaultName:video"
-          "6,  persistent:true, monitor:${secondary}, defaultName:browsing, default:true"
-          "7,  persistent:true, monitor:${secondary}, defaultName:messaging"
-          "8,  persistent:true, monitor:${secondary}, defaultName:password"
-          "9,  persistent:true, monitor:${secondary}, defaultName:reserved"
-          "10, persistent:true, monitor:${secondary}, defaultName:music"
-        ];
-      };
+    hyprland.settings = {
+      workspace = lib.mkForce [
+        "1,  persistent:true, monitor:DP-1,     defaultName:coding,    default:true"
+        "2,  persistent:true, monitor:DP-1,     defaultName:files                  "
+        "3,  persistent:true, monitor:DP-1,     defaultName:email                  "
+        "4,  persistent:true, monitor:DP-1,     defaultName:gaming                 "
+        "5,  persistent:true, monitor:DP-1,     defaultName:video                  "
+        "6,  persistent:true, monitor:HDMI-A-1, defaultName:browsing,  default:true"
+        "7,  persistent:true, monitor:HDMI-A-1, defaultName:messaging              "
+        "8,  persistent:true, monitor:HDMI-A-1, defaultName:password               "
+        "9,  persistent:true, monitor:HDMI-A-1, defaultName:reserved               "
+        "10, persistent:true, monitor:HDMI-A-1, defaultName:music                  "
+      ];
+    };
   };
 }
