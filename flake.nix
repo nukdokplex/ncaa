@@ -26,6 +26,8 @@
     git-hooks-nix.url = "github:cachix/git-hooks.nix";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager?ref=release-25.11";
+    hyprdynamicmonitors.inputs.nixpkgs.follows = "nixpkgs";
+    hyprdynamicmonitors.url = "github:fiffeek/hyprdynamicmonitors?ref=v1.4.0";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins?ref=v0.52.0";
