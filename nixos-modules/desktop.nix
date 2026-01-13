@@ -12,6 +12,7 @@
     smartcard
     stylix
     usb-utils
+    upower
   ];
 
   security.polkit.enable = true;
