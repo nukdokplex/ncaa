@@ -60,6 +60,7 @@ in
           # layout stuff
           "$mainMod, Z, preselect next split to down, layoutmsg, preselect d"
           "$mainMod, X, preselect next split to right, layoutmsg, preselect r"
+          "$mainMod, W, toggle the split of the current window, layoutmsg, togglesplit"
 
           # misc
           "$mainMod, Escape, Expo, hyprexpo:expo, toggle"
