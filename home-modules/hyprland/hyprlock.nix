@@ -22,7 +22,7 @@ in
         rounding = 0;
         placeholder_text = "<i>enter password...</i>";
         position = "0%, 0%";
-        size = "20%, 8%";
+        size = "200, 72";
         valign = "center";
         halign = "center";
         outer_color = "rgb(${base0D})";
