@@ -1,19 +1,23 @@
-{ config, ... }:
+{ pkgs, ... }:
 {
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "nukdokplex";
-        email = "nukdokplex@nukdokplex.ru";
-      };
-    };
-    signing = {
-      format = "openpgp";
-      signByDefault = true;
-      key = config.programs.git.settings.user.email;
-    };
-  };
+  # programs.git = {
+  #   enable = true;
+  #   settings = {
+  #     user = {
+  #       name = "nukdokplex";
+  #       email = "nukdokplex@nukdokplex.ru";
+  #     };
+  #   };
+  #   signing = {
+  #     format = "ssh";
+  #     signByDefault = true;
+  #     key = config.programs.git.settings.user.email;
+  #   };
+  # };
+
+  home.packages = with pkgs; [
+    git
+  ];
 
   programs.lazygit = {
     enable = true;
