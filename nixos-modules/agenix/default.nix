@@ -15,13 +15,17 @@
     agePlugins = [ pkgs.age-plugin-fido2-hmac ];
     masterIdentities = [
       {
-        identity = ./fido2-0643DA9F.pub;
-        pubkey = "age1shz2tstp72sk93rgtj4nwksksye9dwtmu4spt5v3a3kzg3j7r3jqawdq6d";
+        identity = ./fido-2362853.pub;
+        pubkey = "age1a2l36tx3e0mut3fz0gehqrlqp37mprv4xn08pg8sgarg26uaecmsxgq3hg";
       }
       {
-        identity = ./fido2-775BC6BC.pub;
-        pubkey = "age14eg3wdumvpwmsgdk3ctdkvtw43am8kq43wq4hzejzt9fqrpgggqsyzutrm";
+        identity = ./fido-32050569.pub;
+        pubkey = "age1emhhqlwqugef6sa89qllqaxd4wtmz5g5qq8r22kpx4dc3vgdtd9sc903pa";
       }
+      # {
+      #   identity = ./backup.age;
+      #   pubkey = "age1uhv9l24d4rnrxtydm4mvmmh2653x22ae0ysmhgejhmrtsr8a6e6qnh29vf";
+      # }
     ];
     extraEncryptionPubkeys = [
       "age1uhv9l24d4rnrxtydm4mvmmh2653x22ae0ysmhgejhmrtsr8a6e6qnh29vf"
