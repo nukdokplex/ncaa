@@ -1,12 +1,12 @@
 args@{
   lib,
-  config,
   pkgs,
   ...
 }:
 {
   imports = [
     ./wm-quirks
+    ./wayprompt.nix
   ];
 
   home.packages = with pkgs; [
@@ -20,11 +20,6 @@ args@{
     wm-utils
     pavucontrol
   ];
-
-  programs.wayprompt = {
-    enable = true;
-    settings.general.corner-radius = 0;
-  };
 
   programs.fuzzel = {
     enable = true;
@@ -47,7 +42,6 @@ args@{
   services.network-manager-applet.enable = lib.mkDefault (
     args.osConfig.networking.networkmanager.enable or false
   );
-  services.gpg-agent.pinentry.package = config.programs.wayprompt.package;
   services.udiskie = {
     enable = true;
     notify = true;
