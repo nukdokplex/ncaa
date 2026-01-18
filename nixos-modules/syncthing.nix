@@ -11,19 +11,31 @@ let
   devices = {
     sleipnir = {
       id = getDeviceId "sleipnir";
-      address = "quic://sleipnir.ndp.local:22000,tcp://sleipnir.ndp.local:22000";
+      addresses = [
+        "quic://sleipnir.ndp.local:22000"
+        "tcp://sleipnir.ndp.local:22000"
+      ];
     };
     gladr = {
       id = getDeviceId "gladr";
-      address = "quic://gladr.ndp.local:22000,tcp://gladr.ndp.local:22000";
+      addresses = [
+        "quic://gladr.ndp.local:22000"
+        "tcp://gladr.ndp.local:22000"
+      ];
     };
     holl = {
       id = getDeviceId "holl";
-      address = "quic://holl.ndp.local:22000,tcp://holl.ndp.local:22000";
+      addresses = [
+        "quic://holl.ndp.local:22000"
+        "tcp://holl.ndp.local:22000"
+      ];
     };
     hrafn = {
       id = "EC4RLTB-CKAH2DZ-KVQNUC6-CEKMG43-T73DRAY-ZXOHBHO-OS2AIL4-BKMZOQQ";
-      address = "quic://hrafn.ndp.local:22000,tcp://hrafn.ndp.local:22000";
+      addresses = [
+        "quic://hrafn.ndp.local:22000"
+        "tcp://hrafn.ndp.local:22000"
+      ];
     };
   };
   folders = {
