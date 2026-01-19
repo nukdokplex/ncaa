@@ -1,0 +1,107 @@
+(defsrc
+  grv 1 2 3 4     7 8 9 0 - =  bspc
+  tab  q w e r       i o p [ ] \
+  caps  a s d f       k l ; '  ret
+         z x c         , . /   
+)
+
+(defalias
+  mda  (tap-hold-next-release 200 a met)
+  mds  (tap-hold-next-release 200 s alt)
+  mdd  (tap-hold-next-release 200 d ctl)
+  mdf  (tap-hold-next-release 200 f sft)
+
+  mdj  (tap-hold-next-release 200 j sft) 
+  mdk  (tap-hold-next-release 200 k ctl) 
+  mdl  (tap-hold-next-release 200 l alt) 
+  mdsc (tap-hold-next-release 200 ; met)
+
+  mdz  (tap-hold-next-release 200 z (layer-toggle U_BUTTON))
+  mdx  (tap-hold-next-release 200 x ralt)
+  mddt (tap-hold-next-release 200 . ralt)
+  mdsh (tap-hold-next-release 200 / (layer-toggle U_BUTTON))
+
+  lr1 (tap-hold-next-release 200 esc (layer-toggle U_MEDIA)) 
+  lr2 (tap-hold-next-release 200 spc (layer-toggle U_NAV)) 
+  lr3 (tap-hold-next-release 200 tab (layer-toggle U_MOUSE)) 
+
+  lr4 (tap-hold-next-release 200 ent (layer-toggle U_SYM)) 
+  lr5 (tap-hold-next-release 200 bspc (layer-toggle U_NUM)) 
+  lr6 (tap-hold-next-release 200 del (layer-toggle U_FUN))
+
+  mttp (multi-tap 200 XX (layer-switch U_TAP)) 
+  mtex (multi-tap 200 XX (layer-switch U_EXTRA)) 
+  mtbs (multi-tap 200 XX (layer-switch U_BASE))
+  mtnm (multi-tap 200 XX (layer-switch U_NUM)) 
+  mtnv (multi-tap 200 XX (layer-switch U_NAV))
+  mtsm (multi-tap 200 XX (layer-switch U_SYM))
+  mtms (multi-tap 200 XX (layer-switch U_MOUSE)) 
+  mtfn (multi-tap 200 XX (layer-switch U_FUN)) 
+  mtmd (multi-tap 200 XX (layer-switch U_MEDIA))
+
+  pvsng previoussong
+  nxsng nextsong
+)
+
+(deflayer U_BASE
+   q      w      e      r      t            ]      y      u      i      o      p      [
+   @mda   @mds   @mdd   @mdf   g                   h      @mdj   @mdk   @mdl   @mdsc  '
+   @mdz   @mdx   c      v      b                   n      m      ,      @mddt  @mdsh  
+                 @lr1   @lr2   @lr3                @lr4   @lr5   @lr6
+)
+(deflayer U_EXTRA
+   q      w      e      r      t            ]      y      u      i      o      p      [
+   @mda   @mds   @mdd   @mdf   g                   h      @mdj   @mdk   @mdl   @mdsc  '
+   @mdz   @mdx   c      v      b                   n      m      ,      @mddt  @mdsh  
+                 @lr1   @lr2   @lr3                @lr4   @lr5   @lr6
+)
+(deflayer U_TAP
+   q      w      e      r      t            ]      y      u      i      o      p      [
+   a      s      d      f      g                   h      j      k      l      ;      '
+   z      x      c      v      b                   n      m      ,      .      /
+                 esc    spc    tab                 ent    bspc   del
+)
+(deflayer U_BUTTON
+   undo   S-del  C-ins  S-ins  again        XX     again  S-ins  C-ins  S-del  undo   XX
+   met    alt    ctl    sft    XX                  XX     sft    ctl    alt    met    XX
+   undo   S-del  C-ins  S-ins  again               again  S-ins  C-ins  S-del  undo
+    #(kp* kp5) #(kp/ kp5) #(kp- kp5)               #(kp- kp5) #(kp/ kp5) #(kp* kp5)
+)
+(deflayer U_NAV
+   XX     @mttp  @mtex  @mtbs  XX           XX     again  S-ins  C-ins  S-del  undo   XX
+   met    alt    ctl    sft    XX                  caps   left   down   up     right  XX
+   XX     ralt   @mtnm  @mtnv  XX                  ins    home   pgdn   pgup   end
+                 XX     XX     XX                  ent    bspc   del
+)
+(deflayer U_MOUSE
+   XX     @mttp  @mtex  @mtbs  XX           XX     again  S-ins  C-ins  S-del  undo   XX
+   met    alt    ctl    sft    XX                  XX     kp4    kp2    kp8    kp6    XX
+   XX     ralt   @mtsm  @mtms  XX                  XX     XX     XX     XX     XX
+                 XX     XX     XX                  #(kp- kp5) #(kp/ kp5) #(kp* kp5)
+)
+(deflayer U_MEDIA
+   XX     @mttp  @mtex  @mtbs  XX           XX     XX     XX     XX     XX     XX     XX
+   met    alt    ctl    sft    XX                  XX     @pvsng vold   volu   @nxsng XX
+   XX     ralt   @mtfn  @mtmd  XX                  XX     XX     XX     XX     XX
+                 XX     XX     XX                  stopcd playpause mute
+)
+(deflayer U_NUM
+   [      7      8      9      ]            XX     XX     @mtbs  @mtex  @mttp  XX     XX
+   ;      4      5      6      =                   XX     sft    ctl    alt    met    XX
+   `      1      2      3      \\                  XX     @mtnm  @mtnv  ralt   XX
+                 .      0      -                   XX     XX     XX
+)
+(deflayer U_SYM
+   {      &      *      \(     }            XX     XX     @mtbs  @mtex  @mttp   XX     XX
+   :      $      %      ^      +                   XX     sft    ctl    alt     met    XX
+   ~      !      @      #      |                   XX     @mtsm  @mtms  ralt    XX
+                 \(     \)     \_                  XX     XX     XX
+)
+(deflayer U_FUN
+   f12    f7     f8     f9     sysrq        XX     XX     @mtbs  @mtex  @mttp  XX     XX
+   f11    f4     f5     f6     slck                XX     sft    ctl    alt    met    XX
+   f10    f1     f2     f3     pause               XX     @mtfn  @mtmd   ralt   XX
+                 comp   spc    tab                 XX     XX     XX
+)
+
+
