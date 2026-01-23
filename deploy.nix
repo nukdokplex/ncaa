@@ -24,7 +24,10 @@ let
     {
       hostname = "${host.config.networking.hostName}.ndp.local";
       profiles.system = {
+        sshUser = "nukdokplex";
         user = "root";
+        interactiveSudo = true;
+        autoRollback = true;
         path = deploy-rs.lib."${deploySystem}".activate.nixos host;
       };
     };
@@ -32,7 +35,9 @@ in
 {
   flake.deploy = {
     nodes = lib.recursiveUpdate (lib.genAttrs deployableSystems genDeployableSystem) {
-      # custom config goes here
+      sleipnir = {
+        remoteBuild = true;
+      };
     };
   };
 
