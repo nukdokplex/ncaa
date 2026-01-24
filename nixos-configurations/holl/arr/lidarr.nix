@@ -14,7 +14,7 @@
 
   services = {
     lidarr = {
-      package = pkgs.lidarr-plugins;
+      package = pkgs.lidarr-custom;
       enable = true;
       user = "lidarr";
       group = "lidarr";
