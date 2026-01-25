@@ -71,7 +71,7 @@ in
         deps,
         ...
       }:
-      ''${decrypt} ${deps.password.file} | ${lib.getExe pkgs.openssl} passwd -6 -stdin'';
+      "${decrypt} ${deps.password.file} | ${lib.getExe pkgs.openssl} passwd -6 -stdin";
     mkpasswd-bcrypt =
       {
         pkgs,
@@ -80,7 +80,7 @@ in
         lib,
         ...
       }:
-      ''${decrypt} ${lib.escapeShellArg deps.password.file} | ${lib.getExe pkgs.mkpasswd} -sm bcrypt'';
+      "${decrypt} ${lib.escapeShellArg deps.password.file} | ${lib.getExe pkgs.mkpasswd} -sm bcrypt";
   }
   // (lib.pipe
     [

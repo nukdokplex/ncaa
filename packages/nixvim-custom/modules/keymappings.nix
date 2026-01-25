@@ -31,7 +31,7 @@
             "<M-k>" = "<C-w>k";
             "<M-l>" = "<C-w>l";
 
-            "<leader>h" = ''<cmd>Telescope harpoon marks<CR>'';
+            "<leader>h" = "<cmd>Telescope harpoon marks<CR>";
 
             "<Tab>" = ">>";
             "<S-Tab>" = "<<";
