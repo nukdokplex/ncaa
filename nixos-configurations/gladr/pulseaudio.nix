@@ -8,4 +8,14 @@
   };
 
   nixpkgs.config.pulseaudio = true;
+
+  services.jack = {
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    loopback = {
+      enable = true;
+    };
+  };
 }
